@@ -1,11 +1,10 @@
+import AuthLayout from '@/components/layouts/AuthLayouts';
+import Button from '@/components/ui/Button';
+import InputUi from '@/components/ui/Input';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
-// import GoogleIcon from '../../../../../public/googleIcon.png';
-// import GithubIcon from '../../../../../public/githubIcon.png';
-// import Button from '@/components/ui/Button';
-// import AuthLayout from '@/components/layouts/AuthLayout';
-// import InputUi from '@/components/ui/Input';
+import GoogleIcon from '../../../../../public/googleIcon.png';
 
 const LoginView = () => {
   const { push, query } = useRouter();
@@ -55,42 +54,58 @@ const LoginView = () => {
     }
   };
   return (
-    <div>
+    <AuthLayout
+      title="LOGIN"
+      link="/auth/register"
+      linkText="Don't have an account?"
+      linkTitle="Create an account"
+      isError={isError}
+      errorText="Invalid email or password"
+      subChildren={
+        <>
+          <div className="flex justify-center items-center gap-2 w-full">
+            <div className="text-neutral-500 h-0.5 w-full bg-neutral-300" />
+            <p className="italic text-sm pb-1">or</p>
+            <div className="text-neutral-500 h-0.5 w-full bg-neutral-300" />
+          </div>
+          <div className="flex justify-center items-center gap-2 mt-1">
+            <Button
+              type="button"
+              className=" flex justify-center items-center bg-color-primary text-color-dark py-2 px-3 rounded-md"
+              onClick={() => signIn('google', { callbackUrl: '/', redirect: false })}
+              icon={GoogleIcon}
+              label={'Login with Google'}
+            />
+          </div>
+        </>
+      }
+    >
       <div className="min-w-[320px]">
         <form
           className="flex flex-col gap-2"
           action=""
           onSubmit={handleSubmit}
         >
-          <input
+          <InputUi
             type="email"
             name="email"
             placeholder="Email"
           />
           {formErrors.email && <div className="text-color-red">{formErrors.email}</div>}
-          <input
+          <InputUi
             type="password"
             name="password"
             placeholder="Password"
           />
           {formErrors.password && <div className="text-color-red">{formErrors.password}</div>}
-          <button
+          <Button
+            label={isLoading ? 'Loading...' : 'Sign In'}
             type="submit"
-            className="bg-color-red font-semibold text-color-primary py-2 px-1 rounded-md mt-5"
-          >
-            {isLoading ? 'Loading...' : 'Sign In'}
-          </button>
+            className="bg-blue-500 font-semibold text-white py-2 px-1 rounded-md mt-5"
+          />
         </form>
       </div>
-      <button
-        type="button"
-        className=" flex justify-center items-center bg-color-primary text-color-dark py-2 px-3 rounded-md"
-        onClick={() => signIn('google', { callbackUrl: '/', redirect: false })}
-        //   icon={GoogleIcon}
-      >
-        Google
-      </button>
-    </div>
+    </AuthLayout>
   );
 };
 

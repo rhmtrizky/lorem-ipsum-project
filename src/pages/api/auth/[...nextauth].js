@@ -72,6 +72,7 @@ const authOptions = {
           token.id = data.id;
         });
       }
+      return token;
     },
     async session({ session, token }) {
       if ('email' in token) {
