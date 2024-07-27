@@ -41,7 +41,7 @@ export default function Header() {
 
                     </div>
 
-                    <span className='w-full h-1/2 flex justify-around items-center font-bold px-6' >
+                    <div className='w-full h-1/2 flex justify-around items-center font-bold px-6' >
                         <ul className='flex gap-6 text-sm text-slate-400' >
                             <li>Cari Dokter</li>
                             <li>Informasi</li>
@@ -56,7 +56,7 @@ export default function Header() {
                                     <Image src={next} width={15} height={15} alt='next.png'/>
                                 </div>
                             </motion.button>
-                    </span>
+                    </div>
 
                 </nav>
             </div>
