@@ -2,38 +2,41 @@ import { call, instagram, linkedin, logo, mail, next, twitter } from '@/assets/i
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import React from 'react'
+import { Sidebar } from '../Sidebar'
+
 
 export default function Header() {
+
     return (
         <header className='fixed w-full h-[90px] shadow-md ' >
-            <div className='flex h-full' >
-                <div className='flex justify-around items-center w-[50%]  ' >
+            <div className='flex items-center justify-between h-full px-8 min-[600px]:px-0' >
+                <div className='flex justify-around items-center min-[600px]:w-[50%]  ' >
                     <motion.div whileHover={{rotate: 180}} transition={{type: 'spring'}} >
                         <Image src={logo} width={70} height={70} alt='logo.png' />
                     </motion.div>
                 </div>
 
-                <nav className='w-full h-full' >
-                    <div className='flex items-center justify-around h-1/2 px-12 bg-gradient-to-r from-cyan-500 to-blue-500 ' >
+                <nav className='hidden min-[600px]:block w-full h-full' >
+                    <div className='flex items-center justify-around max-[950px]:justify-center h-1/2 px-1 bg-gradient-to-r from-cyan-500 to-blue-500 ' >
                         <div className='flex gap-5 h-max' >
-                            <span className='flex items-center gap-1' >
-                                <Image src={mail} width={20} height={20} alt='mail.png' />
-                                <p className='text-sm text-white' >loremipsum@gmail.com</p>
-                            </span>
-                            <span className='flex items-center gap-1' >
+                            <div className='flex items-center gap-1' >
+                                <Image src={mail} width={25} height={25} alt='mail.png' className='w-[30px] min-[950px]:w-[20px]' />
+                                <p className='hidden min-[600px]:block text-sm text-white' >loremipsum@gmail.com</p>
+                            </div>
+                            <div className='flex items-center gap-1' >
                                 <Image src={call} width={15} height={15} alt='mail.png' />
-                                <p className='text-sm text-white' >+62978324593</p>
-                            </span>
+                                <p className='hidden min-[600px]:block text-sm text-white' >+62978324593</p>
+                            </div>
                         </div>
 
                         <div className='flex gap-4' >
-                            <motion.div whileHover={{y: -4}} className='w-8 h-8 flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer' >
+                            <motion.div whileHover={{y: -4}} className='hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer' >
                                 <Image src={linkedin} width={13} height={13} alt='linkedin.png' />
                             </motion.div>
-                            <motion.div whileHover={{y: -4}} className='w-8 h-8 flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer' >
+                            <motion.div whileHover={{y: -4}} className='hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer' >
                                 <Image src={twitter} width={13} height={13} alt='mail.png' />
                             </motion.div>
-                            <motion.div whileHover={{y: -4}} className='w-8 h-8 flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer' >
+                            <motion.div whileHover={{y: -4}} className='hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer' >
                                 <Image src={instagram} width={15} height={15} alt='instagram.png' />
                             </motion.div>
                             
@@ -56,9 +59,13 @@ export default function Header() {
                                     <Image src={next} width={15} height={15} alt='next.png'/>
                                 </div>
                             </motion.button>
+
                     </div>
 
                 </nav>
+
+                <Sidebar/>
+
             </div>
         </header>
     )
