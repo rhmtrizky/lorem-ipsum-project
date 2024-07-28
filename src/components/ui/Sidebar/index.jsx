@@ -4,11 +4,15 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useClickAway } from 'react-use'
 import { AiOutlineRollback } from 'react-icons/ai'
-import { logo } from '@/assets/images/images'
+import { logo, next } from '@/assets/images/images'
 import { items } from '@/util/datas'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 
 export const Sidebar = () => {
+  const session = useSession()
+
+
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
   useClickAway(ref, () => setOpen(false))
@@ -33,7 +37,7 @@ export const Sidebar = () => {
             ></motion.div>
             <motion.div
               {...framerSidebarPanel}
-              className="fixed top-0 bottom-0 left-0 z-50 w-full h-screen max-w-xs border-r-2 bg-white"
+              className="fixed top-0 bottom-0 left-0 z-50 w-full h-full max-w-xs border-r-2 bg-white"
               ref={ref}
               aria-label="Sidebar"
             >
@@ -68,11 +72,29 @@ export const Sidebar = () => {
                   )
                 })}
               </ul>
+              <div className='h-fit flex items-start' >
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-blue-500/50"
+                    onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
+                    aria-label='masuk'
+                    >
+                    <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
+                    <div className="w-5 h-5 flex items-center justify-center bg-cyan-400 rounded-full">
+                        <Image
+                        src={next}
+                        width={15}
+                        height={15}
+                        alt="next.png"
+                        />
+                    </div>
+                </motion.button>
+              </div>
             </motion.div>
           </>
         )}
+
       </AnimatePresence>
     </div>
   )
 }
-
