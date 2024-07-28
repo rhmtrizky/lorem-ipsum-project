@@ -8,3 +8,6 @@ export const share = "/share.png"
 export const linkedin = "/linkedin.png"
 export const instagram = "/instagram.png"
 export const twitter = "/twitter.png"
+
+export const doctorAnimate = '/doctor-animate.png'
+export const banner = '/banner.png'

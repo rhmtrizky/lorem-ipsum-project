@@ -9,7 +9,7 @@ export default function Header() {
     const session = useSession();
 
     return (
-        <header className='fixed w-full h-[90px] shadow-md ' >
+        <header className='top-0 right-0 w-full h-[90px] shadow-md bg-white' >
             <div className='flex items-center justify-between h-full px-8 min-[600px]:px-0' >
                 <div className='flex justify-around items-center min-[600px]:w-[50%]  ' >
                     <motion.div whileHover={{rotate: 180}} transition={{type: 'spring'}} >
