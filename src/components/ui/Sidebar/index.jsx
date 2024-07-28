@@ -1,25 +1,24 @@
-import { framerButton, framerSidebarBackground, framerSidebarPanel, framerText } from './framer'
-import { useRef, useState } from 'react'
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useClickAway } from 'react-use'
-import { AiOutlineRollback } from 'react-icons/ai'
-import { logo, next } from '@/assets/images/images'
-import { items } from '@/util/datas'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import Image from 'next/image'
+import { framerButton, framerSidebarBackground, framerSidebarPanel, framerText } from './framer';
+import { useRef, useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useClickAway } from 'react-use';
+import { AiOutlineRollback } from 'react-icons/ai';
+import { logo, next } from '@/assets/images/images';
+import { items } from '@/utils/datas';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 export const Sidebar = () => {
-  const session = useSession()
+  const session = useSession();
 
-
-  const [open, setOpen] = useState(false)
-  const ref = useRef(null)
-  useClickAway(ref, () => setOpen(false))
-  const toggleSidebar = () => setOpen(prev => !prev)
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  useClickAway(ref, () => setOpen(false));
+  const toggleSidebar = () => setOpen((prev) => !prev);
 
   return (
-    <div className='min-[600px]:hidden' >
+    <div className="min-[600px]:hidden">
       <button
         onClick={toggleSidebar}
         className="p-3 border-2 bg-white shadow-lg rounded-md"
@@ -27,7 +26,10 @@ export const Sidebar = () => {
       >
         <GiHamburgerMenu />
       </button>
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence
+        mode="wait"
+        initial={false}
+      >
         {open && (
           <>
             <motion.div
@@ -42,10 +44,19 @@ export const Sidebar = () => {
               aria-label="Sidebar"
             >
               <div className="flex items-center justify-between p-5 border-b-2  border-slate-400">
-                <motion.div whileInView={{rotate: 180}} exit={{rotate: -180}}>
-                  <Image src={logo} width={50} height={50} alt='logo.png' />
+                <motion.div
+                  whileInView={{ rotate: 180 }}
+                  exit={{ rotate: -180 }}
+                >
+                  <Image
+                    src={logo}
+                    width={50}
+                    height={50}
+                    alt="logo.png"
+                  />
                 </motion.div>
-                <motion.button {...framerButton}
+                <motion.button
+                  {...framerButton}
                   onClick={toggleSidebar}
                   className="p-3 border-2 text-black rounded-xl"
                   aria-label="close sidebar"
@@ -55,7 +66,7 @@ export const Sidebar = () => {
               </div>
               <ul>
                 {items.map((item, idx) => {
-                  const { title, href, Icon } = item
+                  const { title, href, Icon } = item;
                   return (
                     <li key={title}>
                       <a
@@ -63,39 +74,41 @@ export const Sidebar = () => {
                         href={href}
                         className="flex items-center justify-between gap-5 transition-all m-5 hover:text-white"
                       >
-                        <motion.div {...framerText(idx)} className='w-full flex justify-between text-center hover:bg-blue-500 border-2 border-cyan-400 p-3 rounded-xl' >
-                          <span >{title}</span>
+                        <motion.div
+                          {...framerText(idx)}
+                          className="w-full flex justify-between text-center hover:bg-blue-500 border-2 border-cyan-400 p-3 rounded-xl"
+                        >
+                          <span>{title}</span>
                           <Icon className="text-2xl" />
                         </motion.div>
                       </a>
                     </li>
-                  )
+                  );
                 })}
               </ul>
-              <div className='h-fit flex items-start' >
+              <div className="h-fit flex items-start">
                 <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    {...framerButton}
-                    className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-blue-500/50"
-                    onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
-                    aria-label='masuk'
-                    >
-                    <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
-                    <div className="w-5 h-5 flex items-center justify-center bg-cyan-400 rounded-full">
-                        <Image
-                        src={next}
-                        width={15}
-                        height={15}
-                        alt="next.png"
-                        />
-                    </div>
+                  whileHover={{ scale: 1.1 }}
+                  {...framerButton}
+                  className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-blue-500/50"
+                  onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
+                  aria-label="masuk"
+                >
+                  <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
+                  <div className="w-5 h-5 flex items-center justify-center bg-cyan-400 rounded-full">
+                    <Image
+                      src={next}
+                      width={15}
+                      height={15}
+                      alt="next.png"
+                    />
+                  </div>
                 </motion.button>
               </div>
             </motion.div>
           </>
         )}
-
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};
