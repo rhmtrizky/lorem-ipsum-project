@@ -1,4 +1,4 @@
-import { framerRollBack, framerSidebarBackground, framerSidebarPanel, framerText } from './framer'
+import { framerButton, framerSidebarBackground, framerSidebarPanel, framerText } from './framer'
 import { useRef, useState } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -45,7 +45,7 @@ export const Sidebar = () => {
                 <motion.div whileInView={{rotate: 180}} exit={{rotate: -180}}>
                   <Image src={logo} width={50} height={50} alt='logo.png' />
                 </motion.div>
-                <motion.button {...framerRollBack}
+                <motion.button {...framerButton}
                   onClick={toggleSidebar}
                   className="p-3 border-2 text-black rounded-xl"
                   aria-label="close sidebar"
@@ -75,7 +75,7 @@ export const Sidebar = () => {
               <div className='h-fit flex items-start' >
                 <motion.button
                     whileHover={{ scale: 1.1 }}
-                    {...framerRollBack}
+                    {...framerButton}
                     className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-blue-500/50"
                     onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
                     aria-label='masuk'

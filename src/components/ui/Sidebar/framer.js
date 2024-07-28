@@ -22,7 +22,7 @@ export const framerText = delay => {
     }
 }
 
-export const framerRollBack = {
+export const framerButton = {
     initial: { scale: 0 },
     animate: { scale: 1 },
     transition: {
