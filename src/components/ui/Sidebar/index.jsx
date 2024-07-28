@@ -75,6 +75,7 @@ export const Sidebar = () => {
               <div className='h-fit flex items-start' >
                 <motion.button
                     whileHover={{ scale: 1.1 }}
+                    {...framerRollBack}
                     className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-blue-500/50"
                     onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
                     aria-label='masuk'
