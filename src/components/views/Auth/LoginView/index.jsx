@@ -1,10 +1,10 @@
-import AuthLayout from '@/components/layouts/AuthLayouts';
 import Button from '@/components/ui/Button';
 import InputUi from '@/components/ui/Input';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import GoogleIcon from '../../../../../public/googleIcon.png';
+import AuthLayout from '@/components/layouts/AuthLayout';
 
 const LoginView = () => {
   const { push, query } = useRouter();

@@ -29,18 +29,18 @@ export async function signIn(email) {
   }
 }
 
-export async function loginWithGoogle(userData, callback) {
-  const user = await retrieveDataByField('users', 'email', userData.email);
-  if (user.length > 0) {
-    callback(true, user[0]);
+export async function loginWithGoogle(data, callback) {
+  const user = await retrieveDataByField('users', 'email', data.email);
+  if (user?.length > 0) {
+    callback(user[0]);
   } else {
-    userData.role = 'patient';
-    userData.phoneNumber = '';
-    await addData('users', userData, (status, res) => {
+    data.role = 'patient';
+    data.phoneNumber = '';
+    await addData('users', data, (status, res) => {
       const userId = res.path.split('/').pop();
-      userData.id = userId;
+      data.id = userId;
       if (status) {
-        callback(userData);
+        callback(data);
       }
     });
   }

@@ -1,4 +1,4 @@
-import AuthLayout from '@/components/layouts/AuthLayouts';
+import AuthLayout from '@/components/layouts/AuthLayout';
 import Button from '@/components/ui/Button';
 import InputUi from '@/components/ui/Input';
 import authService from '@/services/auth';

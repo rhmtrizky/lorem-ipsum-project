@@ -58,6 +58,7 @@ const authOptions = {
           fullname: user.name,
           phoneNumber: user.phoneNumber,
           //   address: user.address,
+          role: user.role,
           type: 'google',
         };
 

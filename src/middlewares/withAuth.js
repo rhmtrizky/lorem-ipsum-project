@@ -15,7 +15,7 @@ export default function WithAuth(middleware, requireAuth) {
         secret: process.env.NEXTAUTH_SECRET,
       });
       if (!token && !authPage.includes(pathname)) {
-        const url = new URL('/auth/login', req.url, secret);
+        const url = new URL('/auth/login', req.url);
         url.searchParams.set('callbackUrl', encodeURI(req.url));
         return NextResponse.redirect(url);
       }
