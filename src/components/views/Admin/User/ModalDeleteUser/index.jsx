@@ -35,7 +35,7 @@ const ModalDeleteUser = ({ dataDeleteUser, setDeleteUser, onOpenChange, isOpen, 
         setCloseModal={setDeleteUser}
       >
         <h4>
-          Are you sure you want to delete <span className="text-red-500">"{dataDeleteUser.fullname}"</span>?
+          Are you sure you want to delete <span className="text-red-500">{`"${dataDeleteUser.fullname}"`}</span>?
         </h4>
         <div className="w-full flex justify-end items-center gap-2 my-2">
           <Button
