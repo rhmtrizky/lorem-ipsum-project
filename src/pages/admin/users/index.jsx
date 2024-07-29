@@ -24,7 +24,12 @@ const AdminUsersManagementPage = () => {
     }
   }, [session]);
 
-  return <AdminUsersView users={users} />;
+  return (
+    <AdminUsersView
+      users={users}
+      setUsers={setUsers}
+    />
+  );
 };
 
 export default AdminUsersManagementPage;

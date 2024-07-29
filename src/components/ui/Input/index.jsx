@@ -14,7 +14,7 @@ const InputUi = ({ label, type, name, placeholder, defaultValue, disabled, onCha
       disabled={disabled}
       onChange={onChange}
       style={{ outline: 'none', backgroundColor: 'transparent', minHeight: '40px' }}
-      className="text-neutral-500 shadow-md rounded"
+      className="text-neutral-700 shadow-md rounded"
     />
   );
 };

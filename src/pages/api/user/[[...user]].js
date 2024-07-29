@@ -6,7 +6,6 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     verify(req, res, async (decoded) => {
       if (decoded) {
-        console.log(decoded);
         const users = await retrieveData('users');
         const data = users.map((user) => {
           delete user.password;
@@ -16,7 +15,6 @@ export default async function handler(req, res) {
       }
     });
   } else if (req.method === 'PUT') {
-    console.log(user);
     const { data } = req.body;
     let field = {
       fullname: '',
@@ -36,7 +34,7 @@ export default async function handler(req, res) {
     }
     verify(req, res, async (decoded) => {
       if (decoded && decoded.role === 'admin') {
-        await updateData('users', user[1], field, (result) => {
+        await updateData('users', user[0], field, (result) => {
           if (result) {
             res.status(200).json({
               status: true,
@@ -52,21 +50,24 @@ export default async function handler(req, res) {
         });
       }
     });
-  } else if (req.method === 'delete') {
-    verify(req, res, async (decodes) => {
-      await deleteData('users', user[1], (result) => {
-        if (result) {
-          res.status(200).json({
-            status: true,
-            message: 'Success',
-          });
-        } else {
-          res.status(400).json({
-            status: false,
-            message: 'Failed Delete user',
-          });
-        }
-      });
+  } else if (req.method === 'DELETE') {
+    console.log(user);
+    verify(req, res, async (decoded) => {
+      if (decoded && decoded.role === 'admin') {
+        await deleteData('users', user[0], (result) => {
+          if (result) {
+            res.status(200).json({
+              status: true,
+              message: 'Success',
+            });
+          } else {
+            res.status(400).json({
+              status: false,
+              message: 'Failed Delete user',
+            });
+          }
+        });
+      }
     });
   }
 }
