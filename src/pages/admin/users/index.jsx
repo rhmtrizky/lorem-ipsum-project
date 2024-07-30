@@ -1,4 +1,5 @@
 import AdminUsersView from '@/components/views/Admin/User';
+import useDebounce from '@/hooks/useDebounce';
 import userService from '@/services/user';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -6,6 +7,8 @@ import { useEffect, useState } from 'react';
 const AdminUsersManagementPage = () => {
   const session = useSession();
   const [users, setUsers] = useState([]);
+  const [searchUser, setSearchUser] = useState('');
+  const { debounce } = useDebounce();
 
   const getDataUsers = async () => {
     try {
@@ -18,6 +21,25 @@ const AdminUsersManagementPage = () => {
     }
   };
 
+  const performSearch = async () => {
+    if (searchUser !== '') {
+      try {
+        const { data } = await userService.searchUser(searchUser);
+        setUsers(data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      getDataUsers();
+    }
+  };
+
+  const debouncedSearch = debounce(performSearch, 1000);
+
+  useEffect(() => {
+    debouncedSearch();
+  }, [searchUser]);
+
   useEffect(() => {
     if (session.status === 'authenticated') {
       getDataUsers();
@@ -28,6 +50,7 @@ const AdminUsersManagementPage = () => {
     <AdminUsersView
       users={users}
       setUsers={setUsers}
+      setSearchUser={setSearchUser}
     />
   );
 };

@@ -4,16 +4,28 @@ import verify from '@/utils/verify';
 export default async function handler(req, res) {
   const { user } = req.query;
   if (req.method === 'GET') {
-    verify(req, res, async (decoded) => {
-      if (decoded) {
-        const users = await retrieveData('users');
-        const data = users.map((user) => {
-          delete user.password;
-          return user;
-        });
-        res.status(200).json({ status: true, message: 'Success', data: data });
-      }
-    });
+    // verify(req, res, async (decoded) => {
+    //   if (decoded) {
+    const search = req.query.search;
+    const users = await retrieveData('users');
+    if (search) {
+      const searchResult = users.filter((user) => {
+        return user.fullname.toLowerCase().includes(search.toString().toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || user.phoneNumber.includes(search);
+      });
+      res.status(200).json({
+        status: true,
+        message: 'Success',
+        data: searchResult,
+      });
+    } else {
+      const data = users.map((user) => {
+        delete user.password;
+        return user;
+      });
+      res.status(200).json({ status: true, message: 'Success', data: data });
+    }
+    //   }
+    // });
   } else if (req.method === 'PUT') {
     const { data } = req.body;
     let field = {

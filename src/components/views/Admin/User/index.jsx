@@ -2,14 +2,15 @@ import AdminLayout from '@/components/layouts/AdminLayout';
 import TableUi from '@/components/ui/Table';
 import { useEffect, useState } from 'react';
 import ModalUpdateUser from './ModalUpdateUser';
-import { Button, useDisclosure } from '@nextui-org/react';
+import { Button, Input, useDisclosure } from '@nextui-org/react';
 import ModalDeleteUser from './ModalDeleteUser';
+import userService from '@/services/user';
 
-const AdminUsersView = ({ users, setUsers }) => {
+const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
   const [updateUser, setUpdateUser] = useState({});
   const [deleteUser, setDeleteUser] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // console.log(isOpen);
+
   const columns = [
     {
       title: 'No.',
@@ -75,6 +76,20 @@ const AdminUsersView = ({ users, setUsers }) => {
     <>
       <AdminLayout>
         <h1 className="text-2xl font-bold mb-5">Users Management</h1>
+        <div className="relative w-[400px] text-neutral-600">
+          <Input
+            type="text"
+            placeholder="Search..."
+            className="border-2 border-neutral-300 rounded-md px-2 ml-2 text-sm"
+            variant="underlined"
+            color="danger"
+            style={{ backgroundColor: 'transparent' }}
+            onChange={(e) => setSearchUser(e.target.value)}
+          />
+          <div className="absolute top-3 right-2 text-color-red">
+            <i className="bx bx-search text-xl" />
+          </div>
+        </div>
         <TableUi
           data={processedData}
           columns={columns}

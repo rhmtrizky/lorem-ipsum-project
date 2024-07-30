@@ -19,6 +19,9 @@ export default function WithAuth(middleware, requireAuth) {
         url.searchParams.set('callbackUrl', encodeURI(req.url));
         return NextResponse.redirect(url);
       }
+      if (!token && onlyAdmin.includes(pathname)) {
+        return NextResponse.redirect(new URL('/auth/login', req.url));
+      }
       if (token) {
         if (authPage.includes(pathname)) {
           return NextResponse.redirect(new URL('/', req.url));
