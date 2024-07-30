@@ -1,10 +1,10 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
 import TableUi from '@/components/ui/Table';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ModalUpdateUser from './ModalUpdateUser';
 import { Button, Input, useDisclosure } from '@nextui-org/react';
 import ModalDeleteUser from './ModalDeleteUser';
-import userService from '@/services/user';
+import ModalAddUser from './ModalAddUser';
 
 const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
   const [updateUser, setUpdateUser] = useState({});
@@ -76,18 +76,30 @@ const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
     <>
       <AdminLayout>
         <h1 className="text-2xl font-bold mb-5">Users Management</h1>
-        <div className="relative w-[400px] text-neutral-600">
-          <Input
-            type="text"
-            placeholder="Search..."
-            className="border-2 border-neutral-300 rounded-md px-2 ml-2 text-sm"
-            variant="underlined"
-            color="danger"
-            style={{ backgroundColor: 'transparent' }}
-            onChange={(e) => setSearchUser(e.target.value)}
-          />
-          <div className="absolute top-3 right-2 text-color-red">
-            <i className="bx bx-search text-xl" />
+        <div className="flex items-center justify-between w-full">
+          <div className="relative w-3/5 text-neutral-600 ml-2">
+            <Input
+              type="text"
+              placeholder="Search..."
+              className="w-full border-2 border-neutral-300 rounded-md px-2 text-sm"
+              variant="underlined"
+              color="danger"
+              style={{ backgroundColor: 'transparent' }}
+              onChange={(e) => setSearchUser(e.target.value)}
+            />
+            <div className="absolute top-3 right-2">
+              <i className="bx bx-search text-xl" />
+            </div>
+          </div>
+          <div className="w-2/5 flex justify-end mr-2">
+            <Button
+              endContent={<i className="bx bx-plus-circle text-xl" />}
+              type="button"
+              className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
+              onPress={onOpen}
+            >
+              Add User
+            </Button>
           </div>
         </div>
         <TableUi
@@ -109,6 +121,13 @@ const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
         <ModalDeleteUser
           dataDeleteUser={deleteUser}
           setDeleteUser={setDeleteUser}
+          onOpenChange={onOpenChange}
+          isOpen={isOpen}
+          setUsers={setUsers}
+        />
+      )}
+      {onOpen && (
+        <ModalAddUser
           onOpenChange={onOpenChange}
           isOpen={isOpen}
           setUsers={setUsers}

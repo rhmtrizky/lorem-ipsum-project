@@ -1,31 +1,53 @@
-import { deleteData, retrieveData, updateData } from '@/libs/firebase/service';
+import { addData, deleteData, retrieveData, updateData } from '@/libs/firebase/service';
 import verify from '@/utils/verify';
+import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
   const { user } = req.query;
   if (req.method === 'GET') {
-    // verify(req, res, async (decoded) => {
-    //   if (decoded) {
-    const search = req.query.search;
-    const users = await retrieveData('users');
-    if (search) {
-      const searchResult = users.filter((user) => {
-        return user.fullname.toLowerCase().includes(search.toString().toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || user.phoneNumber.includes(search);
-      });
-      res.status(200).json({
-        status: true,
-        message: 'Success',
-        data: searchResult,
-      });
-    } else {
-      const data = users.map((user) => {
-        delete user.password;
-        return user;
-      });
-      res.status(200).json({ status: true, message: 'Success', data: data });
-    }
-    //   }
-    // });
+    verify(req, res, async (decoded) => {
+      if (decoded) {
+        const search = req.query.search;
+        const users = await retrieveData('users');
+        if (search) {
+          const searchResult = users.filter((user) => {
+            return user.fullname.toLowerCase().includes(search.toString().toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()) || user.phoneNumber.includes(search);
+          });
+          res.status(200).json({
+            status: true,
+            message: 'Success',
+            data: searchResult,
+          });
+        } else {
+          const data = users.map((user) => {
+            delete user.password;
+            return user;
+          });
+          res.status(200).json({ status: true, message: 'Success', data: data });
+        }
+      }
+    });
+  } else if (req.method === 'POST') {
+    verify(req, res, async (decoded) => {
+      if (decoded && decoded.role === 'admin') {
+        const { data } = req.body;
+        data.password = await bcrypt.hash(data.password, 10);
+        await addData('users', data, (result) => {
+          if (result) {
+            res.status(200).json({
+              status: true,
+              message: 'Success',
+              data: data,
+            });
+          } else {
+            res.status(400).json({
+              status: false,
+              message: 'Failed Add user',
+            });
+          }
+        });
+      }
+    });
   } else if (req.method === 'PUT') {
     const { data } = req.body;
     let field = {

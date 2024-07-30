@@ -24,7 +24,7 @@ const AdminUsersManagementPage = () => {
   const performSearch = async () => {
     if (searchUser !== '') {
       try {
-        const { data } = await userService.searchUser(searchUser);
+        const { data } = await userService.searchUser(searchUser, session.data.accessToken);
         setUsers(data.data);
       } catch (err) {
         console.log(err);
