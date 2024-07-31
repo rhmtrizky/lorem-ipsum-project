@@ -115,7 +115,7 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
               type="submit"
               className="bg-[#3b82f6] font-semibold text-white p-2 rounded-md"
             >
-              {isLoading ? 'loading...' : 'Submit'}
+              {isLoading ? 'Loading...' : 'Submit'}
             </Button>
           </div>
         </form>

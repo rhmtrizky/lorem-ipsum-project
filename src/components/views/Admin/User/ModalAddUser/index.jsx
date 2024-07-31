@@ -48,11 +48,13 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
         setUsers(data.data);
         onOpenChange(false);
         setIsLoading(false);
+        setAddUser({ status: false });
       }
     } catch (err) {
       console.log(err);
       onOpenChange(false);
       setIsLoading(false);
+      setAddUser({ status: false });
     }
   };
 
@@ -123,7 +125,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
               type="submit"
               className="bg-[#3b82f6] font-semibold text-white p-2 rounded-md"
             >
-              {isLoading ? 'loading...' : 'Submit'}
+              {isLoading ? 'Loading...' : 'Submit'}
             </Button>
           </div>
         </form>

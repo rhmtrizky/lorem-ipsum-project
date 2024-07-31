@@ -51,7 +51,7 @@ const ModalDeleteUser = ({ dataDeleteUser, setDeleteUser, onOpenChange, isOpen, 
             className="bg-[#3b82f6] font-semibold text-white p-2 rounded-md"
             onClick={handleDeleteUser}
           >
-            {isLoading ? 'loading...' : 'Submit'}
+            {isLoading ? 'Loading...' : 'Submit'}
           </Button>
         </div>
       </ModalUi>
