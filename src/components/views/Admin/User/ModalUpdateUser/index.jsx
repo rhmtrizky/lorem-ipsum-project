@@ -39,7 +39,6 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
       phoneNumber: form.phoneNumber.value,
       role: form.role.value,
     };
-    console.log(data);
     try {
       const result = await userService.updateUser(dataUpdateUser.id, data, session.data.accessToken);
       console.log(result);

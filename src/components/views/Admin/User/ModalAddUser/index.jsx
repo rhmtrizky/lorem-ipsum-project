@@ -5,7 +5,7 @@ import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
-const ModalAddUser = ({ onOpenChange, isOpen, setUsers }) => {
+const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,7 +62,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers }) => {
         title={'Add New User'}
         onOpenChange={onOpenChange}
         isOpen={isOpen}
-        setCloseModal={onOpenChange}
+        setCloseModal={setAddUser}
       >
         <form
           className="flex flex-col gap-4"
@@ -114,7 +114,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers }) => {
             <Button
               color="danger"
               variant="light"
-              onPress={onOpenChange}
+              onClick={() => setAddUser({ status: false })}
             >
               Cancel
             </Button>

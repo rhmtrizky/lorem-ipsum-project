@@ -9,6 +9,9 @@ import ModalAddUser from './ModalAddUser';
 const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
   const [updateUser, setUpdateUser] = useState({});
   const [deleteUser, setDeleteUser] = useState({});
+  const [addUser, setAddUser] = useState({
+    status: false,
+  });
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const columns = [
@@ -97,6 +100,7 @@ const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
               type="button"
               className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
               onPress={onOpen}
+              onClick={() => setAddUser({ status: true })}
             >
               Add User
             </Button>
@@ -126,13 +130,14 @@ const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
           setUsers={setUsers}
         />
       )}
-      {onOpen && (
+      {addUser.status ? (
         <ModalAddUser
           onOpenChange={onOpenChange}
           isOpen={isOpen}
           setUsers={setUsers}
+          setAddUser={setAddUser}
         />
-      )}
+      ) : null}
     </>
   );
 };
