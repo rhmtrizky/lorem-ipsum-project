@@ -10,4 +10,4 @@ export const instagram = "/instagram.png"
 export const twitter = "/twitter.png"
 
 export const doctorAnimate = '/doctor-animate.png'
-export const banner = '/banner.png'
+export const doctorNote = '/doctor-notes.png'

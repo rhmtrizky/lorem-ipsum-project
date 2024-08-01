@@ -14,7 +14,7 @@ export default function PoliCard() {
                     return () => animation.stop()
                 }
             },
-            { threshold: 0.1 } // Trigger when 10% of the element is visible
+            { threshold: 0.1 }
         )
 
         if (h2Ref.current) {
@@ -46,24 +46,6 @@ export default function PoliCard() {
                 <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
             </div><div className='bg-slate-600 w-[400px] h-40'>
                 <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-            </div>
-            <div className='bg-slate-600 w-[400px] h-40 text-red-600'>
-                <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-            </div>
-            <div className='bg-slate-600 w-[400px] h-40'>
-                <h2>PoliCard</h2>
-            </div>
-            <div className='bg-slate-600 w-[400px] h-40'>
-                <h2>PoliCard</h2>
-            </div>
-            <div className='bg-slate-600 w-[400px] h-40'>
-                <h2>PoliCard</h2>
-            </div>
-            <div className='bg-slate-600 w-[400px] h-40'>
-                <h2>PoliCard</h2>
-            </div>
-            <div className='bg-slate-600 w-[400px] h-40'>
-                <motion.h2>{rounded}</motion.h2>
             </div>
         </div>
     )

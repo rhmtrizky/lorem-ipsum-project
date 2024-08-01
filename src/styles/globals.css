@@ -8,10 +8,15 @@
 /* font Bebas Neue */
 /* @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Playwrite+DE+Grund:wght@100..400&family=Playwrite+IT+Moderna:wght@100..400&display=swap');
 
+
 .bebas-neue-regular {
   font-family: 'Bebas Neue', sans-serif;
 } */
 
+.bg-gradient-white-blue {
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 29%, rgba(59,130,246,0.45710784313725494) 100%);
+}
 
 /* :root {
   --foreground-rgb: 0, 0, 0;
