@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* boxicons */
 @import url('boxicons/css/boxicons.min.css');
+
+/* font Bebas Neue */
+/* @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Playwrite+DE+Grund:wght@100..400&family=Playwrite+IT+Moderna:wght@100..400&display=swap');
+
+.bebas-neue-regular {
+  font-family: 'Bebas Neue', sans-serif;
+} */
+
 
 /* :root {
   --foreground-rgb: 0, 0, 0;
