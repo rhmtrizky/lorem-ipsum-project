@@ -18,7 +18,7 @@ export default function Header() {
                 </div>
 
                 <nav className='hidden min-[600px]:block w-full h-full' >
-                    <div className='flex items-center justify-around max-[950px]:justify-center h-1/2 px-1 bg-gradient-to-r from-cyan-500 to-blue-500 ' >
+                    <div className='flex items-center justify-around max-[950px]:justify-center h-1/2 px-1 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] ' >
                         <div className='flex gap-5 h-max' >
                             <div className='flex items-center gap-1' >
                                 <Image src={mail} width={25} height={25} alt='mail.png' className='w-[30px] min-[950px]:w-[20px]' />
@@ -54,7 +54,7 @@ export default function Header() {
                         </ul>
                         <motion.button
                             whileHover={{ scale: 1.1 }}
-                            className="h-8 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-full shadow-lg hover:shadow-blue-500/50"
+                            className="h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-full shadow-lg hover:shadow-blue-500/50"
                             onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
                             >
                             <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>

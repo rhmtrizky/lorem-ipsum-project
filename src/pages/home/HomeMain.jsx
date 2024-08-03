@@ -13,7 +13,7 @@ export default function HomeMain() {
     <>
       <Header />
       <section className='w-full h-fit border-y-2'>
-        <div>
+        <div className='flex justify-center' >
           <HomeBanner />
         </div>
       </section>
@@ -23,7 +23,7 @@ export default function HomeMain() {
       >
         <HomeHelp />
       </motion.section>
-      <section className='m-12'>
+      <section className=' m-12'>
         <HomePoli />
       </section>
     </>
