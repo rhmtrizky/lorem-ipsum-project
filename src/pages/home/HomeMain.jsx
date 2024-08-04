@@ -4,6 +4,7 @@ import HomeBanner from './HomeBanner'
 import HomePoli from './HomePoli'
 import HomeHelp from './HomeHelp'
 import React from 'react'
+import PoliCard from '@/components/ui/Card/PoliCard'
 
 export default function HomeMain() {
   const { scrollYProgress } = useScroll()
@@ -12,9 +13,14 @@ export default function HomeMain() {
   return (
     <>
       <Header />
-      <section className='w-full h-fit border-y-2'>
-        <div className='flex justify-center' >
+      {/* untuk responsive nanti mx-4 bisa dihapus */}
+      <section className='w-full h-fit relative flex justify-center gap-3 mt-3 mx-4'>
+        <div className='w-full flex justify-center' >
           <HomeBanner />
+        </div>
+        <div className='w-[20%] flex flex-col justify-center gap-2 border h-max '>
+          <PoliCard/>
+          
         </div>
       </section>
       <motion.section

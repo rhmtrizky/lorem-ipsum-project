@@ -18,7 +18,7 @@ body {
 }
 
 .bg-button-pink {
-  background-color: rgba(255, 190, 190, .52);
+  background-color: #ffbebe85;
 }
 
 .bg-gradient-white-blue {
@@ -27,8 +27,13 @@ body {
 }
 
 .bg-gradient-radial {
-  background: rgb(255,190,190);
+  background: rgb(32, 25, 25);
   background: radial-gradient(circle, rgba(255,190,190,1) 0%, rgba(101,74,180,1) 100%);
+}
+
+.testing {
+  /* background-color: #f2347c; */
+  background-color: #ffa288;
 }
 
 /* border bem start */

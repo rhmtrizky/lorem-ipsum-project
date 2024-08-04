@@ -1,4 +1,5 @@
 import { logo } from '@/assets/images/images'
+import { datas } from '@/constraint'
 import { motion, animate, useMotionValue, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
@@ -31,58 +32,23 @@ export default function PoliCard() {
     }, [count])
 
     return (
-        <div className='flex gap-3 justify-center flex-wrap'>
-            {/* <div className='flex justify-between bg-slate-600 w-[350px] h-32 rounded-lg'>
-                <div>
-                    <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-                </div>
-                <div className='bg-red-600 w-[100px] rounded-lg' >
-                    <Image src={logo} width={40} height={40} alt='card.png'/>
-                </div>
-            </div>
-            <div className='flex justify-between bg-slate-600 w-[350px] h-32 rounded-lg'>
-                <div>
-                    <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-                </div>
-                <div className='bg-red-600 w-[100px] rounded-lg' >
-                    <Image src={logo} width={40} height={40} alt='card.png'/>
-                </div>
-            </div>
-            <div className='flex justify-between bg-slate-600 w-[350px] h-32 rounded-lg'>
-                <div>
-                    <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-                </div>
-                <div className='bg-red-600 w-[100px] rounded-lg' >
-                    <Image src={logo} width={40} height={40} alt='card.png'/>
-                </div>
-            </div>
-            <div className='flex justify-between bg-slate-600 w-[350px] h-32 rounded-lg'>
-                <div>
-                    <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-                </div>
-                <div className='bg-red-600 w-[100px] rounded-lg' >
-                    <Image src={logo} width={40} height={40} alt='card.png'/>
-                </div>
-            </div>
-            <div className='flex justify-between bg-slate-600 w-[350px] h-32 rounded-lg'>
-                <div>
-                    <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-                </div>
-                <div className='bg-red-600 w-[100px] rounded-lg' >
-                    <Image src={logo} width={40} height={40} alt='card.png'/>
-                </div>
-            </div>
-            <div className='flex justify-between bg-slate-600 w-[350px] h-32 rounded-lg'>
-                <div>
-                    <motion.h2 ref={h2Ref}>{rounded}</motion.h2>
-                </div>
-                <div className='bg-red-600 w-[100px] rounded-lg' >
-                    <Image src={logo} width={40} height={40} alt='card.png'/>
-                </div>
-            </div> */}
-
-
-            
+        <div className='flex gap-3 justify-center flex-col'>
+            {
+                datas.map((poli) => (
+                    <div ref={h2Ref} key={poli.name} className='border-2 border-purple-600 xl:w-[210px] h-[100px] flex flex-col justify-center bg-white shadow-sm rounded-lg p-2 mr-3' >
+                        <div className='flex items-center gap-2' >
+                            <div className='bg-white p-2 rounded-full' >
+                                <Image src={poli.image} width={40} height={40} alt={poli.name}/>
+                            </div>
+                            <h3 className='text-[#654AB4] font-bold ' >{poli.name}</h3>
+                        </div>
+                        <div className='flex gap-1 text-slate-500' >
+                            <p>Jumlah Antrian: </p>
+                            <motion.p>{rounded}</motion.p>
+                        </div>
+                    </div>
+                ))
+            }
         </div>
     )
 }
