@@ -29,9 +29,6 @@ export default function HomeMain() {
       >
         <HomeHelp />
       </motion.section>
-      <section className=' m-12'>
-        <HomePoli />
-      </section>
     </>
   )
 }

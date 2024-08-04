@@ -23,3 +23,5 @@ export const tooth = "/tooth.png"
 
 export const doctorAnimate = '/doctor-animate.png'
 export const doctorNote = '/doctor-notes.png'
+
+export const heart = "/heart.png"

@@ -7,6 +7,7 @@ const Button = ({ icon, label, type, onClick, className, disabled }) => {
       className={className}
       type={type}
       disabled={disabled}
+  
     >
       <div className="flex gap-2 justify-center items-center">
         {icon && (

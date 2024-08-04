@@ -13,8 +13,8 @@ const InputUi = ({ label, type, name, placeholder, defaultValue, disabled, onCha
       defaultValue={defaultValue}
       disabled={disabled}
       onChange={onChange}
-      style={{ outline: 'none', backgroundColor: 'transparent', minHeight: '40px' }}
-      className="text-neutral-800 shadow-md rounded"
+      style={{ outline: 'none', minHeight: '40px'}}
+      className="input-auth text-white shadow-md rounded mt-2"
     />
   );
 };

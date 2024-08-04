@@ -5,14 +5,6 @@
 /* boxicons */
 @import url('boxicons/css/boxicons.min.css');
 
-/* font Bebas Neue */
-/* @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Playwrite+DE+Grund:wght@100..400&family=Playwrite+IT+Moderna:wght@100..400&display=swap');
-
-
-.bebas-neue-regular {
-  font-family: 'Bebas Neue', sans-serif;
-} */
-
 body {
   background-color: #eeeff2;
 }
@@ -28,64 +20,51 @@ body {
 
 .bg-gradient-radial {
   background: rgb(32, 25, 25);
-  background: radial-gradient(circle, rgba(255,190,190,1) 0%, rgba(101,74,180,1) 100%);
+  background: radial-gradient(circle, rgba(255,190,190,1) 0%, rgb(101, 74, 180) 100%);
 }
 
-.testing {
-  /* background-color: #f2347c; */
-  background-color: #ffa288;
+.bg-layout-auth {
+  background-color: rgba(101, 74, 180);
 }
-
-/* border bem start */
-.box {
-  width: 215px;
-  height: 158px;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.box::before {
-  content: "";
-  background-image: conic-gradient(
-    #3b82f6 20deg,
-    transparent 120deg
-  );
-  width: 250%;
-  height: 200%;
-  position: absolute;
-  animation: rotate 6s linear infinite ;
-}
-
-.box::after {
-  content: "";
-  width: 207px;
-  height: 150px;
-  background: white;
-  position: absolute;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #3b82f6;
-  font-size: large;
-  letter-spacing: 5px;
-  box-shadow: inset 20px 20px 20px #0000008c;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-/* border bem end */
 
 .test-shadow {
   box-shadow: inset 5px 20px 20px #F6F5F2 ;
+}
+
+/* Auth Start */
+.bg-auth {
+  background: url("/bg-auth.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form-container {
+  border: 3px solid rgba(255, 255, 255, .3);
+  backdrop-filter: blur(5px);
+}
+
+.col-first {
+  background-color: rgba(255, 255, 255, .3);
+  backdrop-filter: blur(30px);
+  border-radius: 20px;
+}
+
+.heart-login {
+  animation: scale-up 3s ease-in-out alternate infinite;
+}
+
+.input-auth {
+  background: rgba(3, 3, 3, 0.2);
+  backdrop-filter: blur(20px);
+} 
+
+.bg-button-auth {
+  background-color: rgba(255, 190, 190, .52);
+}
+
+@keyframes scale-up {
+  to {
+    transform: scale(.95);
+  }
 }

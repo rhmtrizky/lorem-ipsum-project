@@ -129,7 +129,7 @@ const RegisterView = () => {
           <Button
             label={isLoading ? 'Loading...' : 'Register'}
             type="submit"
-            className="bg-blue-500 text-white py-2 px-1 rounded-md mt-5"
+            className="bg-button-auth text-white py-2 px-1 rounded-md mt-5"
           />
         </form>
       </div>
