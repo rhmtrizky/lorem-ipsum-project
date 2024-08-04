@@ -8,24 +8,20 @@ import { useState } from 'react';
 const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [role, setRole] = useState('');
+  const [schedules, setSchedules] = useState([{ day: '', time: '' }]);
+  console.log(role);
 
   const roles = [
-    {
-      value: 'admin',
-      label: 'Admin',
-    },
-    {
-      value: 'patient',
-      label: 'Patient',
-    },
-    {
-      value: 'doctor',
-      label: 'Doctor',
-    },
-    {
-      value: 'pharmacy',
-      label: 'Pharmacy',
-    },
+    { value: 'admin', label: 'Admin' },
+    { value: 'patient', label: 'Patient' },
+    { value: 'doctor', label: 'Doctor' },
+    { value: 'pharmacy', label: 'Pharmacy' },
+  ];
+
+  const gender = [
+    { value: 'male', label: 'Laki-laki' },
+    { value: 'female', label: 'Perempuan' },
   ];
 
   const handleAddUser = async (event) => {
@@ -34,13 +30,46 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
     const form = event.target;
     const formData = new FormData(form);
 
-    const data = {
+    let data = {
       fullname: formData.get('fullname'),
       email: formData.get('email'),
       password: formData.get('password'),
       phoneNumber: formData.get('phoneNumber'),
       role: formData.get('role'),
     };
+
+    if (data.role == 'patient') {
+      data = {
+        ...data,
+        name: formData.get('name'),
+        bornPlace: formData.get('bornPlace'),
+        bornDate: formData.get('bornDate'),
+        gender: formData.get('gender'),
+        nik: formData.get('nik'),
+        bpjsNumber: formData.get('bpjsNumber'),
+        fatherName: formData.get('fatherName'),
+        motherName: formData.get('motherName'),
+        address: formData.get('address'),
+        golDarah: formData.get('golDarah'),
+        suku: formData.get('suku'),
+      };
+    } else if (data.role == 'doctor') {
+      data = {
+        ...data,
+        specialist: formData.get('specialist'),
+        licenceNumber: formData.get('licenceNumber'),
+        address: formData.get('address'),
+        schedule: schedules,
+      };
+    } else if (data.role == 'pharmacy') {
+      data = {
+        ...data,
+        licenceNumber: formData.get('licenceNumber'),
+        address: formData.get('address'),
+        // image: formData.get('image'),
+      };
+    }
+
     try {
       const result = await userService.addUser(data, session.data.accessToken);
       if (result.status === 200) {
@@ -58,6 +87,20 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
     }
   };
 
+  const addSchedule = () => {
+    setSchedules([...schedules, { day: '', time: '' }]);
+  };
+
+  const removeSchedule = (index) => {
+    const newSchedules = schedules.filter((_, i) => i !== index);
+    setSchedules(newSchedules);
+  };
+
+  const handleScheduleChange = (index, key, value) => {
+    const newSchedules = schedules.map((schedule, i) => (i === index ? { ...schedule, [key]: value } : schedule));
+    setSchedules(newSchedules);
+  };
+
   return (
     <div>
       <ModalUi
@@ -68,39 +111,39 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
       >
         <form
           className="flex flex-col gap-4"
-          action=""
           onSubmit={handleAddUser}
         >
           <InputUi
             name="fullname"
             type={'text'}
             placeholder={'Fullname'}
-            required={true}
+            required
           />
           <InputUi
             name={'email'}
             type={'email'}
             placeholder={'Email'}
-            required={true}
+            required
           />
           <InputUi
             name={'password'}
             type={'password'}
             placeholder={'Password'}
-            required={true}
+            required
           />
           <InputUi
             name={'phoneNumber'}
             type={'number'}
             placeholder={'Phone Number'}
-            required={true}
+            required
           />
           <Select
             name="role"
             size="sm"
             placeholder="Select role"
             className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
-            required={true}
+            required
+            onChange={(e) => setRole(e.target.value)}
           >
             {roles.map((role) => (
               <SelectItem
@@ -112,6 +155,164 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
               </SelectItem>
             ))}
           </Select>
+          {role == 'patient' && (
+            <>
+              <InputUi
+                name="name"
+                type={'text'}
+                placeholder={'Patient Name'}
+                required
+              />
+              <InputUi
+                name={'bornPlace'}
+                type={'text'}
+                placeholder={'Tempat Lahir'}
+                required
+              />
+              <InputUi
+                name={'bornDate'}
+                type={'date'}
+                placeholder={'Tanggal Lahir'}
+                required
+              />
+              <Select
+                name="gender"
+                size="sm"
+                placeholder="Jenis Kelamin"
+                className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                required
+              >
+                {gender.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="w-full bg-white gap-0"
+                  >
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </Select>
+              <InputUi
+                name={'nik'}
+                type={'number'}
+                placeholder={'NIK'}
+                required
+              />
+              <InputUi
+                name={'bpjsNumber'}
+                type={'number'}
+                placeholder={'No BPJS'}
+                required
+              />
+              <InputUi
+                name={'fatherName'}
+                type={'text'}
+                placeholder={'Nama Ayah'}
+                required
+              />
+              <InputUi
+                name={'motherName'}
+                type={'text'}
+                placeholder={'Nama Ibu'}
+                required
+              />
+              <InputUi
+                name={'address'}
+                type={'text'}
+                placeholder={'Alamat'}
+                required
+              />
+              <InputUi
+                name={'golDarah'}
+                type={'text'}
+                placeholder={'Golongan Darah'}
+                required
+              />
+              <InputUi
+                name={'suku'}
+                type={'text'}
+                placeholder={'Suku'}
+                required
+              />
+            </>
+          )}
+          {role == 'doctor' && (
+            <>
+              <InputUi
+                name={'specialist'}
+                type={'text'}
+                placeholder={'Specialist'}
+                required
+              />
+              <InputUi
+                name={'licenceNumber'}
+                type={'number'}
+                placeholder={'Licence Number'}
+                required
+              />
+              <InputUi
+                name={'address'}
+                type={'text'}
+                placeholder={'Address'}
+                required
+              />
+              <div>
+                <label>Schedule:</label>
+                {schedules.map((schedule, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-2 w-full"
+                  >
+                    <InputUi
+                      name={`schedule[${index}].day`}
+                      type={'text'}
+                      placeholder={'Day'}
+                      value={schedule.day}
+                      onChange={(e) => handleScheduleChange(index, 'day', e.target.value)}
+                      required
+                    />
+                    <InputUi
+                      name={`schedule[${index}].time`}
+                      type={'text'}
+                      placeholder={'Time'}
+                      value={schedule.time}
+                      onChange={(e) => handleScheduleChange(index, 'time', e.target.value)}
+                      required
+                    />
+                    <Button
+                      color="danger"
+                      onClick={() => removeSchedule(index)}
+                    >
+                      <i className="bx bx-trash" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  onClick={addSchedule}
+                  className="text-xs flex items-center gap-1 items-center bg-green-500 text-white p-2 rounded-md mt-2"
+                >
+                  <p className="bx bx-plus-circle text-xl" />
+                  Add Schedule
+                </Button>
+              </div>
+            </>
+          )}
+          {role == 'pharmacy' && (
+            <>
+              <InputUi
+                name={'licenceNumber'}
+                type={'number'}
+                placeholder={'Licence Number'}
+                required
+              />
+              <InputUi
+                name={'address'}
+                type={'text'}
+                placeholder={'Address'}
+                required
+              />
+            </>
+          )}
           <div className="w-full flex justify-end items-center gap-2 my-2">
             <Button
               color="danger"

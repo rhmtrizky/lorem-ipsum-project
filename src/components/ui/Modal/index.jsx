@@ -12,7 +12,7 @@ export default function ModalUi({ children, isOpen, onOpenChange, title, setClos
       classNames={{
         backdrop: 'bg-gradient-to-t from-blue-500 to-blue-900/10 backdrop-opacity-20',
       }}
-      className="bg-white rounded-md "
+      className="bg-white rounded-md max-h-[90vh] overflow-y-auto"
     >
       <ModalContent>
         {(onClose) => (
