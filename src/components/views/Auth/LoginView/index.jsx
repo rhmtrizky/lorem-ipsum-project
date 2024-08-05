@@ -55,7 +55,7 @@ const LoginView = () => {
   };
   return (
     <AuthLayout
-      title="LOGIN"
+      title="Login to Your Account"
       link="/auth/register"
       linkText="Don't have an account?"
       linkTitle="Create an account"
@@ -101,7 +101,7 @@ const LoginView = () => {
           <Button
             label={isLoading ? 'Loading...' : 'Sign In'}
             type="submit"
-            className="bg-blue-500 font-semibold text-white py-2 px-1 rounded-md mt-5"
+            className="bg-button-auth font-semibold text-white py-2 px-1 rounded-md mt-5"
           />
         </form>
       </div>
