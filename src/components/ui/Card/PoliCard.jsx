@@ -41,7 +41,7 @@ export default function PoliCard() {
     return (
         <>
             {/* Tampilan pada 774px - seterusnya */}
-            <motion.div className='hidden min-[774px]:w-[25%] lg:w-[20%] xl:w-[15%] min-[774px]:flex flex-col justify-center gap-2 border h-max xl:mr-1' >
+            <motion.div className='hidden min-[774px]:w-[25%] lg:w-[20%] xl:w-[17%] min-[774px]:flex flex-col justify-center gap-2 border h-max xl:mr-1' >
                 <div className='flex gap-3 justify-center flex-col'>
                     {
                         datas.map((poli, index) => (
@@ -85,7 +85,7 @@ export default function PoliCard() {
                     {
                         datas.map((poli, index) => (
                             <SwiperSlide key={poli.name} >
-                                <div className='border-2 border-purple-600 xl:w-[210px] h-[100px] flex flex-col justify-center bg-white shadow-sm rounded-lg p-2 mb-12' >
+                                <div className='border-2 border-purple-600 xl:w-[210px] h-[100px] flex flex-col justify-center bg-white shadow-sm rounded-lg p-2 mb-12 mr-1.5' >
                                     <div className='flex items-center gap-2' >
                                         <Image src={poli.image} width={40} height={40} alt={poli.name} />
                                     </div>
