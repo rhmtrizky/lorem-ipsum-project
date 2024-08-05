@@ -10,7 +10,21 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState('');
   const [schedules, setSchedules] = useState([{ day: '', time: '' }]);
-  console.log(role);
+  const [patients, setPatients] = useState([
+    {
+      name: '',
+      bornPlace: '',
+      bornDate: '',
+      gender: '',
+      nik: '',
+      bpjsNumber: '',
+      fatherName: '',
+      motherName: '',
+      address: '',
+      golDarah: '',
+      suku: '',
+    },
+  ]);
 
   const roles = [
     { value: 'admin', label: 'Admin' },
@@ -22,6 +36,13 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const gender = [
     { value: 'male', label: 'Laki-laki' },
     { value: 'female', label: 'Perempuan' },
+  ];
+
+  const golDarah = [
+    { value: 'A', label: 'A' },
+    { value: 'B', label: 'B' },
+    { value: 'AB', label: 'AB' },
+    { value: 'O', label: 'O' },
   ];
 
   const handleAddUser = async (event) => {
@@ -41,17 +62,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
     if (data.role == 'patient') {
       data = {
         ...data,
-        name: formData.get('name'),
-        bornPlace: formData.get('bornPlace'),
-        bornDate: formData.get('bornDate'),
-        gender: formData.get('gender'),
-        nik: formData.get('nik'),
-        bpjsNumber: formData.get('bpjsNumber'),
-        fatherName: formData.get('fatherName'),
-        motherName: formData.get('motherName'),
-        address: formData.get('address'),
-        golDarah: formData.get('golDarah'),
-        suku: formData.get('suku'),
+        patient: patients,
       };
     } else if (data.role == 'doctor') {
       data = {
@@ -87,6 +98,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
     }
   };
 
+  // schedules
   const addSchedule = () => {
     setSchedules([...schedules, { day: '', time: '' }]);
   };
@@ -99,6 +111,21 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const handleScheduleChange = (index, key, value) => {
     const newSchedules = schedules.map((schedule, i) => (i === index ? { ...schedule, [key]: value } : schedule));
     setSchedules(newSchedules);
+  };
+
+  // patients
+  const addPatient = () => {
+    setPatients([...patients, { name: '', bornPlace: '', bornDate: '', gender: '', nik: '', bpjsNumber: '', fatherName: '', motherName: '', address: '', golDarah: '', suku: '' }]);
+  };
+
+  const removePatient = (index) => {
+    const newPatients = patients.filter((_, i) => i !== index);
+    setPatients(newPatients);
+  };
+
+  const handlePatientsChange = (index, key, value) => {
+    const newPatients = patients.map((patient, i) => (i === index ? { ...patient, [key]: value } : patient));
+    setPatients(newPatients);
   };
 
   return (
@@ -156,85 +183,131 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
             ))}
           </Select>
           {role == 'patient' && (
-            <>
-              <InputUi
-                name="name"
-                type={'text'}
-                placeholder={'Patient Name'}
-                required
-              />
-              <InputUi
-                name={'bornPlace'}
-                type={'text'}
-                placeholder={'Tempat Lahir'}
-                required
-              />
-              <InputUi
-                name={'bornDate'}
-                type={'date'}
-                placeholder={'Tanggal Lahir'}
-                required
-              />
-              <Select
-                name="gender"
-                size="sm"
-                placeholder="Jenis Kelamin"
-                className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
-                required
-              >
-                {gender.map((item) => (
-                  <SelectItem
-                    key={item.value}
-                    value={item.value}
-                    className="w-full bg-white gap-0"
+            <div className="flex flex-col gap-4">
+              {patients.map((patient, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-3"
+                >
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">{`Data Pasien ${index + 1}`}</h2>
+                    <Button
+                      className="bg-red-500 text-white rounded p-2 w-4 h-8 "
+                      color="danger"
+                      onClick={() => removePatient(index)}
+                    >
+                      <i className="bx bx-trash" />
+                    </Button>
+                  </div>
+                  <InputUi
+                    name={`patient[${index}].name`}
+                    type={'text'}
+                    placeholder={'Patient Name'}
+                    onChange={(e) => handlePatientsChange(index, 'name', e.target.value)}
+                    required
+                  />
+                  <InputUi
+                    name={`patient[${index}].bornPlace`}
+                    type={'text'}
+                    placeholder={'Tempat Lahir'}
+                    onChange={(e) => handlePatientsChange(index, 'bornPlace', e.target.value)}
+                    required
+                  />
+                  <InputUi
+                    name={`patient[${index}].bornDate`}
+                    type={'date'}
+                    placeholder={'Tanggal Lahir'}
+                    onChange={(e) => handlePatientsChange(index, 'bornDate', e.target.value)}
+                    required
+                  />
+                  <Select
+                    name={`patient[${index}].gender`}
+                    size="sm"
+                    placeholder="Jenis Kelamin"
+                    className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                    onChange={(e) => handlePatientsChange(index, 'gender', e.target.value)}
+                    required
                   >
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </Select>
-              <InputUi
-                name={'nik'}
-                type={'number'}
-                placeholder={'NIK'}
-                required
-              />
-              <InputUi
-                name={'bpjsNumber'}
-                type={'number'}
-                placeholder={'No BPJS'}
-                required
-              />
-              <InputUi
-                name={'fatherName'}
-                type={'text'}
-                placeholder={'Nama Ayah'}
-                required
-              />
-              <InputUi
-                name={'motherName'}
-                type={'text'}
-                placeholder={'Nama Ibu'}
-                required
-              />
-              <InputUi
-                name={'address'}
-                type={'text'}
-                placeholder={'Alamat'}
-                required
-              />
-              <InputUi
-                name={'golDarah'}
-                type={'text'}
-                placeholder={'Golongan Darah'}
-                required
-              />
-              <InputUi
-                name={'suku'}
-                type={'text'}
-                placeholder={'Suku'}
-                required
-              />
-            </>
+                    {gender.map((item) => (
+                      <SelectItem
+                        key={item.value}
+                        value={item.value}
+                        className="w-full bg-white gap-0"
+                      >
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                  <InputUi
+                    name={`patient[${index}].nik`}
+                    type={'number'}
+                    placeholder={'NIK'}
+                    onChange={(e) => handlePatientsChange(index, 'nik', e.target.value)}
+                    required
+                  />
+                  <InputUi
+                    name={`patient[${index}].bpjsNumber`}
+                    type={'number'}
+                    placeholder={'No BPJS'}
+                    onChange={(e) => handlePatientsChange(index, 'bpjsNumber', e.target.value)}
+                    required
+                  />
+                  <InputUi
+                    name={`patient[${index}].fatherName`}
+                    type={'text'}
+                    placeholder={'Nama Ayah'}
+                    onChange={(e) => handlePatientsChange(index, 'fatherName', e.target.value)}
+                    required
+                  />
+                  <InputUi
+                    name={`patient[${index}].motherName`}
+                    type={'text'}
+                    placeholder={'Nama Ibu'}
+                    onChange={(e) => handlePatientsChange(index, 'motherName', e.target.value)}
+                    required
+                  />
+                  <InputUi
+                    name={`patient[${index}].address`}
+                    type={'text'}
+                    placeholder={'Alamat'}
+                    onChange={(e) => handlePatientsChange(index, 'address', e.target.value)}
+                    required
+                  />
+                  <Select
+                    name={`patient[${index}].golDarah`}
+                    size="sm"
+                    placeholder="Golongan Darah"
+                    className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                    required
+                    onChange={(e) => handlePatientsChange(index, 'golDarah', e.target.value)}
+                  >
+                    {golDarah.map((item) => (
+                      <SelectItem
+                        key={item.value}
+                        value={item.value}
+                        className="w-full bg-white gap-0"
+                      >
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                  <InputUi
+                    name={`patient[${index}].suku`}
+                    type={'text'}
+                    placeholder={'Suku'}
+                    onChange={(e) => handlePatientsChange(index, 'suku', e.target.value)}
+                    required
+                  />
+                </div>
+              ))}
+              <Button
+                onClick={addPatient}
+                className="text-xs flex items-center gap-1 items-center bg-green-500 text-white p-2 rounded-md mt-2"
+              >
+                <p className="bx bx-plus-circle text-xl" />
+                Add Patient
+              </Button>
+            </div>
           )}
           {role == 'doctor' && (
             <>
@@ -256,7 +329,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                 placeholder={'Address'}
                 required
               />
-              <div>
+              <div className="flex flex-col gap-4">
                 <label>Schedule:</label>
                 {schedules.map((schedule, index) => (
                   <div

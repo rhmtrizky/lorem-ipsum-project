@@ -110,7 +110,7 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
               onPress={onOpen}
               onClick={() => setAddUser({ status: true })}
             >
-              Add User
+              Tambah User Baru
             </Button>
           </div>
         </div>
