@@ -8,22 +8,22 @@ export const datas = [
     },
     {
         name: 'Poli Umum',
-        antrian: 60,
+        antrian: 50,
         image: general
     },
     {
         name: 'Poli Gigi',
-        antrian: 60,
+        antrian: 10,
         image: tooth
     },
     {
         name: 'Poli Penyakit Dalam',
-        antrian: 60,
+        antrian: 80,
         image: lungs
     },
     {
         name: 'Poli Kandungan',
-        antrian: 60,
+        antrian: 39,
         image: pregnant
     }
 ]
