@@ -24,10 +24,19 @@ const useCounterAnimation = (initialValue, endValue, duration) => {
 
 export default function PoliCard() {
 
-    const animations = datas.reduce((acc, poli) => {
-        acc[poli.name] = useCounterAnimation(0, poli.antrian, 2);
-        return acc;
-    }, {});
+    const roundedPoliUmum = useCounterAnimation(0, 50, 2);
+    const roundedPoliMata = useCounterAnimation(0, 10, 2);
+    const roundedPoliPenyakitDalam = useCounterAnimation(0, 40, 2);
+    const roundedPoliKandungan = useCounterAnimation(0, 100, 2);
+    const roundedPoliGigi = useCounterAnimation(0, 60, 2);
+
+    const arrayPoli = [
+        roundedPoliMata,
+        roundedPoliUmum,
+        roundedPoliGigi,
+        roundedPoliPenyakitDalam,
+        roundedPoliKandungan,
+    ];
     
     return (
         <>
@@ -35,7 +44,7 @@ export default function PoliCard() {
             <motion.div className='hidden min-[774px]:w-[25%] lg:w-[20%] xl:w-[15%] min-[774px]:flex flex-col justify-center gap-2 border h-max xl:mr-1' >
                 <div className='flex gap-3 justify-center flex-col'>
                     {
-                        datas.map((poli) => (
+                        datas.map((poli, index) => (
                             <div key={poli.name} className='border-2 border-purple-600 xl:w-[210px] h-[100px] flex flex-col justify-center bg-white shadow-sm rounded-lg p-2 mr-3' >
                                 <div className='flex items-center gap-2' >
                                     <div className='bg-white p-2 rounded-full' >
@@ -45,7 +54,7 @@ export default function PoliCard() {
                                 </div>
                                 <div className='flex gap-1 text-slate-500' >
                                     <p>Jumlah Antrian: </p>
-                                    <motion.p>{animations[poli.name]}</motion.p>
+                                    <motion.p>{arrayPoli[index]}</motion.p>
                                 </div>
                             </div>
                         ))
@@ -74,7 +83,7 @@ export default function PoliCard() {
                     className='max-w-[90%] lg:max-w-[80%]'
                 >
                     {
-                        datas.map((poli) => (
+                        datas.map((poli, index) => (
                             <SwiperSlide key={poli.name} >
                                 <div className='border-2 border-purple-600 xl:w-[210px] h-[100px] flex flex-col justify-center bg-white shadow-sm rounded-lg p-2 mb-12' >
                                     <div className='flex items-center gap-2' >
@@ -83,18 +92,14 @@ export default function PoliCard() {
                                     <h3 className='text-[#654ab4] font-bold' >{poli.name}</h3>
                                     <div className='flex gap-1 text-slate-500 text-xs min-[585px]:text-sm' >
                                         <p>Jumlah Antrian: </p>
-                                        <motion.p>{animations[poli.name]}</motion.p>
+                                        <motion.p>{arrayPoli[index]}</motion.p>
                                     </div>
                                 </div>
                             </SwiperSlide>
                         ))
                     }
-
                 </Swiper>
-                    
             </motion.div>
-
-
         </>
     )
 }
