@@ -6,7 +6,7 @@ import { Button, Input, useDisclosure } from '@nextui-org/react';
 import ModalDeleteUser from './ModalDeleteUser';
 import ModalAddUser from './ModalAddUser';
 
-const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
+const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
   const [updateUser, setUpdateUser] = useState({});
   const [deleteUser, setDeleteUser] = useState({});
   const [addUser, setAddUser] = useState({
@@ -91,7 +91,15 @@ const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
               onChange={(e) => setSearchUser(e.target.value)}
             />
             <div className="absolute top-3 right-2">
-              <i className="bx bx-search text-xl" />
+              {searchUser !== '' ? (
+                <button
+                  type="button"
+                  className="bx bx-x text-xl"
+                  onClick={() => setSearchUser('')}
+                />
+              ) : (
+                <i className="bx bx-search text-xl" />
+              )}
             </div>
           </div>
           <div className="w-2/5 flex justify-end mr-2">
@@ -102,7 +110,7 @@ const AdminUsersView = ({ users, setUsers, setSearchUser }) => {
               onPress={onOpen}
               onClick={() => setAddUser({ status: true })}
             >
-              Add User
+              Tambah User Baru
             </Button>
           </div>
         </div>

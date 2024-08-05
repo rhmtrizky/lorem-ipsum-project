@@ -51,6 +51,7 @@ const AdminUsersManagementPage = () => {
       users={users}
       setUsers={setUsers}
       setSearchUser={setSearchUser}
+      searchUser={searchUser}
     />
   );
 };

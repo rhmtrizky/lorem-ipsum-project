@@ -61,6 +61,17 @@ export default async function handler(req, res) {
     field.email = data.email;
     field.phoneNumber = data.phoneNumber;
     field.role = data.role;
+    if (field.role === 'patient') {
+      field.patient = data.patient;
+    } else if (field.role === 'doctor') {
+      field.specialist = data.specialist;
+      field.licenceNumber = data.licenceNumber;
+      field.address = data.address;
+      field.schedule = data.schedule;
+    } else if (field.role === 'pharmacy') {
+      field.licenceNumber = data.licenceNumber;
+      field.address = data.address;
+    }
     if (data.password) {
       let salt = await bcrypt.genSalt(10);
       let hashPassword = await bcrypt.hash(data.password, salt);
