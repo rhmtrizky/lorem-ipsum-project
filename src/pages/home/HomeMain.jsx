@@ -5,6 +5,7 @@ import HomePoli from './HomePoli'
 import HomeHelp from './HomeHelp'
 import React from 'react'
 import PoliCard from '@/components/ui/Card/PoliCard'
+import ActiveSlider from '@/components/ui/ActiveSlider'
 
 export default function HomeMain() {
   const { scrollYProgress } = useScroll()
@@ -13,22 +14,24 @@ export default function HomeMain() {
   return (
     <>
       <Header />
-      {/* untuk responsive nanti mx-4 bisa dihapus */}
-      <section className='w-full h-fit relative flex justify-center gap-3 mt-3 mx-4'>
-        <div className='w-full flex justify-center' >
+      <section className='w-full h-fit relative flex flex-col min-[774px]:flex-row justify-center gap-3 mt-3'>
+        <div className='w-full min-[774px]:w-[80%] xl:w-full flex justify-center' >
           <HomeBanner />
         </div>
-        <div className='w-[20%] flex flex-col justify-center gap-2 border h-max '>
+        <div className='hidden min-[774px]:w-[25%] lg:w-[20%] xl:w-[15%] min-[774px]:flex flex-col justify-center gap-2 border h-max xl:mr-1 '>
           <PoliCard/>
-          
+        </div>
+
+        <div className='min-[774px]:hidden' >
+          <ActiveSlider/>
         </div>
       </section>
-      <motion.section
+      {/* <motion.section
         className='min-h-screen bg-gradient-white-blue rounded-md mx-10 my-4'
         style={{ boxShadow: shadow }}
       >
         <HomeHelp />
-      </motion.section>
+      </motion.section> */}
     </>
   )
 }

@@ -45,9 +45,9 @@ export default function ActiveSlider() {
                         slidesPerView: 2,
                         spaceBetween: 15
                     },
-                    700: {
-                        slidesPerView: 5,
-                        spaceBetween: 30
+                    501: {
+                        slidesPerView: 3,
+                        spaceBetween: 15
                     }
                 }}
                 freeMode={true}
@@ -60,18 +60,18 @@ export default function ActiveSlider() {
                 {
                     datas.map((item) => (
                         <SwiperSlide key={item.name} >
-                        <div className='flex flex-col justify-center bg-[#654AB4] rounded-lg p-2 mr-3'>
-                            <div className='z-10 w-max bg-slate-200 p-2.5 rounded-full' >
+                        <div className='flex flex-col justify-center bg-[#654AB4] rounded-lg p-2 mb-12 max-[340px]:mr-1.5'>
+                            <div className='w-max bg-slate-200 p-2.5 rounded-full' >
                                 <Image src={item.image} width={40} height={40} alt={item.name}/>
                             </div>
 
-                            <div className='z-10 text-white ' >
+                            <div className='text-white ' >
                                 <h3>{item.name}</h3>
                             </div>
 
-                            <div className='z-10 flex gap-1 text-white ' >
+                            <div className='flex gap-1 text-white text-xs' >
                                 <p>Jumlah Antrian: </p>
-                                <motion.h2  >{rounded}</motion.h2>
+                                <motion.h2 >{rounded}</motion.h2>
                             </div>
                         </div>
                         </SwiperSlide>

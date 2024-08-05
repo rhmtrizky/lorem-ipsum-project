@@ -1,4 +1,3 @@
-import { logo } from '@/assets/images/images'
 import { datas } from '@/constraint'
 import { motion, animate, useMotionValue, useTransform } from 'framer-motion'
 import Image from 'next/image'

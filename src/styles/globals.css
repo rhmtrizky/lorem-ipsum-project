@@ -23,14 +23,6 @@ body {
   background: radial-gradient(circle, rgba(255,190,190,1) 0%, rgb(101, 74, 180) 100%);
 }
 
-.bg-layout-auth {
-  background-color: rgba(101, 74, 180);
-}
-
-.test-shadow {
-  box-shadow: inset 5px 20px 20px #F6F5F2 ;
-}
-
 /* Auth Start */
 .bg-auth {
   background: url("/bg-auth.png");
