@@ -3,7 +3,6 @@ import HomeMain from './home/HomeMain';
 
 export default function Home() {
   const session = useSession();
-  console.log(session);
   return (
     <main className={`flex flex-col min-h-screen`}>
       <HomeMain />

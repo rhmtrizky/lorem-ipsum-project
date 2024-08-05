@@ -1,18 +1,12 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
-import TableUi from '@/components/ui/Table';
-import { useState } from 'react';
-import ModalUpdateUser from './ModalUpdateUser';
 import { Button, Input, useDisclosure } from '@nextui-org/react';
-import ModalDeleteUser from './ModalDeleteUser';
-import ModalAddUser from './ModalAddUser';
+import { useState } from 'react';
+import ModalAddQueue from './ModalAddQueue';
+import TableUi from '@/components/ui/Table';
 import Search from '@/components/ui/Search';
 
-const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
-  const [updateUser, setUpdateUser] = useState({});
-  const [deleteUser, setDeleteUser] = useState({});
-  const [addUser, setAddUser] = useState({
-    status: false,
-  });
+const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQueue }) => {
+  const [addQueue, setAddQueue] = useState({ status: false });
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const columns = [
@@ -21,20 +15,24 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
       uid: 'index',
     },
     {
-      title: 'Fullname',
-      uid: 'fullname',
+      title: 'No Antrian',
+      uid: 'queueNumber',
     },
     {
-      title: 'Email',
-      uid: 'email',
+      title: 'NIK',
+      uid: 'nik',
     },
     {
-      title: 'Phone Number',
-      uid: 'phoneNumber',
+      title: 'Nama Pasien',
+      uid: 'name',
     },
     {
-      title: 'Role',
-      uid: 'role',
+      title: 'No BPJS',
+      uid: 'bpjsNumber',
+    },
+    {
+      title: 'Specialist',
+      uid: 'specialist',
     },
     {
       title: 'Actions',
@@ -47,6 +45,7 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
       case 'index': {
         return <p>{data.index + 1}</p>;
       }
+
       case 'phoneNumber': {
         return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
       }
@@ -58,14 +57,14 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
               type="button"
               className="bx bxs-edit-alt text-blue-500 font-semibold text-[14px]"
               onPress={onOpen}
-              onClick={() => setUpdateUser(data)}
+              // onClick={() => setUpdateUser(data)}
             />
             <Button
               isIconOnly
               type="button"
               className="bx bxs-trash text-red-500 font-semibold text-[14px]"
               onPress={onOpen}
-              onClick={() => setDeleteUser(data)}
+              // onClick={() => setDeleteUser(data)}
             />
           </div>
         );
@@ -74,17 +73,17 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
     }
   };
 
-  const processedData = users.map((user, index) => ({ ...user, index }));
+  const processedData = queues.map((queue, index) => ({ ...queue, index }));
 
   return (
     <>
       <AdminLayout>
-        <h1 className="text-2xl font-bold mb-5">Users Management</h1>
+        <h1 className="text-2xl font-bold mb-5">Queues Management</h1>
         <div className="flex items-center justify-between w-full">
           <div className="relative w-3/5 text-neutral-600 ml-2">
             <Search
-              state={searchUser}
-              setState={setSearchUser}
+              state={searchQueue}
+              setState={setSearchQueue}
             />
           </div>
           <div className="w-2/5 flex justify-end mr-2">
@@ -93,9 +92,9 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
               type="button"
               className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
               onPress={onOpen}
-              onClick={() => setAddUser({ status: true })}
+              onClick={() => setAddQueue({ status: true })}
             >
-              Tambah User Baru
+              Tambah Antrian
             </Button>
           </div>
         </div>
@@ -105,34 +104,19 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
           renderCellContent={renderCellContent}
         />
       </AdminLayout>
-      {Object.keys(updateUser).length > 0 && (
-        <ModalUpdateUser
-          dataUpdateUser={updateUser}
-          setUpdateUser={setUpdateUser}
+      {addQueue.status ? (
+        <ModalAddQueue
           onOpenChange={onOpenChange}
           isOpen={isOpen}
           setUsers={setUsers}
-        />
-      )}
-      {Object.keys(deleteUser).length > 0 && (
-        <ModalDeleteUser
-          dataDeleteUser={deleteUser}
-          setDeleteUser={setDeleteUser}
-          onOpenChange={onOpenChange}
-          isOpen={isOpen}
-          setUsers={setUsers}
-        />
-      )}
-      {addUser.status ? (
-        <ModalAddUser
-          onOpenChange={onOpenChange}
-          isOpen={isOpen}
-          setUsers={setUsers}
-          setAddUser={setAddUser}
+          setAddQueue={setAddQueue}
+          users={users}
+          queues={queues}
+          setQueues={setQueues}
         />
       ) : null}
     </>
   );
 };
 
-export default AdminUsersView;
+export default QueueView;
