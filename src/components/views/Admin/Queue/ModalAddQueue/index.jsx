@@ -6,7 +6,7 @@ import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
-const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, queues, setQueues }) => {
+const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, queues, setQueues, setTicketQueue }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -57,9 +57,29 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
 
   const [selectedSpesialist, setSelectedSpesialist] = useState('');
   const [doctorSpesialist, setDoctorSpesialist] = useState('');
+
   useEffect(() => {
     setDoctorSpesialist(doctors.filter((doctor) => doctor.specialist === selectedSpesialist));
   }, [selectedSpesialist, doctors]);
+
+  const [selectDoctor, setSelectDoctor] = useState('');
+  const [getDocter, setGetDocter] = useState({});
+  useEffect(() => {
+    if (doctorSpesialist.length > 0) {
+      setGetDocter(doctorSpesialist.find((doctor) => doctor.id === selectDoctor));
+    }
+  }, [doctorSpesialist, selectDoctor]);
+
+  const [selectedSchedule, setSelectedSchedule] = useState('');
+  const [getSchedule, setGetSchedule] = useState({});
+  useEffect(() => {
+    if (selectedSchedule) {
+      setGetSchedule(getDocter.schedule[selectedSchedule]);
+    }
+  }, [getDocter, selectedSchedule]);
+
+  const queueNumber = (queues.length + 1).toString();
+  const formattedQueueNumber = queueNumber.padStart(3, '0');
 
   const handleAddQueue = async (event) => {
     event.preventDefault();
@@ -68,7 +88,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
     const formData = new FormData(form);
 
     let data = {
-      queueNumber: queues.length + 1,
+      queueNumber: formattedQueueNumber,
       userId: patientAccId,
       name: currentPatientData.name,
       nik: formData.get('nik'),
@@ -80,8 +100,10 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
       golDarah: formData.get('golDarah'),
       specialist: formData.get('specialist'),
       doctorId: formData.get('doctorId'),
+      schedule: getSchedule,
       status: 'queue',
     };
+    console.log(data);
 
     try {
       const result = await queueService.addQueue(data, session.data.accessToken);
@@ -260,23 +282,47 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
                 </Select>
               </div>
               {selectedSpesialist && (
+                <div>
+                  <label className="text-sm font-medium text-neutral-800">Pilih Dokter</label>
+                  <Select
+                    name="doctorId"
+                    size="sm"
+                    placeholder="Pilih Dokter"
+                    className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
+                    onChange={(e) => setSelectDoctor(e.target.value)}
+                    required
+                  >
+                    {doctorSpesialist?.map((item) => (
+                      <SelectItem
+                        key={item.id}
+                        value={item.id}
+                        className="w-full bg-white gap-0"
+                      >
+                        {item.fullname}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                </div>
+              )}
+              {selectDoctor && (
                 <>
                   <div>
-                    <label className="text-sm font-medium text-neutral-800">Pilih Dokter</label>
+                    <label className="text-sm font-medium text-neutral-800">Pilih Jadwal</label>
                     <Select
-                      name="doctorId"
+                      name="schedule"
                       size="sm"
-                      placeholder="Pilih Dokter"
+                      placeholder="Pilih Jadwal"
                       className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
+                      onChange={(e) => setSelectedSchedule(e.target.value)}
                       required
                     >
-                      {doctorSpesialist?.map((item) => (
+                      {getDocter?.schedule?.map((item, index) => (
                         <SelectItem
-                          key={item.id}
-                          value={item.id}
+                          key={index}
+                          value={index}
                           className="w-full bg-white gap-0"
                         >
-                          {item.fullname}
+                          {`${item.day} - (${item.time})`}
                         </SelectItem>
                       ))}
                     </Select>
