@@ -137,51 +137,58 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
         setCloseModal={setAddUser}
       >
         <form
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-3"
           onSubmit={handleAddUser}
         >
           <InputUi
             name="fullname"
             type={'text'}
             placeholder={'Fullname'}
+            label={'Name Lengkap'}
             required
           />
           <InputUi
             name={'email'}
             type={'email'}
             placeholder={'Email'}
+            label={'Email'}
             required
           />
           <InputUi
             name={'password'}
             type={'password'}
             placeholder={'Password'}
+            label={'Password'}
             required
           />
           <InputUi
             name={'phoneNumber'}
             type={'number'}
             placeholder={'Phone Number'}
+            label={'No Handphone'}
             required
           />
-          <Select
-            name="role"
-            size="sm"
-            placeholder="Select role"
-            className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
-            required
-            onChange={(e) => setRole(e.target.value)}
-          >
-            {roles.map((role) => (
-              <SelectItem
-                key={role.value}
-                value={role.value}
-                className="w-full bg-white gap-0"
-              >
-                {role.label}
-              </SelectItem>
-            ))}
-          </Select>
+          <div>
+            <label className="text-sm font-medium text-neutral-800">Pilih Role</label>
+            <Select
+              name="role"
+              size="sm"
+              placeholder="Select role"
+              className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
+              required
+              onChange={(e) => setRole(e.target.value)}
+            >
+              {roles.map((role) => (
+                <SelectItem
+                  key={role.value}
+                  value={role.value}
+                  className="w-full bg-white gap-0"
+                >
+                  {role.label}
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
           {role == 'patient' && (
             <div className="flex flex-col gap-4">
               {patients.map((patient, index) => (
@@ -203,6 +210,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     name={`patient[${index}].name`}
                     type={'text'}
                     placeholder={'Patient Name'}
+                    label={'Name Pasien'}
                     onChange={(e) => handlePatientsChange(index, 'name', e.target.value)}
                     required
                   />
@@ -210,6 +218,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     name={`patient[${index}].bornPlace`}
                     type={'text'}
                     placeholder={'Tempat Lahir'}
+                    label={'Tempat Lahir'}
                     onChange={(e) => handlePatientsChange(index, 'bornPlace', e.target.value)}
                     required
                   />
@@ -217,31 +226,36 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     name={`patient[${index}].bornDate`}
                     type={'date'}
                     placeholder={'Tanggal Lahir'}
+                    label={'Tanggal Lahir'}
                     onChange={(e) => handlePatientsChange(index, 'bornDate', e.target.value)}
                     required
                   />
-                  <Select
-                    name={`patient[${index}].gender`}
-                    size="sm"
-                    placeholder="Jenis Kelamin"
-                    className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
-                    onChange={(e) => handlePatientsChange(index, 'gender', e.target.value)}
-                    required
-                  >
-                    {gender.map((item) => (
-                      <SelectItem
-                        key={item.value}
-                        value={item.value}
-                        className="w-full bg-white gap-0"
-                      >
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </Select>
+                  <div>
+                    <label className="text-sm font-medium text-neutral-800">Jenis Kelamin</label>
+                    <Select
+                      name={`patient[${index}].gender`}
+                      size="sm"
+                      placeholder="Jenis Kelamin"
+                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
+                      onChange={(e) => handlePatientsChange(index, 'gender', e.target.value)}
+                      required
+                    >
+                      {gender.map((item) => (
+                        <SelectItem
+                          key={item.value}
+                          value={item.value}
+                          className="w-full bg-white gap-0"
+                        >
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
                   <InputUi
                     name={`patient[${index}].nik`}
                     type={'number'}
                     placeholder={'NIK'}
+                    label={'NIK'}
                     onChange={(e) => handlePatientsChange(index, 'nik', e.target.value)}
                     required
                   />
@@ -249,6 +263,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     name={`patient[${index}].bpjsNumber`}
                     type={'number'}
                     placeholder={'No BPJS'}
+                    label={'No BPJS'}
                     onChange={(e) => handlePatientsChange(index, 'bpjsNumber', e.target.value)}
                     required
                   />
@@ -256,6 +271,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     name={`patient[${index}].fatherName`}
                     type={'text'}
                     placeholder={'Nama Ayah'}
+                    label={'Nama Ayah'}
                     onChange={(e) => handlePatientsChange(index, 'fatherName', e.target.value)}
                     required
                   />
@@ -263,6 +279,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     name={`patient[${index}].motherName`}
                     type={'text'}
                     placeholder={'Nama Ibu'}
+                    label={'Nama Ibu'}
                     onChange={(e) => handlePatientsChange(index, 'motherName', e.target.value)}
                     required
                   />
@@ -270,31 +287,36 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     name={`patient[${index}].address`}
                     type={'text'}
                     placeholder={'Alamat'}
+                    label={'Alamat'}
                     onChange={(e) => handlePatientsChange(index, 'address', e.target.value)}
                     required
                   />
-                  <Select
-                    name={`patient[${index}].golDarah`}
-                    size="sm"
-                    placeholder="Golongan Darah"
-                    className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
-                    required
-                    onChange={(e) => handlePatientsChange(index, 'golDarah', e.target.value)}
-                  >
-                    {golDarah.map((item) => (
-                      <SelectItem
-                        key={item.value}
-                        value={item.value}
-                        className="w-full bg-white gap-0"
-                      >
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </Select>
+                  <div>
+                    <label className="text-sm font-medium text-neutral-800">Golongan Darah</label>
+                    <Select
+                      name={`patient[${index}].golDarah`}
+                      size="sm"
+                      placeholder="Golongan Darah"
+                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
+                      required
+                      onChange={(e) => handlePatientsChange(index, 'golDarah', e.target.value)}
+                    >
+                      {golDarah.map((item) => (
+                        <SelectItem
+                          key={item.value}
+                          value={item.value}
+                          className="w-full bg-white gap-0"
+                        >
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
                   <InputUi
                     name={`patient[${index}].suku`}
                     type={'text'}
                     placeholder={'Suku'}
+                    label={'Suku'}
                     onChange={(e) => handlePatientsChange(index, 'suku', e.target.value)}
                     required
                   />
@@ -314,19 +336,22 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
               <InputUi
                 name={'specialist'}
                 type={'text'}
+                label={'Specialist'}
                 placeholder={'Specialist'}
                 required
               />
               <InputUi
                 name={'licenceNumber'}
                 type={'number'}
+                label={'No Lisensi'}
                 placeholder={'Licence Number'}
                 required
               />
               <InputUi
                 name={'address'}
                 type={'text'}
-                placeholder={'Address'}
+                label={'Alamat'}
+                placeholder={'Alamat'}
                 required
               />
               <div className="flex flex-col gap-4">
@@ -334,20 +359,22 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                 {schedules.map((schedule, index) => (
                   <div
                     key={index}
-                    className="flex gap-2 w-full"
+                    className="flex gap-2 w-full items-center"
                   >
                     <InputUi
                       name={`schedule[${index}].day`}
                       type={'text'}
-                      placeholder={'Day'}
+                      placeholder={'Hari'}
                       value={schedule.day}
+                      label={'Hari'}
                       onChange={(e) => handleScheduleChange(index, 'day', e.target.value)}
                       required
                     />
                     <InputUi
                       name={`schedule[${index}].time`}
                       type={'text'}
-                      placeholder={'Time'}
+                      placeholder={'Jam'}
+                      label={'Jam'}
                       value={schedule.time}
                       onChange={(e) => handleScheduleChange(index, 'time', e.target.value)}
                       required

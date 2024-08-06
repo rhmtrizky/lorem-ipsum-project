@@ -7,6 +7,11 @@ const SideBarItems = [
     icon: 'bxs-dashboard',
   },
   {
+    title: 'Queues Management',
+    url: '/admin/queues',
+    icon: 'bx bx-list-ul',
+  },
+  {
     title: 'Users Management',
     url: '/admin/users',
     icon: 'bxs-group',
