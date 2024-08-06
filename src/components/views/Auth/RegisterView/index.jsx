@@ -97,6 +97,7 @@ const RegisterView = () => {
             type="text"
             name="fullname"
             placeholder="Fullname"
+            className={'input-auth text-white shadow-md rounded mt-2'}
           />
           {formErrors.fullname && <div className="text-color-red">{formErrors.fullname}</div>}
 
@@ -104,12 +105,14 @@ const RegisterView = () => {
             type="email"
             name="email"
             placeholder="Email"
+            className={'input-auth text-white shadow-md rounded mt-2'}
           />
           {formErrors.email && <div className="text-color-red">{formErrors.email}</div>}
           <InputUi
             type="number"
             name="phoneNumber"
             placeholder="Phone Number"
+            className={'input-auth text-white shadow-md rounded mt-2'}
           />
           {formErrors.phoneNumber && <div className="text-color-red">{formErrors.phoneNumber}</div>}
 
@@ -117,12 +120,14 @@ const RegisterView = () => {
             type="password"
             name="password"
             placeholder="Password"
+            className={'input-auth text-white shadow-md rounded mt-2'}
           />
           {formErrors.password && <div className="text-color-red">{formErrors.password}</div>}
           <InputUi
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
+            className={'input-auth text-white shadow-md rounded mt-2'}
           />
           {formErrors.confirmPassword && <div className="text-color-red">{formErrors.confirmPassword}</div>}
 

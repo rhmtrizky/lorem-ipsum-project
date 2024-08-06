@@ -191,7 +191,7 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
               name="role"
               size="sm"
               defaultSelectedKeys={[dataUpdateUser.role]}
-              className="w-full text-neutral-700 shadow-md rounded min-h-[40px] bg-white"
+              className="w-full text-neutral-700 shadow-md rounded min-h-[40px] bg-white text-sm"
               required
               onChange={(e) => setRole(e.target.value)}
             >
@@ -256,7 +256,7 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
                       name={`patient[${index}].gender`}
                       size="sm"
                       defaultSelectedKeys={[patient.gender]}
-                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                       onChange={(e) => handlePatientsChange(index, 'gender', e.target.value)}
                       placeholder="Jenis Kelamin"
                       required
@@ -323,7 +323,7 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
                       name={`patient[${index}].golDarah`}
                       size="sm"
                       defaultSelectedKeys={[patient.golDarah]}
-                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                       onChange={(e) => handlePatientsChange(index, 'golDarah', e.target.value)}
                       placeholder="Golongan Darah"
                       required

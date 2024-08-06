@@ -118,7 +118,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
               name="patient"
               size="sm"
               placeholder="Select Account"
-              className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+              className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
               required
               onChange={(e) => setPatientAccId(e.target.value)}
             >
@@ -140,7 +140,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
                 name="index"
                 size="sm"
                 placeholder="Select Patient"
-                className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                 required
                 onChange={(e) => setIndexPatient(parseInt(e.target.value))}
               >
@@ -244,7 +244,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
                   name="specialist"
                   size="sm"
                   placeholder="Pilih Spesialis"
-                  className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                  className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                   required
                   onChange={(e) => setSelectedSpesialist(e.target.value)}
                 >
@@ -267,7 +267,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
                       name="doctorId"
                       size="sm"
                       placeholder="Pilih Dokter"
-                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                       required
                     >
                       {doctorSpesialist?.map((item) => (

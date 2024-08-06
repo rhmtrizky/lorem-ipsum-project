@@ -90,12 +90,14 @@ const LoginView = () => {
             type="email"
             name="email"
             placeholder="Email"
+            className={'input-auth text-white shadow-md rounded mt-2'}
           />
           {formErrors.email && <div className="text-color-red">{formErrors.email}</div>}
           <InputUi
             type="password"
             name="password"
             placeholder="Password"
+            className={'input-auth text-white shadow-md rounded mt-2'}
           />
           {formErrors.password && <div className="text-color-red">{formErrors.password}</div>}
           <Button

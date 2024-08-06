@@ -137,7 +137,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
         setCloseModal={setAddUser}
       >
         <form
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-3"
           onSubmit={handleAddUser}
         >
           <InputUi
@@ -174,7 +174,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
               name="role"
               size="sm"
               placeholder="Select role"
-              className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+              className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
               required
               onChange={(e) => setRole(e.target.value)}
             >
@@ -236,7 +236,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                       name={`patient[${index}].gender`}
                       size="sm"
                       placeholder="Jenis Kelamin"
-                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                       onChange={(e) => handlePatientsChange(index, 'gender', e.target.value)}
                       required
                     >
@@ -297,7 +297,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                       name={`patient[${index}].golDarah`}
                       size="sm"
                       placeholder="Golongan Darah"
-                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white"
+                      className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                       required
                       onChange={(e) => handlePatientsChange(index, 'golDarah', e.target.value)}
                     >
