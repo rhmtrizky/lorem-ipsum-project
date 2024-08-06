@@ -8,7 +8,7 @@ import PoliCard from '@/components/ui/Card/PoliCard'
 
 export default function HomeMain() {
   const { scrollYProgress } = useScroll()
-  // const shadow = useTransform(scrollYProgress, [0, 1], ['0px 0px 0px rgba(0, 0, 0, 0)', '0px 10px 30px rgba(0, 0, 0, 0.3)'])
+  const shadow = useTransform(scrollYProgress, [0, 1], ['0px 0px 0px rgba(0, 0, 0, 0)', '0px 10px 30px rgba(0, 0, 0, 0.3)'])
 
   return (
     <>
@@ -19,12 +19,14 @@ export default function HomeMain() {
         </div>
           <PoliCard/>
       </section>
-      {/* <motion.section
-        className='min-h-screen bg-gradient-white-blue rounded-md mx-10 my-4'
-        style={{ boxShadow: shadow }}
+      <motion.section
+        // style={{ boxShadow: shadow }}
+        className='flex justify-center min-h-[60vh] mt-12'
       >
-        <HomeHelp />
-      </motion.section> */}
+        <div className='w-full flex justify-center' >
+          <HomeHelp />
+        </div>
+      </motion.section>
     </>
   )
 }

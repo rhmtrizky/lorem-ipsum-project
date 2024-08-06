@@ -1,72 +1,34 @@
-import { motion, animate, useMotionValue, useTransform } from 'framer-motion';
-import { useEffect } from 'react';
-import { doctorNote } from '@/assets/images/images';
-import Image from 'next/image';
-
-const useCounterAnimation = (initialValue, endValue, duration) => {
-    const count = useMotionValue(initialValue);
-    const rounded = useTransform(count, Math.round);
-
-    useEffect(() => {
-        const animation = animate(count, endValue, { duration });
-        return () => animation.stop();
-    }, [count, endValue, duration]);
-
-    return rounded;
-};
+import { injection, stetoskop, termometer, youngDoctor } from '@/assets/images/images';
 
 export default function HomeHelp() {
-    const roundedHappyCustomers = useCounterAnimation(0, 10, 2);
-    const roundedMonthlyVisitors = useCounterAnimation(0, 4, 2);
-    const roundedCountriesWorldwide = useCounterAnimation(0, 8, 2);
-    const roundedTrustPilots = useCounterAnimation(0, 9, 2);
 
     return (
-        <div>
-            <div className='flex justify-center gap-6 mt-6'>
-                <div className='text-center'>
-                    <motion.h2 className='text-[#3b82f6] text-[36px] font-bold'>
-                        {roundedHappyCustomers}
-                    </motion.h2>
-                    <p className='text-sm font-semibold'>Happy Customers</p>
-                </div>
-                <div className='text-center'>
-                    <motion.h2 className='text-[#3b82f6] text-[36px] font-bold'>
-                        {roundedMonthlyVisitors}
-                    </motion.h2>
-                    <p className='text-sm font-semibold'>Monthly Visitors</p>
-                </div>
-                <div className='text-center'>
-                    <motion.h2 className='text-[#3b82f6] text-[36px] font-bold'>
-                        {roundedCountriesWorldwide}
-                    </motion.h2>
-                    <p className='text-sm font-semibold'>Countries Worldwide</p>
-                </div>
-                <div className='text-center'>
-                    <motion.h2 className='text-[#3b82f6] text-[36px] font-bold'>
-                        {roundedTrustPilots}
-                    </motion.h2>
-                    <p className='text-sm font-semibold'>Trust Pilots</p>
+        <div className='w-full relative flex justify-center items-center max-[850px]:flex-col-reverse max-[1195px]:gap-12 overflow-auto px-3 sm:px-8'>
+            <div className='w-[70%] flex justify-center max-[1195px]:ml-1 '>
+                <div className='min-[350px]:overflow-visible relative box bg-gradient-to-t from-[#FFBEBE] to-[#654AB4]' >
+                    <div className='absolute max-[349px]:-left-36 -left-20 -top-[51px] inset-0 w-[550px]' >
+                        <img src={youngDoctor} alt='young-doctor.png' />
+                    </div>
+                    <img src={termometer} alt='termometer.png' className='w-12 h-12 absolute -left-6 animate-up-down' />
+                    <img src={stetoskop} alt='termometer.png' className='w-12 h-12 absolute left-4 -top-8 origin-center rotate-[30deg] animate-up-down' />
+                    <img src={injection} alt='termometer.png' className='hidden min-[355px]:block w-12 h-12 absolute -right-6 top-0 animate-up-down' />
                 </div>
             </div>
-
-            <div className='flex justify-center mt-28'>
-                <div>
-                    <div>
-                        <h1 className='text-[#3b82f6]'>-Who we are</h1>
-                        <h1 className='text-6xl font-bold my-4'>
-                            We Help To Get <br />Solutions
+            <div className='w-full xl:w-[75%] flex justify-center'>
+                <div className='flex justify-center'>
+                    <div className='w-full'>
+                        <h2 className='text-xl font-semibold text-[#654AB4]'>-Who we are</h2>
+                        <h1 className='text-2xl xl:text-5xl font-bold my-4'>
+                            Kami Hadir untuk <span className='text-[#654AB4]' >Membantu</span> dan <span className='text-[#654AB4]' >Menemukan Solusi</span>
                         </h1>
-                        <p className='text-[#7C8DA5]'>
-                            Daftarkan diri Anda untuk menjadi lebih sehat
+                        <p className='w text-slate-600 font-semibold bg-text-help '>
+                            Daftarkan diri Anda untuk menjadi lebih sehat, <br />
+                            Anda bisa lihat cara daftar dengan mengklik tombol dibawah ini.
                         </p>
-                        <button className='bg-[#3b82f6] text-white font-semibold rounded-lg py-2 px-8 mt-4'>
+                        <button className='w-56 h-12 border-2 border-[#654AB4] text-black hover:bg-[#654AB4] hover:text-white font-bold rounded-lg py-2 px-8 mt-4'>
                             Cara Daftar
                         </button>
                     </div>
-                </div>
-                <div>
-                    <Image src={doctorNote} width={770} height={600} alt='doctor-note.png' />
                 </div>
             </div>
         </div>
