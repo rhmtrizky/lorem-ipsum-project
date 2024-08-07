@@ -5,6 +5,7 @@ import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { specialistTypes } from '@/constraint/adminPanel';
+import getDay from '@/utils/getDay';
 
 const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, queues, setQueues, setTicketQueue }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,22 +13,23 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
   const [doctors, setDoctors] = useState([]);
   const session = useSession();
 
+  // filtering patients and doctors
   useEffect(() => {
     setPatients(users.filter((user) => user.role === 'patient'));
     setDoctors(users.filter((user) => user.role === 'doctor'));
   }, [users]);
 
+  // select patient account
   const [patientAccId, setPatientAccId] = useState('');
   const [selectedPatient, setSelectedPatient] = useState(null);
-
   useEffect(() => {
     const foundPatient = patients.find((patient) => patient.id === patientAccId);
     setSelectedPatient(foundPatient || null);
   }, [patientAccId, patients]);
 
+  // select patient by index
   const [indexPatient, setIndexPatient] = useState();
   const [currentPatientData, setCurrentPatientData] = useState(null);
-
   useEffect(() => {
     if (selectedPatient && selectedPatient.patient && selectedPatient.patient.length > 0) {
       if (indexPatient >= 0 && indexPatient < selectedPatient.patient.length) {
@@ -40,6 +42,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
     }
   }, [selectedPatient, indexPatient]);
 
+  // select spesialist
   const [selectedSpesialist, setSelectedSpesialist] = useState('');
   const [doctorSpesialist, setDoctorSpesialist] = useState('');
 
@@ -47,6 +50,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
     setDoctorSpesialist(doctors.filter((doctor) => doctor.specialist === selectedSpesialist));
   }, [selectedSpesialist, doctors]);
 
+  // select doctor
   const [selectDoctor, setSelectDoctor] = useState('');
   const [getDocter, setGetDocter] = useState({});
   useEffect(() => {
@@ -57,15 +61,82 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
 
   const [selectedSchedule, setSelectedSchedule] = useState('');
   const [getSchedule, setGetSchedule] = useState({});
+
   useEffect(() => {
     if (selectedSchedule) {
       setGetSchedule(getDocter.schedule[selectedSchedule]);
     }
   }, [getDocter, selectedSchedule]);
 
-  const queueNumber = (queues.length + 1).toString();
-  const formattedQueueNumber = queueNumber.padStart(3, '0');
+  // book date logic
+  const [bookDate, setBookDate] = useState('');
+  const [bookDay, setBookDay] = useState('');
+  const [resultCompare, setResultCompare] = useState({});
 
+  useEffect(() => {
+    if (bookDate) {
+      setBookDay(getDay(bookDate));
+    }
+  }, [bookDate]);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const selectedDate = new Date(bookDate);
+
+    if (selectedDate < currentDate) {
+      setResultCompare({
+        status: false,
+        message: 'Tanggal yang Anda pilih sudah lewat.',
+      });
+      return;
+    }
+
+    if (bookDay && getDocter?.schedule?.length > 0) {
+      const isDayInSchedule = getDocter.schedule.some((item) => item.day.includes(bookDay));
+
+      if (isDayInSchedule) {
+        if (bookDay !== getSchedule.day) {
+          setResultCompare({
+            status: false,
+            message: 'Schedule Dokter yang Anda pilih, tidak sesuai dengan hari yang Anda pilih.',
+          });
+        } else {
+          setResultCompare({
+            status: true,
+            message: 'Jadwal Tersedia.',
+          });
+        }
+      } else {
+        setResultCompare({
+          status: false,
+          message: 'Jadwal Tidak Tersedia.',
+        });
+      }
+    } else {
+      setResultCompare({
+        status: false,
+        message: 'Tidak Tersedia',
+      });
+    }
+  }, [bookDate, bookDay, getDocter, getSchedule]);
+
+  // generate queue number
+  const getSpecialist = queues.filter((queue) => {
+    return queue.specialist === selectedSpesialist && queue.status === 'queue';
+  });
+
+  const queueNumber = (getSpecialist.length + 1).toString();
+  let specialistId = '';
+  if (selectedSpesialist) {
+    specialistId = selectedSpesialist
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase())
+      .join('');
+  }
+  const formattedQueueNumber = queueNumber.padStart(3, '0');
+  const formattedResult = `${specialistId}${formattedQueueNumber}`;
+
+  // handle add queue
   const handleAddQueue = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -73,7 +144,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
     const formData = new FormData(form);
 
     let data = {
-      queueNumber: formattedQueueNumber,
+      queueNumber: formattedResult,
       userId: patientAccId,
       name: currentPatientData.name,
       nik: formData.get('nik'),
@@ -86,6 +157,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
       specialist: formData.get('specialist'),
       doctorId: formData.get('doctorId'),
       keluhan: formData.get('keluhan'),
+      bookDate: bookDate,
       schedule: getSchedule,
       status: 'queue',
     };
@@ -107,7 +179,6 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
       setAddQueue({ status: false });
     }
   };
-
   return (
     <div>
       <ModalUi
@@ -313,6 +384,17 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
                       ))}
                     </Select>
                   </div>
+                  <div className="flex flex-col gap-1">
+                    <InputUi
+                      name="bookDate"
+                      type="date"
+                      label={'Tgl. Booking'}
+                      placeholder="Tgl. Booking"
+                      onChange={(e) => setBookDate(e.target.value)}
+                      required
+                    />
+                    {Object.keys(resultCompare).length > 0 && <p className={`${resultCompare.status ? 'text-blue-800' : 'text-red-500'} text-sm italic`}>*{resultCompare.message}</p>}
+                  </div>
                   <InputUi
                     name="keluhan"
                     type="text"
@@ -336,7 +418,8 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
             <Button
               color="primary"
               type="submit"
-              className="bg-[#3b82f6] font-semibold text-white p-2 rounded-md"
+              className={`${resultCompare.status ? 'bg-[#3b82f6]' : 'bg-[#86B5FF]'} font-semibold text-white p-2 rounded-md`}
+              isDisabled={isLoading || !resultCompare.status}
             >
               {isLoading ? 'Loading...' : 'Submit'}
             </Button>

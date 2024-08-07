@@ -1,5 +1,6 @@
 import InputUi from '@/components/ui/Input';
 import ModalUi from '@/components/ui/Modal';
+import getDay from '@/utils/getDay';
 import { Button, Checkbox } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
@@ -43,10 +44,19 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, tickteQueue, setTicketQ
             <div className="flex justify-between items-center ">
               <h1 className="font-semibold flex gap-1 justify-center items-center">
                 <i className="bx bx-time-five"></i>
-                <p>Time</p>
+                <p>Schedule</p>
               </h1>
               <p className="text-sm">
                 {tickteQueue?.schedule?.day} - ({tickteQueue?.schedule?.startTime} - {tickteQueue?.schedule?.endTime})
+              </p>
+            </div>
+            <div className="flex justify-between items-center ">
+              <h1 className="font-semibold flex gap-1 justify-center items-center">
+                <i className="bx bx-time-five"></i>
+                <p>Book Date</p>
+              </h1>
+              <p className="text-sm">
+                {getDay(tickteQueue.bookDate)}, {tickteQueue.bookDate}
               </p>
             </div>
           </div>
