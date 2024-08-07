@@ -4,9 +4,12 @@ import { useState } from 'react';
 import ModalAddQueue from './ModalAddQueue';
 import TableUi from '@/components/ui/Table';
 import Search from '@/components/ui/Search';
+import { GrView } from 'react-icons/gr';
+import ModalTicketQueue from './ModalTicketQueue';
 
 const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQueue }) => {
   const [addQueue, setAddQueue] = useState({ status: false });
+  const [tickteQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const columns = [
@@ -51,13 +54,14 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
       }
       case 'actions':
         return (
-          <div className="flex justify-center items-center bg-blue">
+          <div className="flex justify-center items-center">
             <Button
               isIconOnly
               type="button"
-              className="bx bxs-edit-alt text-blue-500 font-semibold text-[14px]"
+              className="text-blue-500 font-semibold text-[14px]"
               onPress={onOpen}
-              // onClick={() => setUpdateUser(data)}
+              startContent={<GrView />}
+              onClick={() => setTicketQueue(data)}
             />
             <Button
               isIconOnly
@@ -104,7 +108,7 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
           renderCellContent={renderCellContent}
         />
       </AdminLayout>
-      {addQueue.status ? (
+      {addQueue.status && (
         <ModalAddQueue
           onOpenChange={onOpenChange}
           isOpen={isOpen}
@@ -114,7 +118,16 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
           queues={queues}
           setQueues={setQueues}
         />
-      ) : null}
+      )}
+      {Object.keys(tickteQueue).length > 0 && (
+        <ModalTicketQueue
+          onOpenChange={onOpenChange}
+          isOpen={isOpen}
+          users={users}
+          tickteQueue={tickteQueue}
+          setTicketQueue={setTicketQueue}
+        />
+      )}
     </>
   );
 };

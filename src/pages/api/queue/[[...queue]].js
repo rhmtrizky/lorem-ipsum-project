@@ -1,9 +1,8 @@
-import { addData, deleteData, retrieveData, updateData } from '@/libs/firebase/service';
+import { addData, retrieveData } from '@/libs/firebase/service';
 import verify from '@/utils/verify';
-import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
-  const { user } = req.query;
+  // const { user } = req.query;
   if (req.method === 'GET') {
     verify(req, res, async (decoded) => {
       if (decoded) {
@@ -11,7 +10,7 @@ export default async function handler(req, res) {
         const patientActivities = await retrieveData('patientActivities');
         if (search) {
           const searchResult = patientActivities.filter((item) => {
-            return item.name.toLowerCase().includes(search.toString().toLowerCase()) || item.nik.toLowerCase().includes(search.toLowerCase()) || item.queueNumber.toString().includes(search) || item.bpjsNumber.includes(search);
+            return item.name.toLowerCase().includes(search.toString().toLowerCase()) || item.nik.toLowerCase().includes(search.toLowerCase()) || item.queueNumber.includes(search) || item.bpjsNumber.includes(search);
           });
           res.status(200).json({
             status: true,

@@ -1,9 +1,9 @@
 import { Input } from '@nextui-org/react';
 
-const InputUi = ({ label, type, name, placeholder, defaultValue, disabled, onChange, required, className }) => {
+const InputUi = ({ label, type, name, placeholder, defaultValue, disabled, onChange, required, className, colorLabel }) => {
   return (
-    <div className={'flex flex-col'}>
-      <label className="text-sm font-medium text-neutral-700">{label}</label>
+    <div className={'flex flex-col gap-1'}>
+      <label className={`text-sm font-medium text-${colorLabel}`}>{label}</label>
       <Input
         key={'outside'}
         labelPlacement={'outside'}
