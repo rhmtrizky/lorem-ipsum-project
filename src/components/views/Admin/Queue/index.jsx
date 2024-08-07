@@ -1,6 +1,6 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
-import { Button, Input, useDisclosure } from '@nextui-org/react';
-import { useState } from 'react';
+import { Button, useDisclosure } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 import ModalAddQueue from './ModalAddQueue';
 import TableUi from '@/components/ui/Table';
 import Search from '@/components/ui/Search';
@@ -9,8 +9,14 @@ import ModalTicketQueue from './ModalTicketQueue';
 
 const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQueue }) => {
   const [addQueue, setAddQueue] = useState({ status: false });
-  const [tickteQueue, setTicketQueue] = useState({});
+  const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  useEffect(() => {
+    if (Object.keys(ticketQueue).length > 0) {
+      onOpen();
+    }
+  }, [ticketQueue]);
 
   const columns = [
     {
@@ -117,14 +123,15 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
           users={users}
           queues={queues}
           setQueues={setQueues}
+          setTicketQueue={setTicketQueue}
         />
       )}
-      {Object.keys(tickteQueue).length > 0 && (
+      {Object.keys(ticketQueue).length > 0 && (
         <ModalTicketQueue
           onOpenChange={onOpenChange}
           isOpen={isOpen}
           users={users}
-          tickteQueue={tickteQueue}
+          tickteQueue={ticketQueue}
           setTicketQueue={setTicketQueue}
         />
       )}

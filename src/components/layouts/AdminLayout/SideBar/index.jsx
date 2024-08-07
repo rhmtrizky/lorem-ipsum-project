@@ -8,7 +8,7 @@ const SideBar = ({ lists, title, closeIcon, onClick, bgColor }) => {
   const { status } = useSession();
 
   return (
-    <div className="lg:w-1/5 md:w-[50%] sm:w-[70%] w-[70%] h-screen fixed bg-blue-500 flex flex-col justify-between p-5">
+    <div className="lg:w-1/5 md:w-[2/5] h-screen fixed bg-blue-500 flex flex-col justify-between p-5">
       <div className="">
         <div className="flex justify-between items-center">
           <h1 className="text-white font-bold text-xl">{title}</h1>

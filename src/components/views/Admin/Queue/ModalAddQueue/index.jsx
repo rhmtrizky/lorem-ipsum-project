@@ -1,7 +1,6 @@
 import InputUi from '@/components/ui/Input';
 import ModalUi from '@/components/ui/Modal';
 import queueService from '@/services/queue';
-import userService from '@/services/user';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -100,19 +99,20 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
       golDarah: formData.get('golDarah'),
       specialist: formData.get('specialist'),
       doctorId: formData.get('doctorId'),
+      keluhan: formData.get('keluhan'),
       schedule: getSchedule,
       status: 'queue',
     };
-    console.log(data);
 
     try {
       const result = await queueService.addQueue(data, session.data.accessToken);
       if (result.status === 200) {
-        const { data } = await queueService.getAllQueues(session.data.accessToken);
-        setQueues(data.data);
+        const result = await queueService.getAllQueues(session.data.accessToken);
+        setQueues(result.data.data);
         onOpenChange(false);
         setIsLoading(false);
         setAddQueue({ status: false });
+        setTicketQueue(data);
       }
     } catch (err) {
       console.log(err);

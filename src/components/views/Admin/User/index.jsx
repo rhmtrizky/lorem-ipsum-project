@@ -2,7 +2,7 @@ import AdminLayout from '@/components/layouts/AdminLayout';
 import TableUi from '@/components/ui/Table';
 import { useState } from 'react';
 import ModalUpdateUser from './ModalUpdateUser';
-import { Button, Input, useDisclosure } from '@nextui-org/react';
+import { Button, useDisclosure } from '@nextui-org/react';
 import ModalDeleteUser from './ModalDeleteUser';
 import ModalAddUser from './ModalAddUser';
 import Search from '@/components/ui/Search';
@@ -79,31 +79,36 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
   return (
     <>
       <AdminLayout>
-        <h1 className="text-2xl font-bold mb-5">Users Management</h1>
-        <div className="flex items-center justify-between w-full">
-          <div className="relative w-3/5 text-neutral-600 ml-2">
-            <Search
-              state={searchUser}
-              setState={setSearchUser}
+        <div className="flex w-full">
+          <div className="lg:w-1/5 md:w-1/4"></div>
+          <div className="lg:w-4/5 md:w-3/4">
+            <h1 className="text-2xl font-bold mb-5">Users Management</h1>
+            <div className="flex items-center justify-between w-full">
+              <div className="relative w-3/5 text-neutral-600 ml-2">
+                <Search
+                  state={searchUser}
+                  setState={setSearchUser}
+                />
+              </div>
+              <div className="w-2/5 flex justify-end mr-2">
+                <Button
+                  endContent={<i className="bx bx-plus-circle text-xl" />}
+                  type="button"
+                  className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
+                  onPress={onOpen}
+                  onClick={() => setAddUser({ status: true })}
+                >
+                  Tambah User Baru
+                </Button>
+              </div>
+            </div>
+            <TableUi
+              data={processedData}
+              columns={columns}
+              renderCellContent={renderCellContent}
             />
           </div>
-          <div className="w-2/5 flex justify-end mr-2">
-            <Button
-              endContent={<i className="bx bx-plus-circle text-xl" />}
-              type="button"
-              className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
-              onPress={onOpen}
-              onClick={() => setAddUser({ status: true })}
-            >
-              Tambah User Baru
-            </Button>
-          </div>
         </div>
-        <TableUi
-          data={processedData}
-          columns={columns}
-          renderCellContent={renderCellContent}
-        />
       </AdminLayout>
       {Object.keys(updateUser).length > 0 && (
         <ModalUpdateUser
