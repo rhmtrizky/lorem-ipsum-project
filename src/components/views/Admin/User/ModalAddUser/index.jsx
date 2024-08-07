@@ -4,12 +4,13 @@ import userService from '@/services/user';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import { roles, gender, golDarah, specialistTypes } from '@/constraint/adminPanel';
 
 const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState('');
-  const [schedules, setSchedules] = useState([{ day: '', time: '' }]);
+  const [schedules, setSchedules] = useState([{ day: '', startTime: '', endTime: '' }]);
   const [patients, setPatients] = useState([
     {
       name: '',
@@ -25,25 +26,6 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
       suku: '',
     },
   ]);
-
-  const roles = [
-    { value: 'admin', label: 'Admin' },
-    { value: 'patient', label: 'Patient' },
-    { value: 'doctor', label: 'Doctor' },
-    { value: 'pharmacy', label: 'Pharmacy' },
-  ];
-
-  const gender = [
-    { value: 'male', label: 'Laki-laki' },
-    { value: 'female', label: 'Perempuan' },
-  ];
-
-  const golDarah = [
-    { value: 'A', label: 'A' },
-    { value: 'B', label: 'B' },
-    { value: 'AB', label: 'AB' },
-    { value: 'O', label: 'O' },
-  ];
 
   const handleAddUser = async (event) => {
     event.preventDefault();
@@ -100,7 +82,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
 
   // schedules
   const addSchedule = () => {
-    setSchedules([...schedules, { day: '', time: '' }]);
+    setSchedules([...schedules, { day: '', startTime: '', endTime: '' }]);
   };
 
   const removeSchedule = (index) => {
@@ -333,13 +315,26 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
           )}
           {role == 'doctor' && (
             <>
-              <InputUi
-                name={'specialist'}
-                type={'text'}
-                label={'Specialist'}
-                placeholder={'Specialist'}
-                required
-              />
+              <div>
+                <label className="text-sm font-medium text-neutral-800">Pilih Spesialis</label>
+                <Select
+                  name="specialist"
+                  size="sm"
+                  placeholder="Pilih Spesialis"
+                  className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
+                  required
+                >
+                  {specialistTypes.map((item) => (
+                    <SelectItem
+                      key={item.value}
+                      value={item.value}
+                      className="w-full bg-white gap-0"
+                    >
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
               <InputUi
                 name={'licenceNumber'}
                 type={'number'}
@@ -371,12 +366,21 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                       required
                     />
                     <InputUi
-                      name={`schedule[${index}].time`}
-                      type={'text'}
-                      placeholder={'Jam'}
-                      label={'Jam'}
-                      value={schedule.time}
-                      onChange={(e) => handleScheduleChange(index, 'time', e.target.value)}
+                      name={`schedule[${index}].startTime`}
+                      type={'time'}
+                      placeholder={'Jam Mulai'}
+                      label={'Jam Mulai'}
+                      value={schedule.startTime}
+                      onChange={(e) => handleScheduleChange(index, 'startTime', e.target.value)}
+                      required
+                    />
+                    <InputUi
+                      name={`schedule[${index}].endTime`}
+                      type={'time'}
+                      placeholder={'Jam Selesai'}
+                      label={'Jam Selesai'}
+                      value={schedule.endTime}
+                      onChange={(e) => handleScheduleChange(index, 'endTime', e.target.value)}
                       required
                     />
                     <Button

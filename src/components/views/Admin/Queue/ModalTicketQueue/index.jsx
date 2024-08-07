@@ -12,8 +12,6 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, tickteQueue, setTicketQ
     setDoctor(getDoctors.find((doctor) => doctor.id === tickteQueue.doctorId));
   });
 
-  console.log(tickteQueue);
-
   return (
     <div>
       <ModalUi
@@ -48,7 +46,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, tickteQueue, setTicketQ
                 <p>Time</p>
               </h1>
               <p className="text-sm">
-                {tickteQueue?.schedule?.day} - ({tickteQueue?.schedule?.time})
+                {tickteQueue?.schedule?.day} - ({tickteQueue?.schedule?.startTime} - {tickteQueue?.schedule?.endTime})
               </p>
             </div>
           </div>

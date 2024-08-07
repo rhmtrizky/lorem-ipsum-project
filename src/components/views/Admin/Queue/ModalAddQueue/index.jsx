@@ -4,6 +4,7 @@ import queueService from '@/services/queue';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { specialistTypes } from '@/constraint/adminPanel';
 
 const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, queues, setQueues, setTicketQueue }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,21 +39,6 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
       setCurrentPatientData(null);
     }
   }, [selectedPatient, indexPatient]);
-
-  const spesialists = [
-    {
-      label: 'Umum',
-      value: 'umum',
-    },
-    {
-      label: 'Poli Gigi',
-      value: 'poli gigi',
-    },
-    {
-      label: 'Poli Mata',
-      value: 'poli mata',
-    },
-  ];
 
   const [selectedSpesialist, setSelectedSpesialist] = useState('');
   const [doctorSpesialist, setDoctorSpesialist] = useState('');
@@ -270,7 +256,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
                   required
                   onChange={(e) => setSelectedSpesialist(e.target.value)}
                 >
-                  {spesialists.map((item) => (
+                  {specialistTypes.map((item) => (
                     <SelectItem
                       key={item.value}
                       value={item.value}
@@ -322,7 +308,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
                           value={index}
                           className="w-full bg-white gap-0"
                         >
-                          {`${item.day} - (${item.time})`}
+                          {`${item.day} - (${item.startTime} - ${item.endTime})`}
                         </SelectItem>
                       ))}
                     </Select>

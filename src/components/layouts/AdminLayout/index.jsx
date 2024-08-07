@@ -22,7 +22,10 @@ const AdminLayout = ({ children }) => {
   return (
     <>
       <div className="flex lg:flex md:flex sm:hidden hidden">
-        <div className="w-full px-10 py-7 h-auto min-h-screen overflow-auto">{children}</div>
+        <div className="flex w-full">
+          <div className="lg:w-1/5 md:w-1/4"></div>
+          <div className="lg:w-4/5 md:w-3/4 px-4 py-7 h-auto min-h-screen overflow-auto">{children}</div>
+        </div>
 
         <SideBar
           lists={SideBarItems}
