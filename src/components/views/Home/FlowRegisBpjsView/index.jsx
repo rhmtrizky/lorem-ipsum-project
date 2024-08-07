@@ -34,7 +34,7 @@ export default function FlowRegisBpjs() {
                                         <div className='w-2 h-10 bg-[#c8c9ca] my-3 group-hover:bg-[#FFBEBE]' ></div>
                                     </div>
                                     <div className='w-64' >
-                                        <h1 className='group-hover:text-purple-700 font-bold ' >{flow.no}</h1>
+                                        <h1 className='group-hover:text-purple-700 font-bold ' >{flow.title}</h1>
                                         <p className='text-sm text-slate-600 font-semibold ' >{flow.keterangan}</p>
                                     </div>
                                 </div>
