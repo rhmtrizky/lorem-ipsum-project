@@ -33,3 +33,4 @@ export const doctorNote = '/doctor-notes.png'
 export const heart = "/heart.png"
 
 export const laptop = "/laptop.png"
+export const rightArrow = "/right-arrow.png"

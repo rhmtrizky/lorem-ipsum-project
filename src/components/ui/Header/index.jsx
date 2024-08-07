@@ -22,11 +22,11 @@ export default function Header() {
                         <div className='flex gap-5 h-max' >
                             <div className='flex items-center gap-1' >
                                 <Image src={mail} width={25} height={25} alt='mail.png' className='w-[30px] min-[950px]:w-[20px]' />
-                                <p className='hidden min-[600px]:block text-sm text-white' >loremipsum@gmail.com</p>
+                                <p className='hidden min-[600px]:block text-sm text-white cursor-default' >loremipsum@gmail.com</p>
                             </div>
                             <div className='flex items-center gap-1' >
                                 <Image src={call} width={15} height={15} alt='mail.png' />
-                                <p className='hidden min-[600px]:block text-sm text-white' >+62978324593</p>
+                                <p className='hidden min-[600px]:block text-sm text-white cursor-default' >+62978324593</p>
                             </div>
                         </div>
 
