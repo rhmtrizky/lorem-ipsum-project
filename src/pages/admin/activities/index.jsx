@@ -1,18 +1,17 @@
 import QueueView from '@/components/views/Admin/Queue';
 import useDebounce from '@/hooks/useDebounce';
-import queueService from '@/services/queue';
+import activityService from '@/services/activity';
 import userService from '@/services/user';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 const QueuePage = () => {
   const [users, setUsers] = useState([]);
-  const [queues, setQueues] = useState([]);
+  const [activities, setActivities] = useState([]);
   const session = useSession();
-  const [searchQueue, setSearchQueue] = useState('');
+  const [searchActivities, setSearchActivities] = useState('');
   const { debounce } = useDebounce();
-
-  console.log(searchQueue);
+  console.log(activities);
 
   const getDataUsers = async () => {
     try {
@@ -25,11 +24,11 @@ const QueuePage = () => {
     }
   };
 
-  const getAllQueues = async () => {
+  const getAllActivities = async () => {
     try {
       if (session.data.accessToken) {
-        const queues = await queueService.getAllQueues(session.data.accessToken);
-        setQueues(queues.data.data);
+        const activities = await activityService.getAllActivities(session.data.accessToken);
+        setActivities(activities.data.data);
       }
     } catch (error) {
       console.log(error);
@@ -37,15 +36,15 @@ const QueuePage = () => {
   };
 
   const performSearch = async () => {
-    if (searchQueue !== '') {
+    if (searchActivities !== '') {
       try {
-        const { data } = await queueService.searchQueue(searchQueue, session.data.accessToken);
-        setQueues(data.data);
+        const { data } = await activityService.searchActivities(searchActivities, session.data.accessToken);
+        setActivities(data.data);
       } catch (err) {
         console.log(err);
       }
     } else {
-      getAllQueues();
+      getAllActivities();
     }
   };
 
@@ -53,7 +52,7 @@ const QueuePage = () => {
 
   useEffect(() => {
     debouncedSearch();
-  }, [searchQueue]);
+  }, [searchActivities]);
 
   useEffect(() => {
     if (session.status === 'authenticated') {
@@ -63,7 +62,7 @@ const QueuePage = () => {
 
   useEffect(() => {
     if (session.status === 'authenticated') {
-      getAllQueues();
+      getAllActivities();
     }
   }, [session]);
 
@@ -71,10 +70,10 @@ const QueuePage = () => {
     <QueueView
       users={users}
       setUsers={setUsers}
-      queues={queues}
-      setQueues={setQueues}
-      searchQueue={searchQueue}
-      setSearchQueue={setSearchQueue}
+      activities={activities}
+      setActivities={setActivities}
+      searchActivities={searchActivities}
+      setSearchActivities={setSearchActivities}
     />
   );
 };

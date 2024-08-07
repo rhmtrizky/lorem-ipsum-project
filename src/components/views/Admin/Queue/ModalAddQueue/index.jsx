@@ -1,13 +1,13 @@
 import InputUi from '@/components/ui/Input';
 import ModalUi from '@/components/ui/Modal';
-import queueService from '@/services/queue';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { specialistTypes } from '@/constraint/adminPanel';
 import getDay from '@/utils/getDay';
+import activityService from '@/services/activity';
 
-const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, queues, setQueues, setTicketQueue }) => {
+const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -121,8 +121,8 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
   }, [bookDate, bookDay, getDocter, getSchedule]);
 
   // generate queue number
-  const getSpecialist = queues.filter((queue) => {
-    return queue.specialist === selectedSpesialist && queue.status === 'queue';
+  const getSpecialist = activities.filter((activity) => {
+    return activity.specialist === selectedSpesialist && activity.status === 'queue';
   });
 
   const queueNumber = (getSpecialist.length + 1).toString();
@@ -163,10 +163,10 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setUsers, setAddQueue, users, que
     };
 
     try {
-      const result = await queueService.addQueue(data, session.data.accessToken);
+      const result = await activityService.addQueue(data, session.data.accessToken);
       if (result.status === 200) {
-        const result = await queueService.getAllQueues(session.data.accessToken);
-        setQueues(result.data.data);
+        const result = await activityService.getAllActivities(session.data.accessToken);
+        setActivities(result.data.data);
         onOpenChange(false);
         setIsLoading(false);
         setAddQueue({ status: false });
