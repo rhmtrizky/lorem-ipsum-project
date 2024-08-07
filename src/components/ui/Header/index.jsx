@@ -50,7 +50,6 @@ export default function Header() {
                             <li>Cari Dokter</li>
                             <li>Informasi</li>
                             <li>Kontak</li>
-
                         </ul>
                         <motion.button
                             whileHover={{ scale: 1.1 }}

@@ -27,9 +27,9 @@ export const termometer = "/medical.png"
 export const stetoskop = "/stethoscope.png"
 export const injection = "/syringe.png"
 
-
 export const doctorAnimate = '/doctor-animate.png'
 export const doctorNote = '/doctor-notes.png'
 
-
 export const heart = "/heart.png"
+
+export const laptop = "/laptop.png"
