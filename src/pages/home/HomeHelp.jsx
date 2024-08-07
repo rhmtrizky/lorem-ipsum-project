@@ -1,4 +1,5 @@
 import { injection, stetoskop, termometer, youngDoctor } from '@/assets/images/images';
+import Link from 'next/link';
 
 export default function HomeHelp() {
 
@@ -7,11 +8,11 @@ export default function HomeHelp() {
             <div className='w-[70%] flex justify-center max-[1195px]:ml-1 '>
                 <div className='min-[350px]:overflow-visible relative box bg-gradient-to-t from-[#FFBEBE] to-[#654AB4]' >
                     <div className='absolute max-[349px]:-left-36 -left-20 -top-[51px] inset-0 w-[550px]' >
-                        <img src={youngDoctor} alt='young-doctor.png' />
+                        <img src={youngDoctor} alt='young-doctor.png' loading='lazy' />
                     </div>
-                    <img src={termometer} alt='termometer.png' className='w-12 h-12 absolute -left-6 animate-up-down' />
-                    <img src={stetoskop} alt='termometer.png' className='w-12 h-12 absolute left-4 -top-8 origin-center rotate-[30deg] animate-up-down' />
-                    <img src={injection} alt='termometer.png' className='hidden min-[355px]:block w-12 h-12 absolute -right-6 top-0 animate-up-down' />
+                    <img src={termometer} alt='termometer.png' className='w-12 h-12 absolute -left-6 animate-up-down' loading='lazy' />
+                    <img src={stetoskop} alt='termometer.png' className='w-12 h-12 absolute left-4 -top-8 origin-center rotate-[30deg] animate-up-down' loading='lazy' />
+                    <img src={injection} alt='termometer.png' className='hidden min-[355px]:block w-12 h-12 absolute -right-6 top-0 animate-up-down' loading='lazy' />
                 </div>
             </div>
             <div className='w-full xl:w-[75%] flex justify-center'>
@@ -25,9 +26,11 @@ export default function HomeHelp() {
                             Daftarkan diri Anda untuk menjadi lebih sehat, <br />
                             Anda bisa lihat cara daftar dengan mengklik tombol dibawah ini.
                         </p>
-                        <button className='w-56 h-12 border-2 border-[#654AB4] text-black hover:bg-[#654AB4] hover:text-white font-bold rounded-lg py-2 px-8 mt-4'>
-                            Cara Daftar
-                        </button>
+                        <Link href={'flowRegisBpjs'} >
+                            <button className='w-56 h-12 border-2 border-[#654AB4] text-black hover:bg-[#654AB4] hover:text-white font-bold rounded-lg py-2 px-8 mt-4'>
+                                Cara Daftar
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

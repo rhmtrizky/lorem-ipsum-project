@@ -20,7 +20,7 @@ export default function FlowRegisBpjs() {
 
                 <div className='flex justify-evenly items-start max-[600px]:flex-col max-[6000px]:items-center min-[1550px]:justify-center min-[1550px]:gap-40 mt-5' >
                     <div>
-                        <Image src={laptop} width={600} height={400} alt='laptop.png'/>
+                        <Image src={laptop} width={600} height={400} alt='laptop.png' loading='lazy'/>
                     </div>
 
                     <div className='max-[380px]:w-full w-max px-6' >
