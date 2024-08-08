@@ -11,6 +11,10 @@ body {
   background-color: #eeeff2;
 }
 
+.testing-transition {
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
 .bebas-neue-regular {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
@@ -153,23 +157,6 @@ body {
   overflow-y: auto;
 }
 
-
 .custom::-webkit-scrollbar {
   display: none;
 }
-
-.slider-scrollbar {
-  background-color: red;
-  height: 400px;
-  width: 12px;
-  display: flex;
-  align-items: center;
-}
-
-/* .scrollbar-track {
-  height: 2px;
-  width: 100%;
-  background-color: #ccc;
-  position: relative;
-  border-radius: 4px;
-} */
