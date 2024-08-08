@@ -9,7 +9,7 @@ import ButtonTab from '../Ui/ButtonTab';
 import TableQueues from './Tables/TableQueues';
 import TableCheckup from './Tables/TableCheckup';
 
-const QueueView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
+const ActivityView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
   const [addQueue, setAddQueue] = useState({ status: false });
   const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -121,4 +121,4 @@ const QueueView = ({ users, setUsers, activities, setActivities, searchActivitie
   );
 };
 
-export default QueueView;
+export default ActivityView;

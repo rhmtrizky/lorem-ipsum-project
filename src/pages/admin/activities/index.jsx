@@ -1,4 +1,4 @@
-import QueueView from '@/components/views/Admin/Queue';
+import ActivityView from '@/components/views/Admin/Activity';
 import useDebounce from '@/hooks/useDebounce';
 import activityService from '@/services/activity';
 import userService from '@/services/user';
@@ -67,7 +67,7 @@ const QueuePage = () => {
   }, [session]);
 
   return (
-    <QueueView
+    <ActivityView
       users={users}
       setUsers={setUsers}
       activities={activities}
