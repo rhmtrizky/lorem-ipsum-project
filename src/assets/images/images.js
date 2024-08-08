@@ -34,3 +34,6 @@ export const heart = "/heart.png"
 
 export const laptop = "/laptop.png"
 export const rightArrow = "/right-arrow.png"
+export const administrationImage = "/administration-image.jpg"
+export const dots = "/dots.png"
+export const arrowDottedLeft = "/left-dotted-arrowhead.png"

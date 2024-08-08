@@ -1,6 +1,6 @@
 import { laptop, rightArrow } from '@/assets/images/images'
-import Header from '@/components/ui/Header'
 import { datasFlow } from '@/constraint'
+import Header from '@/components/ui/Header'
 import Image from 'next/image'
 import React from 'react'
 
@@ -41,8 +41,6 @@ export default function FlowRegisBpjs() {
                             ))
                         }
                     </div>
-
-
                 </div>
             </section>
         </>

@@ -21,11 +21,6 @@ body {
   background-color: #ffbebe85;
 }
 
-.bg-gradient-white-blue {
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,1) 29%, rgba(59,130,246,0.45710784313725494) 100%);
-}
-
 .bg-gradient-radial {
   background: rgb(32, 25, 25);
   background: radial-gradient(circle, rgba(255,190,190,1) 0%, rgb(101, 74, 180) 100%);
@@ -121,5 +116,60 @@ body {
     height: 150px;
   }
 }
-
 /* Page Flow Registration BPJS End */
+
+
+.accordion {
+  max-width: 800px;
+}
+
+.accordion .contentBx {
+  position: relative;
+  margin: 10px 20px;
+}
+
+.accordion .contentBx .label {
+  position: relative;
+  padding: 10px;
+  background-color: #2694af;
+  color: white;
+  cursor: pointer;
+}
+
+.accordion .contentBx .label::before {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  right: 20%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+}
+
+.accordion .contentBx .content {
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+  transition: .5s;
+  overflow-y: auto;
+}
+
+
+.custom::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-scrollbar {
+  background-color: red;
+  height: 400px;
+  width: 12px;
+  display: flex;
+  align-items: center;
+}
+
+/* .scrollbar-track {
+  height: 2px;
+  width: 100%;
+  background-color: #ccc;
+  position: relative;
+  border-radius: 4px;
+} */
