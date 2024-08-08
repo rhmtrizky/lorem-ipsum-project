@@ -25,6 +25,10 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
     },

@@ -79,17 +79,21 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
     }
   }, [bookDate]);
 
+  console.log(bookDate);
+
   useEffect(() => {
     const currentDate = new Date();
     const selectedDate = new Date(bookDate);
 
-    if (selectedDate < currentDate) {
-      setResultCompare({
-        status: false,
-        message: 'Tanggal yang Anda pilih sudah lewat.',
-      });
-      return;
-    }
+    console.log(selectedDate);
+
+    // if (selectedDate < currentDate && selectedDate !== currentDate) {
+    //   setResultCompare({
+    //     status: false,
+    //     message: 'Tanggal yang Anda pilih sudah lewat.',
+    //   });
+    //   return;
+    // }
 
     if (bookDay && getDocter?.schedule?.length > 0) {
       const isDayInSchedule = getDocter.schedule.some((item) => item.day.includes(bookDay));
@@ -179,6 +183,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
       setAddQueue({ status: false });
     }
   };
+
   return (
     <div>
       <ModalUi

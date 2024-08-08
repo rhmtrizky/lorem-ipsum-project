@@ -3,6 +3,8 @@ import { Button } from '@nextui-org/react';
 import { GrView } from 'react-icons/gr';
 
 const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
+  console.log(filterByStatusActivity('checkup'));
+
   const columns = [
     {
       title: 'No.',
