@@ -1,112 +1,100 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
-import { Button, Input, useDisclosure } from '@nextui-org/react';
-import { useState } from 'react';
+import { Button, useDisclosure } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 import ModalAddQueue from './ModalAddQueue';
-import TableUi from '@/components/ui/Table';
 import Search from '@/components/ui/Search';
-import { GrView } from 'react-icons/gr';
 import ModalTicketQueue from './ModalTicketQueue';
+import TableAllStatus from './Tables/TableAllStatus';
+import ButtonTab from '../Ui/ButtonTab';
+import TableQueues from './Tables/TableQueues';
+import TableCheckup from './Tables/TableCheckup';
 
-const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQueue }) => {
+const QueueView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
   const [addQueue, setAddQueue] = useState({ status: false });
-  const [tickteQueue, setTicketQueue] = useState({});
+  const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [selectTab, setSelectTab] = useState({
+    status: true,
+    type: 'all',
+  });
 
-  const columns = [
-    {
-      title: 'No.',
-      uid: 'index',
-    },
-    {
-      title: 'No Antrian',
-      uid: 'queueNumber',
-    },
-    {
-      title: 'NIK',
-      uid: 'nik',
-    },
-    {
-      title: 'Nama Pasien',
-      uid: 'name',
-    },
-    {
-      title: 'No BPJS',
-      uid: 'bpjsNumber',
-    },
-    {
-      title: 'Specialist',
-      uid: 'specialist',
-    },
-    {
-      title: 'Actions',
-      uid: 'actions',
-    },
-  ];
+  //function filtering data by status activities
+  const filterByStatusActivity = (activityStatus) => {
+    const result = activities.filter((activity) => activity.status === activityStatus);
 
-  const renderCellContent = (data, columnKey) => {
-    switch (columnKey) {
-      case 'index': {
-        return <p>{data.index + 1}</p>;
-      }
-
-      case 'phoneNumber': {
-        return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
-      }
-      case 'actions':
-        return (
-          <div className="flex justify-center items-center">
-            <Button
-              isIconOnly
-              type="button"
-              className="text-blue-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              startContent={<GrView />}
-              onClick={() => setTicketQueue(data)}
-            />
-            <Button
-              isIconOnly
-              type="button"
-              className="bx bxs-trash text-red-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              // onClick={() => setDeleteUser(data)}
-            />
-          </div>
-        );
-      default:
-        return data[columnKey];
-    }
+    return result;
   };
 
-  const processedData = queues.map((queue, index) => ({ ...queue, index }));
+  useEffect(() => {
+    if (Object.keys(ticketQueue).length > 0) {
+      onOpen();
+    }
+  }, [ticketQueue]);
 
   return (
     <>
       <AdminLayout>
-        <h1 className="text-2xl font-bold mb-5">Queues Management</h1>
-        <div className="flex items-center justify-between w-full">
-          <div className="relative w-3/5 text-neutral-600 ml-2">
-            <Search
-              state={searchQueue}
-              setState={setSearchQueue}
-            />
+        <div className="mx-4">
+          <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
+          <div className="flex items-center justify-between w-full">
+            <div className="relative w-3/5 text-neutral-600">
+              <Search
+                state={searchActivities}
+                setState={setSearchActivities}
+              />
+            </div>
+            <div className="w-2/5 flex justify-end">
+              <Button
+                endContent={<i className="bx bx-plus-circle text-xl" />}
+                type="button"
+                className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
+                onPress={onOpen}
+                onClick={() => setAddQueue({ status: true })}
+              >
+                Tambah Antrian
+              </Button>
+            </div>
           </div>
-          <div className="w-2/5 flex justify-end mr-2">
-            <Button
-              endContent={<i className="bx bx-plus-circle text-xl" />}
-              type="button"
-              className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
-              onPress={onOpen}
-              onClick={() => setAddQueue({ status: true })}
-            >
-              Tambah Antrian
-            </Button>
+          <div className="flex justify-start items-center gap-2 mt-6">
+            <ButtonTab
+              type="all"
+              onClick={() => setSelectTab({ status: true, type: 'all' })}
+            />
+            <ButtonTab
+              type="queue"
+              onClick={() => setSelectTab({ status: true, type: 'queue' })}
+            />
+            <ButtonTab
+              type="checkup"
+              onClick={() => setSelectTab({ status: true, type: 'checkup' })}
+            />
+            {/* <ButtonTab
+              type="pharmacy"
+              onClick={() => setSelectTab({ status: true, type: 'pharmacy' })}
+            /> */}
           </div>
         </div>
-        <TableUi
-          data={processedData}
-          columns={columns}
-          renderCellContent={renderCellContent}
-        />
+        {selectTab.status && selectTab.type === 'all' && (
+          <TableAllStatus
+            activities={activities}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
+        {selectTab.status && selectTab.type === 'queue' && (
+          <TableQueues
+            filterByStatusActivity={filterByStatusActivity}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
+        {selectTab.status && selectTab.type === 'checkup' && (
+          <TableCheckup
+            filterByStatusActivity={filterByStatusActivity}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
       </AdminLayout>
       {addQueue.status && (
         <ModalAddQueue
@@ -115,16 +103,17 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
           setUsers={setUsers}
           setAddQueue={setAddQueue}
           users={users}
-          queues={queues}
-          setQueues={setQueues}
+          activities={activities}
+          setActivities={setActivities}
+          setTicketQueue={setTicketQueue}
         />
       )}
-      {Object.keys(tickteQueue).length > 0 && (
+      {Object.keys(ticketQueue).length > 0 && (
         <ModalTicketQueue
           onOpenChange={onOpenChange}
           isOpen={isOpen}
           users={users}
-          tickteQueue={tickteQueue}
+          tickteQueue={ticketQueue}
           setTicketQueue={setTicketQueue}
         />
       )}
