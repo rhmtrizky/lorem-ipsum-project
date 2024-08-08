@@ -7,8 +7,8 @@ const SideBarItems = [
     icon: 'bxs-dashboard',
   },
   {
-    title: 'Queues Management',
-    url: '/admin/queues',
+    title: 'Patient Activity',
+    url: '/admin/activities',
     icon: 'bx bx-list-ul',
   },
   {

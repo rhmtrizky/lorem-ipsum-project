@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const patientActivities = await retrieveData('patientActivities');
         if (search) {
           const searchResult = patientActivities.filter((item) => {
-            return item.name.toLowerCase().includes(search.toString().toLowerCase()) || item.nik.toLowerCase().includes(search.toLowerCase()) || item.queueNumber.includes(search) || item.bpjsNumber.includes(search);
+            return item.name.toLowerCase().includes(search.toString().toLowerCase()) || item.nik.toLowerCase().includes(search.toLowerCase()) || item.queueNumber.toLowerCase().includes(search.toLowerCase()) || item.bpjsNumber.includes(search);
           });
           res.status(200).json({
             status: true,

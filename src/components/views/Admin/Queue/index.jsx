@@ -2,15 +2,28 @@ import AdminLayout from '@/components/layouts/AdminLayout';
 import { Button, useDisclosure } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import ModalAddQueue from './ModalAddQueue';
-import TableUi from '@/components/ui/Table';
 import Search from '@/components/ui/Search';
-import { GrView } from 'react-icons/gr';
 import ModalTicketQueue from './ModalTicketQueue';
+import TableAllStatus from './Tables/TableAllStatus';
+import ButtonTab from '../Ui/ButtonTab';
+import TableQueues from './Tables/TableQueues';
+import TableCheckup from './Tables/TableCheckup';
 
-const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQueue }) => {
+const QueueView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
   const [addQueue, setAddQueue] = useState({ status: false });
   const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [selectTab, setSelectTab] = useState({
+    status: true,
+    type: 'all',
+  });
+
+  //function filtering data by status activities
+  const filterByStatusActivity = (activityStatus) => {
+    const result = activities.filter((activity) => activity.status === activityStatus);
+
+    return result;
+  };
 
   useEffect(() => {
     if (Object.keys(ticketQueue).length > 0) {
@@ -18,83 +31,16 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
     }
   }, [ticketQueue]);
 
-  const columns = [
-    {
-      title: 'No.',
-      uid: 'index',
-    },
-    {
-      title: 'No Antrian',
-      uid: 'queueNumber',
-    },
-    {
-      title: 'NIK',
-      uid: 'nik',
-    },
-    {
-      title: 'Nama Pasien',
-      uid: 'name',
-    },
-    {
-      title: 'No BPJS',
-      uid: 'bpjsNumber',
-    },
-    {
-      title: 'Specialist',
-      uid: 'specialist',
-    },
-    {
-      title: 'Actions',
-      uid: 'actions',
-    },
-  ];
-
-  const renderCellContent = (data, columnKey) => {
-    switch (columnKey) {
-      case 'index': {
-        return <p>{data.index + 1}</p>;
-      }
-
-      case 'phoneNumber': {
-        return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
-      }
-      case 'actions':
-        return (
-          <div className="flex justify-center items-center">
-            <Button
-              isIconOnly
-              type="button"
-              className="text-blue-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              startContent={<GrView />}
-              onClick={() => setTicketQueue(data)}
-            />
-            <Button
-              isIconOnly
-              type="button"
-              className="bx bxs-trash text-red-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              // onClick={() => setDeleteUser(data)}
-            />
-          </div>
-        );
-      default:
-        return data[columnKey];
-    }
-  };
-
-  const processedData = queues.map((queue, index) => ({ ...queue, index }));
-
   return (
     <>
       <AdminLayout>
         <div className="mx-4">
-          <h1 className="text-2xl font-bold mb-5">Queues Management</h1>
+          <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
           <div className="flex items-center justify-between w-full">
             <div className="relative w-3/5 text-neutral-600">
               <Search
-                state={searchQueue}
-                setState={setSearchQueue}
+                state={searchActivities}
+                setState={setSearchActivities}
               />
             </div>
             <div className="w-2/5 flex justify-end">
@@ -109,12 +55,46 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
               </Button>
             </div>
           </div>
+          <div className="flex justify-start items-center gap-2 mt-6">
+            <ButtonTab
+              type="all"
+              onClick={() => setSelectTab({ status: true, type: 'all' })}
+            />
+            <ButtonTab
+              type="queue"
+              onClick={() => setSelectTab({ status: true, type: 'queue' })}
+            />
+            <ButtonTab
+              type="checkup"
+              onClick={() => setSelectTab({ status: true, type: 'checkup' })}
+            />
+            {/* <ButtonTab
+              type="pharmacy"
+              onClick={() => setSelectTab({ status: true, type: 'pharmacy' })}
+            /> */}
+          </div>
         </div>
-        <TableUi
-          data={processedData}
-          columns={columns}
-          renderCellContent={renderCellContent}
-        />
+        {selectTab.status && selectTab.type === 'all' && (
+          <TableAllStatus
+            activities={activities}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
+        {selectTab.status && selectTab.type === 'queue' && (
+          <TableQueues
+            filterByStatusActivity={filterByStatusActivity}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
+        {selectTab.status && selectTab.type === 'checkup' && (
+          <TableCheckup
+            filterByStatusActivity={filterByStatusActivity}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
       </AdminLayout>
       {addQueue.status && (
         <ModalAddQueue
@@ -123,8 +103,8 @@ const QueueView = ({ users, setUsers, queues, setQueues, searchQueue, setSearchQ
           setUsers={setUsers}
           setAddQueue={setAddQueue}
           users={users}
-          queues={queues}
-          setQueues={setQueues}
+          activities={activities}
+          setActivities={setActivities}
           setTicketQueue={setTicketQueue}
         />
       )}
