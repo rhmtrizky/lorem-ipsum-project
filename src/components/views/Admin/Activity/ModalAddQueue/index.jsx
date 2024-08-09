@@ -62,9 +62,11 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
   const [selectedSchedule, setSelectedSchedule] = useState('');
   const [getSchedule, setGetSchedule] = useState({});
 
+  console.log(getSchedule);
+
   useEffect(() => {
     if (selectedSchedule) {
-      setGetSchedule(getDocter.schedule[selectedSchedule]);
+      setGetSchedule(getDocter?.schedule[selectedSchedule]);
     }
   }, [getDocter, selectedSchedule]);
 
@@ -79,21 +81,39 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
     }
   }, [bookDate]);
 
-  console.log(bookDate);
-
   useEffect(() => {
+    // get current date
     const currentDate = new Date();
     const selectedDate = new Date(bookDate);
 
-    console.log(selectedDate);
+    // Get current hour
+    const currentHour = currentDate.getHours();
+    const scheduleHour = parseInt(getSchedule?.endTime?.split(':')[0], 10);
 
-    // if (selectedDate < currentDate && selectedDate !== currentDate) {
-    //   setResultCompare({
-    //     status: false,
-    //     message: 'Tanggal yang Anda pilih sudah lewat.',
-    //   });
-    //   return;
-    // }
+    // condition to make sure slectedDate is same as currentDate
+    if (selectedDate.toDateString() === currentDate.toDateString()) {
+      // condition to check if currentHour is before time in scheduleHour
+      if (currentHour >= scheduleHour) {
+        setResultCompare({
+          status: false,
+          message: 'Jam sudah melebihi waktu yang tersedia.',
+        });
+        return;
+      }
+    }
+
+    // Set time part to 00:00:00 for both dates to compare only the date portion
+    currentDate.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    // condition to check if selectedDate is before currentDate
+    if (selectedDate < currentDate) {
+      setResultCompare({
+        status: false,
+        message: 'Tanggal yang Anda pilih sudah lewat.',
+      });
+      return;
+    }
 
     if (bookDay && getDocter?.schedule?.length > 0) {
       const isDayInSchedule = getDocter.schedule.some((item) => item.day.includes(bookDay));

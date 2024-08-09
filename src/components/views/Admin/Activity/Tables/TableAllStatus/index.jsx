@@ -3,17 +3,26 @@ import { GrView } from 'react-icons/gr';
 import { Button } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
-const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, getDateForFilter }) => {
+const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, getDateForFilter, selectTabSpecialist }) => {
   const [dataByFilterDate, setDataByFilterDate] = useState(activities || []);
 
   useEffect(() => {
-    if (getDateForFilter !== '') {
-      const result = activities.filter((activity) => activity.bookDate === getDateForFilter || getDateForFilter === '');
-      setDataByFilterDate(result);
-    } else {
-      setDataByFilterDate(activities);
+    if (activities.length > 0) {
+      if (getDateForFilter !== '' && selectTabSpecialist.type !== '') {
+        const result = activities.filter((activity) => activity.bookDate === getDateForFilter && activity.specialist === selectTabSpecialist.type);
+        setDataByFilterDate(result);
+      } else if (getDateForFilter !== '') {
+        const result = activities.filter((activity) => activity.bookDate === getDateForFilter);
+        setDataByFilterDate(result);
+      } else if (selectTabSpecialist.type !== '') {
+        const result = activities.filter((activity) => activity.specialist === selectTabSpecialist.type);
+        setDataByFilterDate(result);
+      } else {
+        setDataByFilterDate(activities);
+      }
     }
-  }, [getDateForFilter]);
+  }, [getDateForFilter, activities, selectTabSpecialist]);
+
   const columns = [
     {
       title: 'No.',
@@ -42,6 +51,10 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, get
     {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',

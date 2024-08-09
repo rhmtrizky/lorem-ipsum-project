@@ -50,6 +50,8 @@ const QueuePage = () => {
 
   const debouncedSearch = debounce(performSearch, 1000);
 
+  console.log(activities);
+
   useEffect(() => {
     debouncedSearch();
   }, [searchActivities]);

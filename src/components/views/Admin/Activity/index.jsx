@@ -1,5 +1,5 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
-import { Button, select, useDisclosure } from '@nextui-org/react';
+import { Button, useDisclosure } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import ModalAddQueue from './ModalAddQueue';
 import Search from '@/components/ui/Search';
@@ -9,7 +9,8 @@ import ButtonTab from '../Ui/ButtonTab';
 import TableQueues from './Tables/TableQueues';
 import TableCheckup from './Tables/TableCheckup';
 import InputUi from '@/components/ui/Input';
-import currentDate from '@/utils/currentDate';
+import TablePrepare from './Tables/TablePrepare';
+import TableTakeMedicine from './Tables/TableTakeMedicine';
 
 const ActivityView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
   const [addQueue, setAddQueue] = useState({ status: false });
@@ -19,8 +20,10 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
     status: true,
     type: 'all',
   });
-
-  console.log(selectTab);
+  const [selectTabSpecialist, setSelectTabSpecialist] = useState({
+    status: true,
+    type: '',
+  });
 
   useEffect(() => {
     if (Object.keys(ticketQueue).length > 0) {
@@ -32,7 +35,7 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
 
   //function filtering data by status activities
   const filterByStatusActivity = (activityStatus) => {
-    const result = activities.filter((activity) => activity.status === activityStatus && (getDateForFilter === '' || activity.bookDate === getDateForFilter));
+    const result = activities?.filter((activity) => activity?.status === activityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type));
     return result;
   };
 
@@ -73,21 +76,32 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
                 type="all"
                 state={selectTab}
                 setState={setSelectTab}
+                basicColor={'blue'}
               />
               <ButtonTab
                 type="queue"
                 state={selectTab}
                 setState={setSelectTab}
+                basicColor={'blue'}
+              />
+              <ButtonTab
+                type="preparing"
+                state={selectTab}
+                setState={setSelectTab}
+                basicColor={'blue'}
               />
               <ButtonTab
                 type="checkup"
                 state={selectTab}
                 setState={setSelectTab}
+                basicColor={'blue'}
               />
-              {/* <ButtonTab
-              type="pharmacy"
-              onClick={() => setSelectTab({ status: true, type: 'pharmacy' })}
-            /> */}
+              <ButtonTab
+                type="take medicine"
+                state={selectTab}
+                setState={setSelectTab}
+                basicColor={'blue'}
+              />
             </div>
             <Button
               endContent={<i className="bx bx-plus-circle text-xl" />}
@@ -99,12 +113,51 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
               Tambah Antrian
             </Button>
           </div>
+          <div className="flex gap-2 mt-3 w-full justify-start">
+            <ButtonTab
+              type=""
+              state={selectTabSpecialist}
+              setState={setSelectTabSpecialist}
+              basicColor={'green'}
+            />
+            <ButtonTab
+              type="poli mata"
+              state={selectTabSpecialist}
+              setState={setSelectTabSpecialist}
+              basicColor={'green'}
+            />
+            <ButtonTab
+              type="poli gigi"
+              state={selectTabSpecialist}
+              setState={setSelectTabSpecialist}
+              basicColor={'green'}
+            />
+            <ButtonTab
+              type="poli umum"
+              state={selectTabSpecialist}
+              setState={setSelectTabSpecialist}
+              basicColor={'green'}
+            />
+            <ButtonTab
+              type="poli anak"
+              state={selectTabSpecialist}
+              setState={setSelectTabSpecialist}
+              basicColor={'green'}
+            />
+            <ButtonTab
+              type="poli jantung"
+              state={selectTabSpecialist}
+              setState={setSelectTabSpecialist}
+              basicColor={'green'}
+            />
+          </div>
         </div>
         {selectTab.status && selectTab.type === 'all' && (
           <TableAllStatus
             activities={activities}
             setActivities={setActivities}
             getDateForFilter={getDateForFilter}
+            selectTabSpecialist={selectTabSpecialist}
             setTicketQueue={setTicketQueue}
             onOpen={onOpen}
             selectTab={selectTab}
@@ -121,24 +174,25 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
           </div>
         )}
         {selectTab.status && selectTab.type === 'checkup' && (
-          <div className="flex flex-col">
-            {/* <div className="flex justify-end mx-4 items-center gap-2">
-              <p>Filter by date : </p>
-              <InputUi
-                name="nik"
-                type="date"
-                placeholder="NIK"
-                defaultValue={formatDate}
-                onChange={(e) => setGetDateForFilter(e.target.value)}
-              />
-            </div> */}
-
-            <TableCheckup
-              filterByStatusActivity={filterByStatusActivity}
-              setTicketQueue={setTicketQueue}
-              onOpen={onOpen}
-            />
-          </div>
+          <TableCheckup
+            filterByStatusActivity={filterByStatusActivity}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
+        {selectTab.status && selectTab.type === 'preparing' && (
+          <TablePrepare
+            filterByStatusActivity={filterByStatusActivity}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
+        )}
+        {selectTab.status && selectTab.type === 'take medicine' && (
+          <TableTakeMedicine
+            filterByStatusActivity={filterByStatusActivity}
+            setTicketQueue={setTicketQueue}
+            onOpen={onOpen}
+          />
         )}
       </AdminLayout>
       {addQueue.status && (
@@ -158,8 +212,10 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
           onOpenChange={onOpenChange}
           isOpen={isOpen}
           users={users}
-          tickteQueue={ticketQueue}
+          ticketQueue={ticketQueue}
           setTicketQueue={setTicketQueue}
+          activities={activities}
+          setActivities={setActivities}
         />
       )}
     </>

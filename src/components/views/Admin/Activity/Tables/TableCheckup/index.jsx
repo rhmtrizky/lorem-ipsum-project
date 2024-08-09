@@ -27,8 +27,16 @@ const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',

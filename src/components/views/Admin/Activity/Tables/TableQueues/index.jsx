@@ -35,8 +35,16 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',
