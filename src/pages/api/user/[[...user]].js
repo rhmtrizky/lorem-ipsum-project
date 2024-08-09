@@ -50,6 +50,7 @@ export default async function handler(req, res) {
     });
   } else if (req.method === 'PUT') {
     const { data } = req.body;
+
     let field = {
       fullname: '',
       email: '',
@@ -79,6 +80,9 @@ export default async function handler(req, res) {
     }
     verify(req, res, async (decoded) => {
       if (decoded && decoded.role === 'admin') {
+        console.log(decoded.id);
+        console.log(user[0]);
+
         await updateData('users', user[0], field, (result) => {
           if (result) {
             res.status(200).json({

@@ -1,27 +1,42 @@
 import TableUi from '@/components/ui/Table';
 import { Button } from '@nextui-org/react';
+import { GrView } from 'react-icons/gr';
 
-const TableDoctors = ({ setUpdateUser, setDeleteUser, filterByRole, onOpen }) => {
+const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
+  console.log(filterByStatusActivity('checkup'));
+
   const columns = [
     {
       title: 'No.',
       uid: 'index',
     },
     {
-      title: 'Fullname',
-      uid: 'fullname',
+      title: 'No Antrian',
+      uid: 'queueNumber',
     },
     {
-      title: 'Email',
-      uid: 'email',
+      title: 'NIK',
+      uid: 'nik',
     },
     {
-      title: 'Phone Number',
-      uid: 'phoneNumber',
+      title: 'Nama Pasien',
+      uid: 'name',
+    },
+    {
+      title: 'No BPJS',
+      uid: 'bpjsNumber',
+    },
+    {
+      title: 'Book Date',
+      uid: 'bookDate',
     },
     {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',
@@ -39,20 +54,21 @@ const TableDoctors = ({ setUpdateUser, setDeleteUser, filterByRole, onOpen }) =>
       }
       case 'actions':
         return (
-          <div className="flex justify-center items-center bg-blue">
+          <div className="flex justify-center items-center">
             <Button
               isIconOnly
               type="button"
-              className="bx bxs-edit-alt text-blue-500 font-semibold text-[14px]"
+              className="text-blue-500 font-semibold text-[14px]"
               onPress={onOpen}
-              onClick={() => setUpdateUser(data)}
+              startContent={<GrView />}
+              onClick={() => setTicketQueue(data)}
             />
             <Button
               isIconOnly
               type="button"
               className="bx bxs-trash text-red-500 font-semibold text-[14px]"
               onPress={onOpen}
-              onClick={() => setDeleteUser(data)}
+              // onClick={() => setDeleteUser(data)}
             />
           </div>
         );
@@ -60,7 +76,7 @@ const TableDoctors = ({ setUpdateUser, setDeleteUser, filterByRole, onOpen }) =>
         return data[columnKey];
     }
   };
-  const processedData = filterByRole('doctor').map((user, index) => ({ ...user, index }));
+  const processedData = filterByStatusActivity('checkup').map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}
@@ -70,4 +86,4 @@ const TableDoctors = ({ setUpdateUser, setDeleteUser, filterByRole, onOpen }) =>
   );
 };
 
-export default TableDoctors;
+export default TableCheckup;

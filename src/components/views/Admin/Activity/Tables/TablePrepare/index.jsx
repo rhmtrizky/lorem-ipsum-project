@@ -1,8 +1,18 @@
 import TableUi from '@/components/ui/Table';
 import { Button } from '@nextui-org/react';
+import { useEffect } from 'react';
 import { GrView } from 'react-icons/gr';
 
-const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
+const TablePrepare = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
+  console.log(filterByStatusActivity('preparing'));
+  console.log(getDateForFilter);
+
+  useEffect(() => {
+    if (getDateForFilter !== '') {
+      filterByStatusActivity('preparing');
+    }
+  }, [getDateForFilter]);
+
   const columns = [
     {
       title: 'No.',
@@ -25,8 +35,16 @@ const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',
@@ -66,7 +84,7 @@ const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
         return data[columnKey];
     }
   };
-  const processedData = filterByStatusActivity('checkup').map((user, index) => ({ ...user, index }));
+  const processedData = filterByStatusActivity('preparing').map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}
@@ -76,4 +94,4 @@ const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
   );
 };
 
-export default TableCheckup;
+export default TablePrepare;

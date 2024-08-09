@@ -1,8 +1,18 @@
 import TableUi from '@/components/ui/Table';
 import { Button } from '@nextui-org/react';
+import { useEffect } from 'react';
 import { GrView } from 'react-icons/gr';
 
-const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
+const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
+  console.log(filterByStatusActivity('queue'));
+  console.log(getDateForFilter);
+
+  useEffect(() => {
+    if (getDateForFilter !== '') {
+      filterByStatusActivity('queue');
+    }
+  }, [getDateForFilter]);
+
   const columns = [
     {
       title: 'No.',
@@ -25,8 +35,16 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',

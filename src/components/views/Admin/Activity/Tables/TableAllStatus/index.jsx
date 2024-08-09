@@ -1,8 +1,28 @@
 import TableUi from '@/components/ui/Table';
 import { GrView } from 'react-icons/gr';
 import { Button } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 
-const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
+const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, getDateForFilter, selectTabSpecialist }) => {
+  const [dataByFilterDate, setDataByFilterDate] = useState(activities || []);
+
+  useEffect(() => {
+    if (activities.length > 0) {
+      if (getDateForFilter !== '' && selectTabSpecialist.type !== '') {
+        const result = activities.filter((activity) => activity.bookDate === getDateForFilter && activity.specialist === selectTabSpecialist.type);
+        setDataByFilterDate(result);
+      } else if (getDateForFilter !== '') {
+        const result = activities.filter((activity) => activity.bookDate === getDateForFilter);
+        setDataByFilterDate(result);
+      } else if (selectTabSpecialist.type !== '') {
+        const result = activities.filter((activity) => activity.specialist === selectTabSpecialist.type);
+        setDataByFilterDate(result);
+      } else {
+        setDataByFilterDate(activities);
+      }
+    }
+  }, [getDateForFilter, activities, selectTabSpecialist]);
+
   const columns = [
     {
       title: 'No.',
@@ -25,8 +45,16 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',
@@ -68,7 +96,7 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
     }
   };
 
-  const processedData = activities.map((queue, index) => ({ ...queue, index }));
+  const processedData = dataByFilterDate.map((queue, index) => ({ ...queue, index }));
   return (
     <TableUi
       data={processedData}

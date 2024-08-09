@@ -13,15 +13,7 @@ const Search = ({ state, setState }) => {
         onChange={(e) => setState(e.target.value)}
       />
       <div className="absolute top-3 right-2">
-        {state !== '' ? (
-          <button
-            type="button"
-            className="bx bx-x text-xl"
-            onClick={() => setState('')}
-          />
-        ) : (
-          <i className="bx bx-search text-xl" />
-        )}
+        <i className="bx bx-search text-xl" />
       </div>
     </>
   );

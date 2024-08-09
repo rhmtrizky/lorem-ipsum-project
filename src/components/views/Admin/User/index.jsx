@@ -56,19 +56,23 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
           <div className="flex justify-start items-center gap-2 mt-6">
             <ButtonTab
               type="all"
-              onClick={() => setSelectTab({ status: true, type: 'all' })}
+              state={selectTab}
+              setState={setSelectTab}
             />
             <ButtonTab
               type="patient"
-              onClick={() => setSelectTab({ status: true, type: 'patient' })}
+              state={selectTab}
+              setState={setSelectTab}
             />
             <ButtonTab
               type="doctor"
-              onClick={() => setSelectTab({ status: true, type: 'doctor' })}
+              state={selectTab}
+              setState={setSelectTab}
             />
             <ButtonTab
               type="pharmacy"
-              onClick={() => setSelectTab({ status: true, type: 'pharmacy' })}
+              state={selectTab}
+              setState={setSelectTab}
             />
           </div>
         </div>

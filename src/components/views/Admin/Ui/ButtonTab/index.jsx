@@ -1,13 +1,13 @@
 const { Button } = require('@nextui-org/react');
 
-const ButtonTab = ({ type, onClick }) => {
+const ButtonTab = ({ type, state, setState, basicColor }) => {
   return (
     <Button
       type="button"
-      className="text-blue-900 font-semibold text-[12px] rounded-md px-3 border-2 border-blue-600"
-      onClick={onClick}
+      className={`${state.status && state.type === type ? `bg-${basicColor}-500 text-white` : `text-${basicColor}-900 border-2 border-${basicColor}-600`} font-semibold text-[12px] rounded-md px-3`}
+      onClick={() => setState({ status: true, type: type })}
     >
-      {type.charAt(0).toUpperCase() + type.slice(1)}
+      {type.charAt(0).toUpperCase() + type.slice(1) || 'All'}
     </Button>
   );
 };
