@@ -160,3 +160,8 @@ body {
 .custom::-webkit-scrollbar {
   display: none;
 }
+
+.button-card-doctor {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
+}

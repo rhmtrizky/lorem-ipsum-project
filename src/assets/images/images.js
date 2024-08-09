@@ -37,3 +37,11 @@ export const rightArrow = "/right-arrow.png"
 export const administrationImage = "/administration-image.jpg"
 export const dots = "/dots.png"
 export const arrowDottedLeft = "/left-dotted-arrowhead.png"
+
+// export const doctorCard = "/doctor-card.png"
+
+export const doctorCard = "/confident-doctor.jpg"
+
+export const doctorCard1 = "/doctor-card1.jpg"
+
+export const stetoskopPurple = "/stethoscope-purple.png"
