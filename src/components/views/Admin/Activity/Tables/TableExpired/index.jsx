@@ -1,25 +1,17 @@
 import TableUi from '@/components/ui/Table';
-import { GrView } from 'react-icons/gr';
 import { Button } from '@nextui-org/react';
 import { useEffect } from 'react';
+import { GrView } from 'react-icons/gr';
 
-const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, getDateForFilter, selectTabSpecialist, filterDataFotTableAllUsers, setFilterDataFotTableAllUsers }) => {
+const TableExpired = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
+  console.log(filterByStatusActivity('expired'));
+  console.log(getDateForFilter);
+
   useEffect(() => {
-    if (activities.length > 0) {
-      if (getDateForFilter !== '' && selectTabSpecialist.type !== '') {
-        const result = activities.filter((activity) => activity.bookDate === getDateForFilter && activity.specialist === selectTabSpecialist.type);
-        setFilterDataFotTableAllUsers(result);
-      } else if (getDateForFilter !== '') {
-        const result = activities.filter((activity) => activity.bookDate === getDateForFilter);
-        setFilterDataFotTableAllUsers(result);
-      } else if (selectTabSpecialist.type !== '') {
-        const result = activities.filter((activity) => activity.specialist === selectTabSpecialist.type);
-        setFilterDataFotTableAllUsers(result);
-      } else {
-        setFilterDataFotTableAllUsers(activities);
-      }
+    if (getDateForFilter !== '') {
+      filterByStatusActivity('expired');
     }
-  }, [getDateForFilter, activities, selectTabSpecialist]);
+  }, [getDateForFilter]);
 
   const columns = [
     {
@@ -65,7 +57,6 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, get
       case 'index': {
         return <p>{data.index + 1}</p>;
       }
-
       case 'phoneNumber': {
         return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
       }
@@ -93,8 +84,7 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, get
         return data[columnKey];
     }
   };
-
-  const processedData = filterDataFotTableAllUsers.map((queue, index) => ({ ...queue, index }));
+  const processedData = filterByStatusActivity('expired').map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}
@@ -104,4 +94,4 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, get
   );
 };
 
-export default TableAllStatus;
+export default TableExpired;

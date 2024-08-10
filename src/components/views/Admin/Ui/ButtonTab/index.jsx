@@ -1,8 +1,7 @@
 import { Button } from '@nextui-org/react';
 
-const ButtonTab = ({ type, state, setState, basicColor, activities }) => {
+const ButtonTab = ({ type, state, setState, basicColor }) => {
   console.log(state);
-  console.log(activities);
 
   return (
     <div className="relative">
