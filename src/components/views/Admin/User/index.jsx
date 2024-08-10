@@ -58,21 +58,25 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
               type="all"
               state={selectTab}
               setState={setSelectTab}
+              basicColor={'blue'}
             />
             <ButtonTab
               type="patient"
               state={selectTab}
               setState={setSelectTab}
+              basicColor={'blue'}
             />
             <ButtonTab
               type="doctor"
               state={selectTab}
               setState={setSelectTab}
+              basicColor={'blue'}
             />
             <ButtonTab
               type="pharmacy"
               state={selectTab}
               setState={setSelectTab}
+              basicColor={'blue'}
             />
           </div>
         </div>

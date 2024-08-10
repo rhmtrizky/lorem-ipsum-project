@@ -16,14 +16,6 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
   const [addQueue, setAddQueue] = useState({ status: false });
   const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [selectTab, setSelectTab] = useState({
-    status: true,
-    type: 'all',
-  });
-  const [selectTabSpecialist, setSelectTabSpecialist] = useState({
-    status: true,
-    type: '',
-  });
 
   useEffect(() => {
     if (Object.keys(ticketQueue).length > 0) {
@@ -31,13 +23,46 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
     }
   }, [ticketQueue]);
 
+  const [selectTab, setSelectTab] = useState({
+    status: true,
+    type: '',
+    length: 0,
+  });
+
+  const [selectTabSpecialist, setSelectTabSpecialist] = useState({
+    status: true,
+    type: '',
+    length: 0,
+  });
+
+  // state for filter by date
   const [getDateForFilter, setGetDateForFilter] = useState('');
+  const [getActivityStatus, setGetActivityStatus] = useState('');
+  const [filterDataFotTableAllUsers, setFilterDataFotTableAllUsers] = useState(activities || []);
 
   //function filtering data by status activities
   const filterByStatusActivity = (activityStatus) => {
     const result = activities?.filter((activity) => activity?.status === activityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type));
+    setGetActivityStatus(activityStatus);
     return result;
   };
+
+  useEffect(() => {
+    if (activities?.length > 0 && getActivityStatus !== '') {
+      // Get length by specialist within the filtered status
+      const filteredByActivities = activities.filter((activity) => activity?.status === getActivityStatus || (activity?.status === '' && (getDateForFilter === '' || activity?.bookDate === getDateForFilter)));
+      setSelectTab({
+        ...selectTab,
+        length: filteredByActivities.length,
+      });
+
+      const filteredBySpecialist = filteredByActivities.filter((activity) => selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type);
+      setSelectTabSpecialist({
+        ...selectTabSpecialist,
+        length: filteredBySpecialist.length,
+      });
+    }
+  }, [activities, getActivityStatus, selectTabSpecialist.type]);
 
   return (
     <>
@@ -72,12 +97,16 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
           </div>
           <div className="flex justify-between items-center mt-6">
             <div className="flex gap-2">
-              <ButtonTab
-                type="all"
-                state={selectTab}
-                setState={setSelectTab}
-                basicColor={'blue'}
-              />
+              <div className="relative">
+                <ButtonTab
+                  type=""
+                  state={selectTab}
+                  setState={setSelectTab}
+                  basicColor={'blue'}
+                  activities={activities}
+                />
+                <p className={'flex justify-center items-center text-sm font-semibold bg-white text-green-500 absolute -top-1 -right-1 rounded-full px-2'}>{filterDataFotTableAllUsers.length}</p>
+              </div>
               <ButtonTab
                 type="queue"
                 state={selectTab}
@@ -152,7 +181,7 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
             />
           </div>
         </div>
-        {selectTab.status && selectTab.type === 'all' && (
+        {selectTab.status && selectTab.type === '' && (
           <TableAllStatus
             activities={activities}
             setActivities={setActivities}
@@ -161,6 +190,8 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
             setTicketQueue={setTicketQueue}
             onOpen={onOpen}
             selectTab={selectTab}
+            filterDataFotTableAllUsers={filterDataFotTableAllUsers}
+            setFilterDataFotTableAllUsers={setFilterDataFotTableAllUsers}
           />
         )}
         {selectTab.status && selectTab.type === 'queue' && (
