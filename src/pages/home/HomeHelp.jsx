@@ -27,7 +27,7 @@ export default function HomeHelp() {
                             Anda bisa lihat cara daftar dengan mengklik tombol dibawah ini.
                         </p>
                         <Link href={'flowRegisBpjs'} >
-                            <button className='w-56 h-12 border-2 border-[#654AB4] text-black hover:bg-[#654AB4] hover:text-white font-bold rounded-lg py-2 px-8 mt-4'>
+                            <button className='w-56 h-12 border-2 border-[#654AB4] text-black hover:bg-[#654AB4] hover:text-white font-bold rounded-lg py-2 px-8 mt-4' style={{transition: '.3s ease'}}>
                                 Cara Daftar
                             </button>
                         </Link>

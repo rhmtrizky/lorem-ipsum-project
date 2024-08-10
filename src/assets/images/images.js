@@ -45,3 +45,4 @@ export const doctorCard = "/confident-doctor.jpg"
 export const doctorCard1 = "/doctor-card1.jpg"
 
 export const stetoskopPurple = "/stethoscope-purple.png"
+export const hospitalPurple = "/hospital-purple.png"

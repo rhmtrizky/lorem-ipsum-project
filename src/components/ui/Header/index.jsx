@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Sidebar } from '../Sidebar'
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link';
 
 export default function Header() {
     const session = useSession();
@@ -47,9 +48,15 @@ export default function Header() {
 
                     <div className='w-full h-1/2 flex justify-around items-center font-bold px-6' >
                         <ul className='flex gap-6 text-sm text-slate-400' >
-                            <li>Cari Dokter</li>
-                            <li>Informasi</li>
-                            <li>Kontak</li>
+                            <li>
+                                <Link href={"/findDoctor"} >Cari Dokter</Link>
+                            </li>
+                            <li>
+                                <Link href={"/"} >Informasi</Link>
+                            </li>
+                            <li>
+                                <Link href={"/"} >Kontak</Link>
+                            </li>
                         </ul>
                         <motion.button
                             whileHover={{ scale: 1.1 }}

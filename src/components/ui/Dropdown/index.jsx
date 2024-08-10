@@ -15,7 +15,7 @@ export default function Dropdown({ toggleDropDown, dropdownOpen, testingDay, tit
                 </svg>
             </button>
             {dropdownOpen &&
-                <div className="absolute top-40 bg-white rounded-lg shadow-xl w-44">
+                <div className="w-44 absolute top-40 bg-white rounded-lg shadow-xl" style={{transition: '3s ease-in-out'}}>
                     <ul className="py-2 text-sm">
                         {specialists.map((specialist) => (
                             <li key={specialist.poli}>
