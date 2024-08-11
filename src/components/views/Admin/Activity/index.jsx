@@ -22,9 +22,11 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
-    if (Object.keys(ticketQueue).length > 0) {
-      onOpen();
-    }
+    const autoOpenModalTicket = () => {
+      if (Object.keys(ticketQueue).length > 0) {
+        onOpen();
+      }
+    };
   }, [ticketQueue]);
 
   const [selectTab, setSelectTab] = useState({
@@ -46,8 +48,9 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
 
   //function filtering data by status activities
   const filterByStatusActivity = (activityStatus) => {
-    const result = activities?.filter((activity) => activity?.status === activityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type));
-    setGetActivityStatus(activityStatus);
+    const result = activities?.filter((activity) => (activityStatus === '' || activity?.status === activityStatus) && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type));
+
+    setGetActivityStatus(activityStatus || '');
     return result;
   };
 
@@ -55,7 +58,7 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
   useEffect(() => {
     if (activities?.length > 0 && getActivityStatus !== '') {
       // Get length by specialist within the filtered status
-      const filteredByActivities = activities.filter((activity) => activity?.status === getActivityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter));
+      const filteredByActivities = activities.filter((activity) => getActivityStatus === '' || (activity?.status === getActivityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter)));
 
       setSelectTab({
         ...selectTab,
@@ -69,7 +72,7 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
         length: filteredBySpecialist.length,
       });
     }
-  }, [activities, getActivityStatus, selectTabSpecialist.type]);
+  }, [activities, getActivityStatus, selectTabSpecialist.type, getDateForFilter]);
 
   // function to refresh expired activities
   const handleRefresh = async () => {
@@ -228,14 +231,13 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
           {selectTab.status && selectTab.type === '' && (
             <TableAllStatus
               activities={activities}
-              setActivities={setActivities}
               getDateForFilter={getDateForFilter}
               selectTabSpecialist={selectTabSpecialist}
               setTicketQueue={setTicketQueue}
               onOpen={onOpen}
-              selectTab={selectTab}
               filterDataFotTableAllUsers={filterDataFotTableAllUsers}
               setFilterDataFotTableAllUsers={setFilterDataFotTableAllUsers}
+              filterByStatusActivity={filterByStatusActivity}
             />
           )}
           {selectTab.status && selectTab.type === 'queue' && (

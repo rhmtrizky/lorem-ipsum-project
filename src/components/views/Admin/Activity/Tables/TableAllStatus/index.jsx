@@ -3,20 +3,26 @@ import { GrView } from 'react-icons/gr';
 import { Button } from '@nextui-org/react';
 import { useEffect } from 'react';
 
-const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, getDateForFilter, selectTabSpecialist, filterDataFotTableAllUsers, setFilterDataFotTableAllUsers }) => {
+const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, selectTabSpecialist, filterDataFotTableAllUsers, setFilterDataFotTableAllUsers, filterByStatusActivity }) => {
+  console.log(filterDataFotTableAllUsers.length);
+
   useEffect(() => {
     if (activities.length > 0) {
       if (getDateForFilter !== '' && selectTabSpecialist.type !== '') {
         const result = activities.filter((activity) => activity.bookDate === getDateForFilter && activity.specialist === selectTabSpecialist.type);
         setFilterDataFotTableAllUsers(result);
+        filterByStatusActivity('');
       } else if (getDateForFilter !== '') {
         const result = activities.filter((activity) => activity.bookDate === getDateForFilter);
         setFilterDataFotTableAllUsers(result);
+        filterByStatusActivity('');
       } else if (selectTabSpecialist.type !== '') {
         const result = activities.filter((activity) => activity.specialist === selectTabSpecialist.type);
         setFilterDataFotTableAllUsers(result);
+        filterByStatusActivity('');
       } else {
         setFilterDataFotTableAllUsers(activities);
+        filterByStatusActivity('');
       }
     }
   }, [getDateForFilter, activities, selectTabSpecialist]);

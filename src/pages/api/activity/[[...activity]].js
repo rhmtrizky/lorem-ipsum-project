@@ -75,24 +75,5 @@ export default async function handler(req, res) {
         });
       }
     });
-  } else if (req.method === 'DELETE') {
-    // console.log(user);
-    // verify(req, res, async (decoded) => {
-    //   if (decoded && decoded.role === 'admin') {
-    //     await deleteData('users', user[0], (result) => {
-    //       if (result) {
-    //         res.status(200).json({
-    //           status: true,
-    //           message: 'Success',
-    //         });
-    //       } else {
-    //         res.status(400).json({
-    //           status: false,
-    //           message: 'Failed Delete user',
-    //         });
-    //       }
-    //     });
-    //   }
-    // });
   }
 }
