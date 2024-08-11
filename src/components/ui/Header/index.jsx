@@ -49,22 +49,22 @@ export default function Header() {
                     <div className='w-full h-1/2 flex justify-around items-center font-bold px-6' >
                         <ul className='flex gap-6 text-sm text-slate-400' >
                             <li>
-                                <Link href={"/findDoctor"} >Cari Dokter</Link>
+                                <Link href={"/findDoctor"} className='hover:text-[#654AB4]' style={{transition: '.3s ease'}} >Cari Dokter</Link>
                             </li>
                             <li>
-                                <Link href={"/"} >Informasi</Link>
+                                <Link href={"/"} className='hover:text-[#654AB4]' style={{transition: '.3s ease'}}>Informasi</Link>
                             </li>
                             <li>
-                                <Link href={"/"} >Kontak</Link>
+                                <Link href={"/"} className='hover:text-[#654AB4]' style={{transition: '.3s ease'}}>Kontak</Link>
                             </li>
                         </ul>
                         <motion.button
                             whileHover={{ scale: 1.1 }}
-                            className="h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-full shadow-lg hover:shadow-blue-500/50"
+                            className="h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-full shadow-lg hover:shadow-purple-500/50"
                             onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
                             >
                             <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
-                            <div className="w-5 h-5 flex items-center justify-center bg-cyan-400 rounded-full">
+                            <div className="w-5 h-5 flex items-center justify-center bg-[#FFBEBE] rounded-full">
                                 <Image
                                 src={next}
                                 width={15}

@@ -76,7 +76,7 @@ export const Sidebar = () => {
                       >
                         <motion.div
                           {...framerText(idx)}
-                          className="w-full flex justify-between text-center hover:bg-blue-500 border-2 border-cyan-400 p-3 rounded-xl"
+                          className="w-full flex justify-between text-center border-purple-900 border-2 hover:bg-[#654ab4a8] p-3 rounded-xl"
                         >
                           <span>{title}</span>
                           <Icon className="text-2xl" />
@@ -90,12 +90,12 @@ export const Sidebar = () => {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   {...framerButton}
-                  className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-blue-500/50"
+                  className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-purple-500/50"
                   onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
                   aria-label="masuk"
                 >
                   <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
-                  <div className="w-5 h-5 flex items-center justify-center bg-cyan-400 rounded-full">
+                  <div className="w-5 h-5 flex items-center justify-center bg-[#FFBEBE] rounded-full">
                     <Image
                       src={next}
                       width={15}

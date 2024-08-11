@@ -4,7 +4,8 @@ import React from 'react'
 
 export default function CardDoctorSchedule() {
     return (
-        <div className='w-1/2' >
+        // kalau appointments w-full sedangkan schedules w-1/2
+        <div className='w-full' >
             <div className='flex items-center gap-6 bg-white w-full h-[200px] shadow-lg p-3' >
                 <div>
                     <Image src={doctorCard} width={250} height={250} alt='doctor.png' />

@@ -46,3 +46,7 @@ export const doctorCard1 = "/doctor-card1.jpg"
 
 export const stetoskopPurple = "/stethoscope-purple.png"
 export const hospitalPurple = "/hospital-purple.png"
+
+export const addUser = "/add-user.png"
+
+export const bufferBro = "/Buffer-bro.png"

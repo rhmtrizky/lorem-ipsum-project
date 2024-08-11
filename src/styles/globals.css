@@ -5,17 +5,26 @@
 /* boxicons */
 @import url('boxicons/css/boxicons.min.css');
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Playwrite+DE+Grund:wght@100..400&family=Playwrite+IT+Moderna:wght@100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Playwrite+DE+Grund:wght@100..400&family=Playwrite+IT+Moderna:wght@100..400&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 body {
   background-color: #eeeff2;
 }
 
-.bebas-neue-regular {
-  font-family: "Bebas Neue", sans-serif;
-  font-weight: 400;
+/* Font start */
+.rubik {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
   font-style: normal;
 }
+
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+/* Font End */
 
 .bg-button-pink {
   background-color: #ffbebe85;
@@ -157,12 +166,7 @@ body {
   display: none;
 }
 
-.button-card-doctor {
-  background-color: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(2px);
-}
-
-/* linkarang start */
+/* Dot schedules start */
 .dot {
   position: relative;
   width: 15px;
@@ -182,3 +186,4 @@ body {
   border-radius: 100%;
   background-color: white;
 }
+/* Dot schedules end */
