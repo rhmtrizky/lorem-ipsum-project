@@ -11,39 +11,105 @@ import TableCheckup from './Tables/TableCheckup';
 import InputUi from '@/components/ui/Input';
 import TablePrepare from './Tables/TablePrepare';
 import TableTakeMedicine from './Tables/TableTakeMedicine';
+import activityService from '@/services/activity';
+import { useSession } from 'next-auth/react';
+import TableExpired from './Tables/TableExpired';
 
 const ActivityView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
+  const { data: session } = useSession();
   const [addQueue, setAddQueue] = useState({ status: false });
   const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  useEffect(() => {
+    const autoOpenModalTicket = () => {
+      if (Object.keys(ticketQueue).length > 0) {
+        onOpen();
+      }
+    };
+  }, [ticketQueue]);
+
   const [selectTab, setSelectTab] = useState({
     status: true,
-    type: 'all',
+    type: '',
+    length: 0,
   });
+
   const [selectTabSpecialist, setSelectTabSpecialist] = useState({
     status: true,
     type: '',
+    length: 0,
   });
 
-  useEffect(() => {
-    if (Object.keys(ticketQueue).length > 0) {
-      onOpen();
-    }
-  }, [ticketQueue]);
-
+  // state for filter by date
   const [getDateForFilter, setGetDateForFilter] = useState('');
+  const [getActivityStatus, setGetActivityStatus] = useState('');
+  const [filterDataFotTableAllUsers, setFilterDataFotTableAllUsers] = useState(activities || []);
 
   //function filtering data by status activities
   const filterByStatusActivity = (activityStatus) => {
-    const result = activities?.filter((activity) => activity?.status === activityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type));
+    const result = activities?.filter((activity) => (activityStatus === '' || activity?.status === activityStatus) && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type));
+
+    setGetActivityStatus(activityStatus || '');
     return result;
+  };
+
+  //filtering to get length every filter component
+  useEffect(() => {
+    if (activities?.length > 0 && getActivityStatus !== '') {
+      // Get length by specialist within the filtered status
+      const filteredByActivities = activities.filter((activity) => getActivityStatus === '' || (activity?.status === getActivityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter)));
+
+      setSelectTab({
+        ...selectTab,
+        length: filteredByActivities.length,
+      });
+
+      const filteredBySpecialist = filteredByActivities.filter((activity) => selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type);
+
+      setSelectTabSpecialist({
+        ...selectTabSpecialist,
+        length: filteredBySpecialist.length,
+      });
+    }
+  }, [activities, getActivityStatus, selectTabSpecialist.type, getDateForFilter]);
+
+  // function to refresh expired activities
+  const handleRefresh = async () => {
+    // Mengatur currentDate ke awal hari saat ini
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    // Filter untuk menemukan aktivitas dengan status 'queue' dan tanggal sebelum currentDate
+    const result = activities.filter((activity) => {
+      const activityDate = new Date(activity.bookDate);
+      activityDate.setHours(0, 0, 0, 0); // Mengatur waktu activityDate ke awal hari
+      return activity.status === 'queue' && activityDate < currentDate;
+    });
+
+    try {
+      // Update aktivitas yang sudah kedaluwarsa satu per satu
+      result.forEach(async (activity) => await activityService.updateActivity(activity.id, { id: activity.id, status: 'expired' }, session.accessToken));
+    } catch (error) {
+      console.error('Error updating activities:', error.response?.data || error.message);
+    }
   };
 
   return (
     <>
       <AdminLayout>
         <div className="mx-4">
-          <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
+          <div className="flex justify-between items-center mb-3">
+            <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
+
+            <Button
+              type="submit"
+              onClick={handleRefresh}
+              className="text-white font-semibold text-sm rounded-md  bg-blue-500"
+            >
+              Refresh Page
+            </Button>
+          </div>
           <div className="flex items-center justify-between w-full">
             <div className="relative w-3/5 text-neutral-600">
               <Search
@@ -72,12 +138,15 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
           </div>
           <div className="flex justify-between items-center mt-6">
             <div className="flex gap-2">
-              <ButtonTab
-                type="all"
-                state={selectTab}
-                setState={setSelectTab}
-                basicColor={'blue'}
-              />
+              <div className="relative">
+                <ButtonTab
+                  type=""
+                  state={selectTab}
+                  setState={setSelectTab}
+                  basicColor={'blue'}
+                />
+                <p className={'flex justify-center items-center text-sm font-semibold bg-white text-green-500 absolute -top-1 -right-1 rounded-full px-2'}>{filterDataFotTableAllUsers.length}</p>
+              </div>
               <ButtonTab
                 type="queue"
                 state={selectTab}
@@ -102,6 +171,12 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
                 setState={setSelectTab}
                 basicColor={'blue'}
               />
+              <ButtonTab
+                type="expired"
+                state={selectTab}
+                setState={setSelectTab}
+                basicColor={'red'}
+              />
             </div>
             <Button
               endContent={<i className="bx bx-plus-circle text-xl" />}
@@ -113,7 +188,9 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
               Tambah Antrian
             </Button>
           </div>
-          <div className="flex gap-2 mt-3 w-full justify-start">
+        </div>
+        <div className="border-2 border-neutral-300 mt-3 px-2">
+          <div className="flex gap-2 mt-3 w-full justify-end mr-3">
             <ButtonTab
               type=""
               state={selectTabSpecialist}
@@ -151,49 +228,57 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
               basicColor={'green'}
             />
           </div>
-        </div>
-        {selectTab.status && selectTab.type === 'all' && (
-          <TableAllStatus
-            activities={activities}
-            setActivities={setActivities}
-            getDateForFilter={getDateForFilter}
-            selectTabSpecialist={selectTabSpecialist}
-            setTicketQueue={setTicketQueue}
-            onOpen={onOpen}
-            selectTab={selectTab}
-          />
-        )}
-        {selectTab.status && selectTab.type === 'queue' && (
-          <div className="flex flex-col">
-            <TableQueues
+          {selectTab.status && selectTab.type === '' && (
+            <TableAllStatus
+              activities={activities}
+              getDateForFilter={getDateForFilter}
+              selectTabSpecialist={selectTabSpecialist}
+              setTicketQueue={setTicketQueue}
+              onOpen={onOpen}
+              filterDataFotTableAllUsers={filterDataFotTableAllUsers}
+              setFilterDataFotTableAllUsers={setFilterDataFotTableAllUsers}
+              filterByStatusActivity={filterByStatusActivity}
+            />
+          )}
+          {selectTab.status && selectTab.type === 'queue' && (
+            <div className="flex flex-col">
+              <TableQueues
+                filterByStatusActivity={filterByStatusActivity}
+                setTicketQueue={setTicketQueue}
+                onOpen={onOpen}
+                getDateForFilter={getDateForFilter}
+              />
+            </div>
+          )}
+          {selectTab.status && selectTab.type === 'checkup' && (
+            <TableCheckup
               filterByStatusActivity={filterByStatusActivity}
               setTicketQueue={setTicketQueue}
               onOpen={onOpen}
-              getDateForFilter={getDateForFilter}
             />
-          </div>
-        )}
-        {selectTab.status && selectTab.type === 'checkup' && (
-          <TableCheckup
-            filterByStatusActivity={filterByStatusActivity}
-            setTicketQueue={setTicketQueue}
-            onOpen={onOpen}
-          />
-        )}
-        {selectTab.status && selectTab.type === 'preparing' && (
-          <TablePrepare
-            filterByStatusActivity={filterByStatusActivity}
-            setTicketQueue={setTicketQueue}
-            onOpen={onOpen}
-          />
-        )}
-        {selectTab.status && selectTab.type === 'take medicine' && (
-          <TableTakeMedicine
-            filterByStatusActivity={filterByStatusActivity}
-            setTicketQueue={setTicketQueue}
-            onOpen={onOpen}
-          />
-        )}
+          )}
+          {selectTab.status && selectTab.type === 'preparing' && (
+            <TablePrepare
+              filterByStatusActivity={filterByStatusActivity}
+              setTicketQueue={setTicketQueue}
+              onOpen={onOpen}
+            />
+          )}
+          {selectTab.status && selectTab.type === 'take medicine' && (
+            <TableTakeMedicine
+              filterByStatusActivity={filterByStatusActivity}
+              setTicketQueue={setTicketQueue}
+              onOpen={onOpen}
+            />
+          )}
+          {selectTab.status && selectTab.type === 'expired' && (
+            <TableExpired
+              filterByStatusActivity={filterByStatusActivity}
+              setTicketQueue={setTicketQueue}
+              onOpen={onOpen}
+            />
+          )}
+        </div>
       </AdminLayout>
       {addQueue.status && (
         <ModalAddQueue

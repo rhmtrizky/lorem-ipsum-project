@@ -62,8 +62,6 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
   const [selectedSchedule, setSelectedSchedule] = useState('');
   const [getSchedule, setGetSchedule] = useState({});
 
-  console.log(getSchedule);
-
   useEffect(() => {
     if (selectedSchedule) {
       setGetSchedule(getDocter?.schedule[selectedSchedule]);

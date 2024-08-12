@@ -1,24 +1,28 @@
 import TableUi from '@/components/ui/Table';
 import { GrView } from 'react-icons/gr';
 import { Button } from '@nextui-org/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, getDateForFilter, selectTabSpecialist }) => {
-  const [dataByFilterDate, setDataByFilterDate] = useState(activities || []);
+const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, selectTabSpecialist, filterDataFotTableAllUsers, setFilterDataFotTableAllUsers, filterByStatusActivity }) => {
+  console.log(filterDataFotTableAllUsers.length);
 
   useEffect(() => {
     if (activities.length > 0) {
       if (getDateForFilter !== '' && selectTabSpecialist.type !== '') {
         const result = activities.filter((activity) => activity.bookDate === getDateForFilter && activity.specialist === selectTabSpecialist.type);
-        setDataByFilterDate(result);
+        setFilterDataFotTableAllUsers(result);
+        filterByStatusActivity('');
       } else if (getDateForFilter !== '') {
         const result = activities.filter((activity) => activity.bookDate === getDateForFilter);
-        setDataByFilterDate(result);
+        setFilterDataFotTableAllUsers(result);
+        filterByStatusActivity('');
       } else if (selectTabSpecialist.type !== '') {
         const result = activities.filter((activity) => activity.specialist === selectTabSpecialist.type);
-        setDataByFilterDate(result);
+        setFilterDataFotTableAllUsers(result);
+        filterByStatusActivity('');
       } else {
-        setDataByFilterDate(activities);
+        setFilterDataFotTableAllUsers(activities);
+        filterByStatusActivity('');
       }
     }
   }, [getDateForFilter, activities, selectTabSpecialist]);
@@ -96,7 +100,7 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, setActivities, get
     }
   };
 
-  const processedData = dataByFilterDate.map((queue, index) => ({ ...queue, index }));
+  const processedData = filterDataFotTableAllUsers.map((queue, index) => ({ ...queue, index }));
   return (
     <TableUi
       data={processedData}

@@ -2,15 +2,17 @@ import InputUi from '@/components/ui/Input';
 import ModalUi from '@/components/ui/Modal';
 import activityService from '@/services/activity';
 import getDay from '@/utils/getDay';
-import { Button, Checkbox } from '@nextui-org/react';
+import { Button, Checkbox, Select, SelectItem, Textarea } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { roles, gender, golDarah, specialistTypes } from '@/constraint/adminPanel';
 
 const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQueue, activities, setActivities }) => {
   const { data: session } = useSession();
   const [doctor, setDoctor] = useState({});
   const [isSelected, setIsSelected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(ticketQueue);
 
   useEffect(() => {
     const getDoctors = users.filter((user) => user.role === 'doctor');
@@ -21,12 +23,24 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
   const handleUpdateStatusActivities = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+    const form = e.target;
+    const formData = new FormData(form);
     if (ticketQueue.status === 'queue') {
       const data = {
         id: ticketQueue.id,
+        nik: formData.get('nik'),
+        bpjsNumber: formData.get('bpjsNumber'),
+        bornPlace: formData.get('bornPlace'),
+        bornDate: formData.get('bornDate'),
+        gender: formData.get('gender'),
+        address: formData.get('address'),
+        golDarah: formData.get('golDarah'),
+        specialist: ticketQueue.specialist,
+        doctorId: ticketQueue.doctorId,
+        keluhan: formData.get('keluhan'),
         status: 'preparing',
       };
+
       try {
         // Update the activity status to 'checkup'
         const result = await activityService.updateActivity(ticketQueue.id, data, session.accessToken);
@@ -66,9 +80,13 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
         setIsLoading(false);
       }
     } else if (ticketQueue.status === 'checkup') {
+      const form = e.target;
+      const formData = new FormData(form);
       const data = {
         id: ticketQueue.id,
         status: 'take medicine',
+        resepDokter: formData.get('resepDokter'),
+        catatanDokter: formData.get('catatanDokter'),
       };
 
       try {
@@ -121,8 +139,6 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
     }
   };
 
-  console.log(activities);
-
   return (
     <div>
       <ModalUi
@@ -133,12 +149,13 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
       >
         <form
           onSubmit={handleUpdateStatusActivities}
-          className="flex flex-col justify-center items-center gap-2"
+          className="flex flex-col justify-center items-center gap-1"
         >
-          <div className="flex flex-col justify-center items-center text-white font-semibold bg-blue-500 h-[80px] w-[120px] rounded-md">
+          <div className="flex flex-col justify-center items-center text-white font-semibold bg-blue-500 h-[80px] w-[120px] rounded-md ">
             <h1>Ticket Queue</h1>
             <h1 className="text-4xl font-bold">{ticketQueue?.queueNumber}</h1>
           </div>
+          <h1 className="font-semibold text-blue-900">Status : {ticketQueue?.status.charAt(0).toUpperCase() + ticketQueue?.status.slice(1)}</h1>
           <div className="border-2 border-blue-300 rounded-md p-3 w-full text-md text-blue-900 flex flex-col gap-1 mt-2">
             <div className="flex justify-between items-center ">
               <h1 className="font-semibold flex gap-1 justify-center items-center">
@@ -194,18 +211,16 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
               className={'border-2 border-blue-300 rounded-md text-blue-900'}
               colorLabel={'blue-900'}
               required
-              disabled
             />
             <InputUi
               name="bpjsNumber"
-              type={'text'}
+              type={'number'}
               placeholder={'No BPJS'}
               label={'No BPJS'}
               defaultValue={ticketQueue.bpjsNumber}
               className={'border-2 border-blue-300 rounded-md text-blue-900'}
               colorLabel={'blue-900'}
               required
-              disabled
             />
             <InputUi
               name="bornPlace"
@@ -216,43 +231,73 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
               className={'border-2 border-blue-300 rounded-md text-blue-900'}
               colorLabel={'blue-900'}
               required
-              disabled
             />
 
             <InputUi
               name="bornDate"
-              type={'text'}
+              type={'date'}
               placeholder={'Tanggal Lahir'}
               label={'Tanggal Lahir'}
               defaultValue={ticketQueue.bornDate}
               className={'border-2 border-blue-300 rounded-md text-blue-900'}
               colorLabel={'blue-900'}
               required
-              disabled
             />
 
-            <InputUi
-              name="gender"
-              type={'text'}
-              placeholder={'Jenis Kelamin'}
-              label={'Jenis Kelamin'}
-              defaultValue={ticketQueue.gender === 'male' ? 'Laki-laki' : 'Perempuan'}
-              className={'border-2 border-blue-300 rounded-md text-blue-900'}
-              colorLabel={'blue-900'}
-              required
-              disabled
-            />
-            <InputUi
-              name="golDarah"
-              type={'text'}
-              placeholder={'Golongan Darah'}
-              label={'Golongan Darah'}
-              defaultValue={ticketQueue.golDarah}
-              className={'border-2 border-blue-300 rounded-md text-blue-900'}
-              colorLabel={'blue-900'}
-              required
-              disabled
-            />
+            <div>
+              <label className="text-sm font-medium text-neutral-800">Jenis Kelamin</label>
+              <Select
+                name="gender"
+                size="sm"
+                placeholder="Jenis Kelamin"
+                className={'border-2 border-blue-300 rounded-md text-blue-900'}
+                defaultSelectedKeys={[ticketQueue.gender]}
+                required
+              >
+                {gender.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="w-full bg-white gap-0"
+                  >
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-neutral-800">Golongan Darah</label>
+              <Select
+                name="golDarah"
+                size="sm"
+                placeholder="Golongan Darah"
+                className={'border-2 border-blue-300 rounded-md text-blue-900'}
+                defaultSelectedKeys={[ticketQueue.golDarah]}
+                required
+              >
+                {golDarah.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="w-full bg-white gap-0"
+                  >
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            <div className="w-full flex flex-col gap-1">
+              <label className="text-sm font-medium text-blue-900">Alamat</label>
+              <Textarea
+                key={'faded'}
+                name="address"
+                variant={'faded'}
+                labelPlacement="outside"
+                placeholder="Alamat"
+                defaultValue={ticketQueue.address}
+                className="col-span-12 md:col-span-6 mb-6 md:mb-0 border-2 border-blue-300 rounded-md text-blue-900"
+              />
+            </div>
             <InputUi
               name="keluhan"
               type={'text'}
@@ -262,8 +307,35 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
               className={'border-2 border-blue-300 rounded-md text-blue-900'}
               colorLabel={'blue-900'}
               required
-              disabled
             />
+            {ticketQueue.status === 'checkup' || ticketQueue.status === 'take medicine' ? (
+              <>
+                <div className="w-full flex flex-col gap-1">
+                  <label className="text-sm font-medium text-blue-900">Resep Dokter</label>
+                  <Textarea
+                    key={'faded'}
+                    name="resepDokter"
+                    variant={'faded'}
+                    labelPlacement="outside"
+                    placeholder="Resep Dokter"
+                    defaultValue={ticketQueue.status === 'take medicine' ? ticketQueue?.resepDokter : ''}
+                    className="col-span-12 md:col-span-6 mb-6 md:mb-0 border-2 border-blue-300 rounded-md text-blue-900"
+                  />
+                </div>
+                <div className="w-full flex flex-col gap-1">
+                  <label className="text-sm font-medium text-blue-900">Catatan Dokter</label>
+                  <Textarea
+                    key={'faded'}
+                    name="catatanDokter"
+                    variant={'faded'}
+                    labelPlacement="outside"
+                    placeholder="Catatan Dokter"
+                    defaultValue={ticketQueue.status === 'take medicine' ? ticketQueue?.catatanDokter : ''}
+                    className="col-span-12 md:col-span-6 mb-6 md:mb-0 border-2 border-blue-300 rounded-md text-blue-900"
+                  />
+                </div>
+              </>
+            ) : null}
           </div>
           <Button className="text-xs flex items-center gap-1 items-center bg-green-500 text-white p-2 rounded-md mt-2 w-full">
             <p className="bx bxs-download text-xl" />
