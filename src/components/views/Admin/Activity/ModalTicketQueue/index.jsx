@@ -5,14 +5,13 @@ import getDay from '@/utils/getDay';
 import { Button, Checkbox, Select, SelectItem, Textarea } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { roles, gender, golDarah, specialistTypes } from '@/constraint/adminPanel';
+import { gender, golDarah } from '@/constraint/adminPanel';
 
-const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQueue, activities, setActivities }) => {
+const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQueue, setActivities }) => {
   const { data: session } = useSession();
   const [doctor, setDoctor] = useState({});
   const [isSelected, setIsSelected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(ticketQueue);
 
   useEffect(() => {
     const getDoctors = users.filter((user) => user.role === 'doctor');
@@ -169,7 +168,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
                 <i className="bx bx-injection" />
                 <p>Specialist</p>
               </h1>
-              <p className="text-sm">{doctor?.specialist}</p>
+              <p className="text-sm">{doctor?.specialist.charAt(0).toUpperCase() + doctor?.specialist.slice(1)}</p>
             </div>
             <div className="flex justify-between items-center ">
               <h1 className="font-semibold flex gap-1 justify-center items-center">

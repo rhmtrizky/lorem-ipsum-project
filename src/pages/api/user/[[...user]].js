@@ -32,75 +32,36 @@ export default async function handler(req, res) {
       if (decoded && decoded.role === 'admin') {
         const { data } = req.body;
         data.password = await bcrypt.hash(data.password, 10);
-        await addData('users', data, (result) => {
-          if (result) {
-            res.status(200).json({
-              status: true,
-              message: 'Success',
-              data: data,
-            });
-          } else {
-            res.status(400).json({
-              status: false,
-              message: 'Failed Add user',
-            });
-          }
-        });
+        try {
+          await addData('users', data, (status, result) => {
+            if (status) {
+              return res.status(200).json({ status: true, code: 200, message: 'Success add user', data: { id: result.id } });
+            } else {
+              return res.status(400).json({ status: false, code: 400, message: 'Failed to add user' });
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
   } else if (req.method === 'PUT') {
-    const { data } = req.body;
-
-    let field = {
-      fullname: '',
-      email: '',
-      password: '',
-      phoneNumber: '',
-      role: '',
-    };
-    field.fullname = data.fullname;
-    field.email = data.email;
-    field.phoneNumber = data.phoneNumber;
-    field.role = data.role;
-    if (field.role === 'patient') {
-      field.patient = data.patient;
-    } else if (field.role === 'doctor') {
-      field.specialist = data.specialist;
-      field.licenceNumber = data.licenceNumber;
-      field.address = data.address;
-      field.schedule = data.schedule;
-    } else if (field.role === 'pharmacy') {
-      field.licenceNumber = data.licenceNumber;
-      field.address = data.address;
-    }
-    if (data.password) {
-      let salt = await bcrypt.genSalt(10);
-      let hashPassword = await bcrypt.hash(data.password, salt);
-      field.password = hashPassword;
-    }
     verify(req, res, async (decoded) => {
-      if (decoded && decoded.role === 'admin') {
-        console.log(decoded.id);
-        console.log(user[0]);
+      const { data } = req.body;
 
-        await updateData('users', user[0], field, (result) => {
+      if (decoded) {
+        await updateData('users', user[0], data, (result) => {
           if (result) {
-            res.status(200).json({
-              status: true,
-              message: 'Success',
-              data: field,
-            });
+            res.status(200).json({ status: true, code: 200, message: 'Success', data: data });
           } else {
-            res.status(400).json({
-              status: false,
-              message: 'Failed Update user',
-            });
+            res.status(400).json({ status: false, code: 400, message: 'Failed' });
           }
         });
+      } else {
+        res.status(401).json({ status: false, message: 'Access Denied' });
       }
     });
   } else if (req.method === 'DELETE') {
-    console.log(user);
     verify(req, res, async (decoded) => {
       if (decoded && decoded.role === 'admin') {
         await deleteData('users', user[0], (result) => {

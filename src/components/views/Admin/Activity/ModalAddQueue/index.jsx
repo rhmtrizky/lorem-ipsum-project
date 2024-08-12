@@ -3,11 +3,11 @@ import ModalUi from '@/components/ui/Modal';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { specialistTypes } from '@/constraint/adminPanel';
+
 import getDay from '@/utils/getDay';
 import activityService from '@/services/activity';
 
-const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue }) => {
+const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue, specialists }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -350,13 +350,13 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
                   required
                   onChange={(e) => setSelectedSpesialist(e.target.value)}
                 >
-                  {specialistTypes.map((item) => (
+                  {specialists.map((item) => (
                     <SelectItem
-                      key={item.value}
-                      value={item.value}
+                      key={item.specialistName}
+                      value={item.specialistName}
                       className="w-full bg-white gap-0"
                     >
-                      {item.label}
+                      {item.specialistName}
                     </SelectItem>
                   ))}
                 </Select>
