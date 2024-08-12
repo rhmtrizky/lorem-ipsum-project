@@ -40,13 +40,15 @@ const TableAllUsers = ({ setUpdateUser, setDeleteUser, users, onOpen }) => {
       case 'actions':
         return (
           <div className="flex justify-center items-center bg-blue">
-            <Button
-              isIconOnly
-              type="button"
-              className="bx bxs-edit-alt text-blue-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              onClick={() => setUpdateUser(data)}
-            />
+            {data.role !== 'admin' && (
+              <Button
+                isIconOnly
+                type="button"
+                className="bx bxs-edit-alt text-blue-500 font-semibold text-[14px]"
+                onPress={onOpen}
+                onClick={() => setUpdateUser(data)}
+              />
+            )}
             <Button
               isIconOnly
               type="button"

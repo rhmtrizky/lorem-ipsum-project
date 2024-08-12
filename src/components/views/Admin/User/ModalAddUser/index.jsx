@@ -1,17 +1,22 @@
 import InputUi from '@/components/ui/Input';
 import ModalUi from '@/components/ui/Modal';
 import userService from '@/services/user';
-import { Button, Select, SelectItem } from '@nextui-org/react';
+import { Button, image, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState, useRef } from 'react';
 import { roles, gender, golDarah } from '@/constraint/adminPanel';
 import specialistService from '@/services/specialist';
+import Image from 'next/image';
+import { BsUpload } from 'react-icons/bs';
+import { uploadFile } from '@/libs/firebase/service';
+import ImageUpload from '../../Ui/ImageUpload';
 
 const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists, setSpecialists }) => {
   const session = useSession();
   const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState('');
+  const [imageFile, setImageFile] = useState(null);
   const [schedules, setSchedules] = useState([{ day: '', startTime: '', endTime: '' }]);
   const [openFormAddSpecialist, setOpenFormAddSpecialist] = useState({
     status: false,
@@ -92,12 +97,18 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
 
     try {
       const result = await userService.addUser(data, session.data.accessToken);
+      console.log(result);
+
       if (result.status === 200) {
-        const { data } = await userService.getAllUsers(session.data.accessToken);
-        setUsers(data.data);
-        onOpenChange(false);
-        setIsLoading(false);
-        setAddUser({ status: false });
+        if (imageFile) {
+          await handleImageUpload(imageFile, result.data.data.id);
+        } else {
+          const { data } = await userService.getAllUsers(session.data.accessToken);
+          setUsers(data.data);
+          onOpenChange(false);
+          setIsLoading(false);
+          setAddUser({ status: false });
+        }
       }
     } catch (err) {
       console.log(err);
@@ -105,6 +116,41 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
       setIsLoading(false);
       setAddUser({ status: false });
     }
+  };
+
+  const handleImageUpload = async (file, userId) => {
+    setIsLoading(true);
+
+    await uploadFile(
+      userId,
+      'users',
+      'doctor image profile',
+      file,
+      (status, progressPercent) => {
+        console.log(`Upload progress: ${progressPercent}%`);
+      },
+      async (status, downloadURL, e) => {
+        if (status) {
+          const data = {
+            image: downloadURL,
+          };
+
+          const result = await userService.updateUser(userId, data, session.data.accessToken);
+
+          if (result.status === 200) {
+            const { data } = await userService.getAllUsers(session.data.accessToken);
+            setUsers(data.data);
+            setAddUser({ status: false });
+          } else {
+            console.log('failed upload image profile', result);
+          }
+        } else {
+          console.log('Size image should be less than 1MB');
+          setIsLoading(false);
+          e.target[0].value = '';
+        }
+      }
+    );
   };
 
   // schedules
@@ -342,6 +388,10 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
           )}
           {role == 'doctor' && (
             <>
+              <ImageUpload
+                stateImage={imageFile}
+                setStateImage={setImageFile}
+              />
               <div className={`flex flex-col gap-2 ${openFormAddSpecialist.status ? 'border-2 border-neutral-200 p-4 rounded-md ' : 'border-0'}`}>
                 <label className="text-sm font-medium text-neutral-800">Pilih Spesialis</label>
                 <Select
@@ -476,6 +526,10 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
           )}
           {role == 'pharmacy' && (
             <>
+              <ImageUpload
+                stateImage={imageFile}
+                setStateImage={setImageFile}
+              />
               <InputUi
                 name={'licenceNumber'}
                 type={'number'}

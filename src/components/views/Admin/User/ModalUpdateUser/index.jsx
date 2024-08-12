@@ -3,14 +3,19 @@ import userService from '@/services/user';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import { roles, gender, golDarah, specialistTypes } from '@/constraint/adminPanel';
+import { roles, gender, golDarah } from '@/constraint/adminPanel';
 import ModalUi from '@/components/ui/Modal';
+import Image from 'next/image';
+import { uploadFile } from '@/libs/firebase/service';
+import ImageUpload from '../../Ui/ImageUpload';
 
 const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, setUsers, specialists }) => {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState(dataUpdateUser.role);
+  const [imageFile, setImageFile] = useState(null);
   const [schedules, setSchedules] = useState(dataUpdateUser.schedule || [{ day: '', startTime: '', endTime: '' }]);
+  console.log(imageFile);
 
   const [patients, setPatients] = useState(
     dataUpdateUser.patient || [
@@ -29,8 +34,6 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
       },
     ]
   );
-
-  console.log(dataUpdateUser.schedule);
 
   useEffect(() => {
     setRole(dataUpdateUser.role);
@@ -92,17 +95,57 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
 
     try {
       const result = await userService.updateUser(dataUpdateUser.id, data, session.data.accessToken);
+
       if (result.status === 200) {
-        const { data } = await userService.getAllUsers(session.data.accessToken);
-        setUsers(data.data);
-        setUpdateUser({});
-        onOpenChange(false);
-        setIsLoading(false);
+        if (imageFile) {
+          await handleImageUpload(imageFile, dataUpdateUser.id);
+        } else {
+          const { data } = await userService.getAllUsers(session.data.accessToken);
+          setUsers(data.data);
+          setUpdateUser({});
+          onOpenChange(false);
+          setIsLoading(false);
+        }
       }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
     }
+  };
+
+  const handleImageUpload = async (file, userId) => {
+    setIsLoading(true);
+
+    await uploadFile(
+      userId,
+      'users',
+      'doctor image profile',
+      file,
+      (status, progressPercent) => {
+        console.log(`Upload progress: ${progressPercent}%`);
+      },
+      async (status, downloadURL, e) => {
+        if (status) {
+          const data = {
+            image: downloadURL,
+          };
+
+          const result = await userService.updateUser(userId, data, session.data.accessToken);
+
+          if (result.status === 200) {
+            const { data } = await userService.getAllUsers(session.data.accessToken);
+            setUsers(data.data);
+            setUpdateUser({});
+          } else {
+            console.log('failed upload image profile', result);
+          }
+        } else {
+          console.log('Size image should be less than 1MB');
+          setIsLoading(false);
+          e.target[0].value = '';
+        }
+      }
+    );
   };
 
   const addPatient = () => {
@@ -145,6 +188,37 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
           className="flex flex-col gap-4"
           onSubmit={handleUpdateUser}
         >
+          {dataUpdateUser?.image ? (
+            <div className="flex flex-col items-center gap-2 justify-center w-full">
+              <Image
+                src={imageFile !== null || '' ? URL.createObjectURL(imageFile) : dataUpdateUser?.image}
+                alt="profile"
+                width={300}
+                height={300}
+                className="rounded-full h-[200px] w-[200px] object-cover"
+              />
+              <div className="relative">
+                <Button
+                  size="sm"
+                  className="bg-blue-500 text-white text-sm rounded-md"
+                >
+                  Change Image
+                </Button>
+                <input
+                  className="absolute bg-color-gray z-0 bottom-0 left-0 w-full h-full opacity-0"
+                  type="file"
+                  name="image"
+                  onChange={(e) => setImageFile(e.target.files[0])}
+                />
+              </div>
+            </div>
+          ) : (
+            <ImageUpload
+              stateImage={imageFile}
+              setStateImage={setImageFile}
+            />
+          )}
+
           <InputUi
             name="fullname"
             type={'text'}
