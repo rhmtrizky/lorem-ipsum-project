@@ -3,14 +3,20 @@ import ModalUi from '@/components/ui/Modal';
 import userService from '@/services/user';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
-import { roles, gender, golDarah, specialistTypes } from '@/constraint/adminPanel';
+import { useState, useRef } from 'react';
+import { roles, gender, golDarah } from '@/constraint/adminPanel';
+import specialistService from '@/services/specialist';
 
-const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
+const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists, setSpecialists }) => {
   const session = useSession();
+  const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState('');
   const [schedules, setSchedules] = useState([{ day: '', startTime: '', endTime: '' }]);
+  const [openFormAddSpecialist, setOpenFormAddSpecialist] = useState({
+    status: false,
+    newSpecialistName: '',
+  });
   const [patients, setPatients] = useState([
     {
       name: '',
@@ -27,10 +33,30 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
     },
   ]);
 
+  // handle add new specialist
+  const handleAddSpecialist = async (event) => {
+    event.preventDefault();
+    const data = {
+      specialistName: openFormAddSpecialist.newSpecialistName,
+    };
+    console.log(data);
+
+    try {
+      const result = await specialistService.addSpecialist(data, session.data.accessToken);
+      if (result.status === 200) {
+        const result = await specialistService.getSpecialists(session.data.accessToken);
+        setSpecialists(result.data.data);
+        setOpenFormAddSpecialist({ status: false });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleAddUser = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const form = event.target;
+    const form = formRef.current;
     const formData = new FormData(form);
 
     let data = {
@@ -54,6 +80,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
         address: formData.get('address'),
         schedule: schedules,
       };
+      console.log(data);
     } else if (data.role == 'pharmacy') {
       data = {
         ...data,
@@ -120,7 +147,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
       >
         <form
           className="flex flex-col gap-3"
-          onSubmit={handleAddUser}
+          ref={formRef}
         >
           <InputUi
             name="fullname"
@@ -315,7 +342,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
           )}
           {role == 'doctor' && (
             <>
-              <div>
+              <div className={`flex flex-col gap-2 ${openFormAddSpecialist.status ? 'border-2 border-neutral-200 p-4 rounded-md ' : 'border-0'}`}>
                 <label className="text-sm font-medium text-neutral-800">Pilih Spesialis</label>
                 <Select
                   name="specialist"
@@ -324,16 +351,62 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                   className="w-full text-neutral-500 shadow-md rounded min-h-[40px] bg-white text-sm"
                   required
                 >
-                  {specialistTypes.map((item) => (
+                  {specialists.map((item) => (
                     <SelectItem
-                      key={item.value}
-                      value={item.value}
+                      key={item.specialistName}
+                      value={item.specialistName}
                       className="w-full bg-white gap-0"
                     >
-                      {item.label}
+                      {item.specialistName.charAt(0).toUpperCase() + item.specialistName.slice(1)}
                     </SelectItem>
                   ))}
                 </Select>
+                <div className={`w-full  flex ${openFormAddSpecialist.status ? 'justify-center' : 'justify-end'}`}>
+                  {openFormAddSpecialist.status ? (
+                    <div className="w-full">
+                      <InputUi
+                        name="specialistName"
+                        type="text"
+                        label="Spesialis Baru"
+                        placeholder="Spesialis Baru"
+                        onChange={(e) =>
+                          setOpenFormAddSpecialist((prevState) => ({
+                            ...prevState,
+                            newSpecialistName: e.target.value.toLowerCase(),
+                          }))
+                        }
+                      />
+                      <div className="w-full flex justify-end items-center gap-2 my-2">
+                        <Button
+                          color="danger"
+                          variant="light"
+                          size="sm"
+                          className="text-sm"
+                          onClick={() => setOpenFormAddSpecialist({ status: false })}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          size="sm"
+                          color="primary"
+                          type="submit"
+                          className="bg-[#3b82f6] text-white p-2 rounded-md text-sm"
+                          onClick={handleAddSpecialist}
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button
+                      size="sm"
+                      className="w-fit bg-blue-500 text-xs rounded-md px-2 text-white"
+                      onClick={() => setOpenFormAddSpecialist({ status: true })}
+                    >
+                      Add New Specialist
+                    </Button>
+                  )}
+                </div>
               </div>
               <InputUi
                 name={'licenceNumber'}
@@ -429,6 +502,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
               color="primary"
               type="submit"
               className="bg-[#3b82f6] font-semibold text-white p-2 rounded-md"
+              onClick={handleAddUser}
             >
               {isLoading ? 'Loading...' : 'Submit'}
             </Button>

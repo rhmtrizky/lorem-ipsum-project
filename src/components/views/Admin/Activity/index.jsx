@@ -14,19 +14,37 @@ import TableTakeMedicine from './Tables/TableTakeMedicine';
 import activityService from '@/services/activity';
 import { useSession } from 'next-auth/react';
 import TableExpired from './Tables/TableExpired';
+import specialistService from '@/services/specialist';
 
 const ActivityView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
   const { data: session } = useSession();
   const [addQueue, setAddQueue] = useState({ status: false });
   const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [specialists, setSpecialists] = useState([]);
+
+  // function to get specialists type
+  const getSpecialists = async () => {
+    try {
+      const result = await specialistService.getSpecialists(session.accessToken);
+      if (result.status === 200) {
+        setSpecialists(result.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const autoOpenModalTicket = () => {
-      if (Object.keys(ticketQueue).length > 0) {
-        onOpen();
-      }
-    };
+    if (session.accessToken) {
+      getSpecialists();
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (Object.keys(ticketQueue).length > 0) {
+      onOpen();
+    }
   }, [ticketQueue]);
 
   const [selectTab, setSelectTab] = useState({
@@ -197,36 +215,16 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
               setState={setSelectTabSpecialist}
               basicColor={'green'}
             />
-            <ButtonTab
-              type="poli mata"
-              state={selectTabSpecialist}
-              setState={setSelectTabSpecialist}
-              basicColor={'green'}
-            />
-            <ButtonTab
-              type="poli gigi"
-              state={selectTabSpecialist}
-              setState={setSelectTabSpecialist}
-              basicColor={'green'}
-            />
-            <ButtonTab
-              type="poli umum"
-              state={selectTabSpecialist}
-              setState={setSelectTabSpecialist}
-              basicColor={'green'}
-            />
-            <ButtonTab
-              type="poli anak"
-              state={selectTabSpecialist}
-              setState={setSelectTabSpecialist}
-              basicColor={'green'}
-            />
-            <ButtonTab
-              type="poli jantung"
-              state={selectTabSpecialist}
-              setState={setSelectTabSpecialist}
-              basicColor={'green'}
-            />
+            {specialists.map((specialist) => (
+              <div key={specialist.specialistName}>
+                <ButtonTab
+                  type={specialist.specialistName}
+                  state={selectTabSpecialist}
+                  setState={setSelectTabSpecialist}
+                  basicColor={'green'}
+                />
+              </div>
+            ))}
           </div>
           {selectTab.status && selectTab.type === '' && (
             <TableAllStatus
@@ -290,6 +288,7 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
           activities={activities}
           setActivities={setActivities}
           setTicketQueue={setTicketQueue}
+          specialists={specialists}
         />
       )}
       {Object.keys(ticketQueue).length > 0 && (
@@ -299,7 +298,6 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
           users={users}
           ticketQueue={ticketQueue}
           setTicketQueue={setTicketQueue}
-          activities={activities}
           setActivities={setActivities}
         />
       )}

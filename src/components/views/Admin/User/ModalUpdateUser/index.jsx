@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { roles, gender, golDarah, specialistTypes } from '@/constraint/adminPanel';
 import ModalUi from '@/components/ui/Modal';
 
-const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, setUsers }) => {
+const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, setUsers, specialists }) => {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState(dataUpdateUser.role);
@@ -355,13 +355,13 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
                   defaultSelectedKeys={[dataUpdateUser.specialist]}
                   required
                 >
-                  {specialistTypes.map((item) => (
+                  {specialists.map((item) => (
                     <SelectItem
-                      key={item.value}
-                      value={item.value}
+                      key={item.specialistName}
+                      value={item.specialistName}
                       className="w-full bg-white gap-0"
                     >
-                      {item.label}
+                      {item.specialistName}
                     </SelectItem>
                   ))}
                 </Select>
