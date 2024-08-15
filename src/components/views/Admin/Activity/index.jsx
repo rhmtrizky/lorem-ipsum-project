@@ -14,32 +14,20 @@ import TableTakeMedicine from './Tables/TableTakeMedicine';
 import activityService from '@/services/activity';
 import { useSession } from 'next-auth/react';
 import TableExpired from './Tables/TableExpired';
-import specialistService from '@/services/specialist';
+import { useRouter } from 'next/router';
+import useUser from '@/hooks/useUser';
+import useActivity from '@/hooks/useActivity';
+import useSpecialist from '@/hooks/useSpecialist';
 
-const ActivityView = ({ users, setUsers, activities, setActivities, searchActivities, setSearchActivities }) => {
+const ActivityView = () => {
   const { data: session } = useSession();
+  const router = useRouter();
+  const { users, setUsers } = useUser();
+  const { activities, setActivities, searchActivities, setSearchActivities } = useActivity();
+  const { specialists } = useSpecialist();
   const [addQueue, setAddQueue] = useState({ status: false });
   const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [specialists, setSpecialists] = useState([]);
-
-  // function to get specialists type
-  const getSpecialists = async () => {
-    try {
-      const result = await specialistService.getSpecialists(session.accessToken);
-      if (result.status === 200) {
-        setSpecialists(result.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (session.accessToken) {
-      getSpecialists();
-    }
-  }, [session]);
 
   useEffect(() => {
     if (Object.keys(ticketQueue).length > 0) {
@@ -93,7 +81,8 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
   }, [activities, getActivityStatus, selectTabSpecialist.type, getDateForFilter]);
 
   // function to refresh expired activities
-  const handleRefresh = async () => {
+  const handleRefresh = async (e) => {
+    e.preventDefault();
     // Mengatur currentDate ke awal hari saat ini
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
@@ -105,18 +94,17 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
       return activity.status === 'queue' && activityDate < currentDate;
     });
 
-    try {
+    if (result.length > 0) {
       // Update aktivitas yang sudah kedaluwarsa satu per satu
       result.forEach(async (activity) => await activityService.updateActivity(activity.id, { id: activity.id, status: 'expired' }, session.accessToken));
-    } catch (error) {
-      console.error('Error updating activities:', error.response?.data || error.message);
+      router.reload();
     }
   };
 
   return (
     <>
       <AdminLayout>
-        <div className="mx-4">
+        <div className="w-full">
           <div className="flex justify-between items-center mb-3">
             <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
 
@@ -125,7 +113,7 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
               onClick={handleRefresh}
               className="text-white font-semibold text-sm rounded-md  bg-blue-500"
             >
-              Refresh Page
+              Refresh Page <i className="bx bx-sync text-xl"></i>
             </Button>
           </div>
           <div className="flex items-center justify-between w-full">
@@ -136,7 +124,7 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
               />
             </div>
             <div className="w-2/5 flex justify-end">
-              <div className="flex justify-end mx-4 items-center">
+              <div className="flex justify-end mx-4 items-center gap-1">
                 <InputUi
                   name="date"
                   type="date"
@@ -144,17 +132,19 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
                   onChange={(e) => setGetDateForFilter(e.target.value)}
                 />
                 <Button
-                  isIconOnly
                   type="button"
-                  className="bx bx-sync text-neutral-700 font-semibold text-[24px] rounded-md pt-1"
+                  className="text-white font-semibold text-[12px] bg-red-500 rounded-md"
                   onPress={onOpen}
                   value={getDateForFilter}
                   onClick={() => setGetDateForFilter('')}
-                />
+                  size="sm"
+                >
+                  Reset
+                </Button>
               </div>
             </div>
           </div>
-          <div className="flex justify-between items-center mt-6">
+          <div className="flex lg:flex-row md:flex-col-reverse lg:justify-between md:justify-start lg:items-center md:items-start mt-6 gap-3">
             <div className="flex gap-2">
               <div className="relative">
                 <ButtonTab
@@ -207,8 +197,8 @@ const ActivityView = ({ users, setUsers, activities, setActivities, searchActivi
             </Button>
           </div>
         </div>
-        <div className="border-2 border-neutral-300 mt-3 px-2">
-          <div className="flex gap-2 mt-3 w-full justify-end mr-3">
+        <div className="border-2 border-neutral-300 mt-3 w-full">
+          <div className="flex gap-2 mt-3 w-full justify-start overflow-x-auto w-auto py-2 px-2 scrollbar-hide">
             <ButtonTab
               type=""
               state={selectTabSpecialist}

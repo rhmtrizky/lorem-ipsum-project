@@ -4,9 +4,6 @@ import { useEffect } from 'react';
 import { GrView } from 'react-icons/gr';
 
 const TablePrepare = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
-  console.log(filterByStatusActivity('preparing'));
-  console.log(getDateForFilter);
-
   useEffect(() => {
     if (getDateForFilter !== '') {
       filterByStatusActivity('preparing');

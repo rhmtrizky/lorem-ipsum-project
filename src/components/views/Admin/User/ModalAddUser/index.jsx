@@ -1,18 +1,18 @@
 import InputUi from '@/components/ui/Input';
-import ModalUi from '@/components/ui/Modal';
 import userService from '@/services/user';
-import { Button, image, Select, SelectItem } from '@nextui-org/react';
+import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState, useRef } from 'react';
 import { roles, gender, golDarah } from '@/constraint/adminPanel';
 import specialistService from '@/services/specialist';
-import Image from 'next/image';
-import { BsUpload } from 'react-icons/bs';
-import { uploadFile } from '@/libs/firebase/service';
 import ImageUpload from '../../Ui/ImageUpload';
+import handleImageUpload from '@/utils/uploadImage';
+import useSpecialist from '@/hooks/useSpecialist';
+import ModalUi from '../../Ui/Modal';
 
-const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists, setSpecialists }) => {
+const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const session = useSession();
+  const { specialists, setSpecialists } = useSpecialist();
   const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState('');
@@ -44,8 +44,6 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
     const data = {
       specialistName: openFormAddSpecialist.newSpecialistName,
     };
-    console.log(data);
-
     try {
       const result = await specialistService.addSpecialist(data, session.data.accessToken);
       if (result.status === 200) {
@@ -62,6 +60,12 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
     event.preventDefault();
     setIsLoading(true);
     const form = formRef.current;
+
+    if (!form.checkValidity()) {
+      setIsLoading(false);
+      form.reportValidity();
+      return;
+    }
     const formData = new FormData(form);
 
     let data = {
@@ -91,17 +95,27 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
         ...data,
         licenceNumber: formData.get('licenceNumber'),
         address: formData.get('address'),
-        // image: formData.get('image'),
       };
     }
 
     try {
       const result = await userService.addUser(data, session.data.accessToken);
-      console.log(result);
-
       if (result.status === 200) {
         if (imageFile) {
-          await handleImageUpload(imageFile, result.data.data.id);
+          try {
+            const downloadUrl = await handleImageUpload(imageFile, result.data.data.id, 'users', 'doctor image profile');
+            data.image = downloadUrl;
+            const update = await userService.updateUser(result.data.data.id, data, session.data.accessToken);
+            if (update.status === 200) {
+              const { data } = await userService.getAllUsers(session.data.accessToken);
+              setUsers(data.data);
+              onOpenChange(false);
+              setIsLoading(false);
+              setAddUser({ status: false });
+            }
+          } catch (error) {
+            console.error('Image upload failed:', error);
+          }
         } else {
           const { data } = await userService.getAllUsers(session.data.accessToken);
           setUsers(data.data);
@@ -116,41 +130,6 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser, specialists,
       setIsLoading(false);
       setAddUser({ status: false });
     }
-  };
-
-  const handleImageUpload = async (file, userId) => {
-    setIsLoading(true);
-
-    await uploadFile(
-      userId,
-      'users',
-      'doctor image profile',
-      file,
-      (status, progressPercent) => {
-        console.log(`Upload progress: ${progressPercent}%`);
-      },
-      async (status, downloadURL, e) => {
-        if (status) {
-          const data = {
-            image: downloadURL,
-          };
-
-          const result = await userService.updateUser(userId, data, session.data.accessToken);
-
-          if (result.status === 200) {
-            const { data } = await userService.getAllUsers(session.data.accessToken);
-            setUsers(data.data);
-            setAddUser({ status: false });
-          } else {
-            console.log('failed upload image profile', result);
-          }
-        } else {
-          console.log('Size image should be less than 1MB');
-          setIsLoading(false);
-          e.target[0].value = '';
-        }
-      }
-    );
   };
 
   // schedules

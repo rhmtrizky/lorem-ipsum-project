@@ -1,11 +1,11 @@
 import InputUi from '@/components/ui/Input';
-import ModalUi from '@/components/ui/Modal';
 import activityService from '@/services/activity';
 import getDay from '@/utils/getDay';
 import { Button, Checkbox, Select, SelectItem, Textarea } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { gender, golDarah } from '@/constraint/adminPanel';
+import ModalUi from '../../Ui/Modal';
 
 const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQueue, setActivities }) => {
   const { data: session } = useSession();
@@ -154,7 +154,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
             <h1>Ticket Queue</h1>
             <h1 className="text-4xl font-bold">{ticketQueue?.queueNumber}</h1>
           </div>
-          <h1 className="font-semibold text-blue-900">Status : {ticketQueue?.status.charAt(0).toUpperCase() + ticketQueue?.status.slice(1)}</h1>
+          <h1 className="font-semibold text-blue-900">Status : {ticketQueue?.status?.charAt(0).toUpperCase() + ticketQueue?.status.slice(1)}</h1>
           <div className="border-2 border-blue-300 rounded-md p-3 w-full text-md text-blue-900 flex flex-col gap-1 mt-2">
             <div className="flex justify-between items-center ">
               <h1 className="font-semibold flex gap-1 justify-center items-center">
@@ -168,7 +168,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
                 <i className="bx bx-injection" />
                 <p>Specialist</p>
               </h1>
-              <p className="text-sm">{doctor?.specialist.charAt(0).toUpperCase() + doctor?.specialist.slice(1)}</p>
+              <p className="text-sm">{doctor?.specialist?.charAt(0).toUpperCase() + doctor?.specialist?.slice(1)}</p>
             </div>
             <div className="flex justify-between items-center ">
               <h1 className="font-semibold flex gap-1 justify-center items-center">
@@ -199,7 +199,6 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
               className={'border-2 border-blue-300 rounded-md text-blue-900'}
               colorLabel={'blue-900'}
               required
-              disabled
             />
             <InputUi
               name="nik"
@@ -319,6 +318,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
                     placeholder="Resep Dokter"
                     defaultValue={ticketQueue.status === 'take medicine' ? ticketQueue?.resepDokter : ''}
                     className="col-span-12 md:col-span-6 mb-6 md:mb-0 border-2 border-blue-300 rounded-md text-blue-900"
+                    required
                   />
                 </div>
                 <div className="w-full flex flex-col gap-1">
@@ -331,6 +331,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
                     placeholder="Catatan Dokter"
                     defaultValue={ticketQueue.status === 'take medicine' ? ticketQueue?.catatanDokter : ''}
                     className="col-span-12 md:col-span-6 mb-6 md:mb-0 border-2 border-blue-300 rounded-md text-blue-900"
+                    required
                   />
                 </div>
               </>
@@ -340,7 +341,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
             <p className="bx bxs-download text-xl" />
             Download Ticket
           </Button>
-          {ticketQueue.status === 'queue' && (
+          {ticketQueue.status === 'queue' && ticketQueue.id !== undefined && (
             <div className="w-full">
               <Checkbox
                 isSelected={isSelected}
@@ -358,16 +359,18 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
               variant="light"
               onClick={() => setTicketQueue({})}
             >
-              Cancel
+              {ticketQueue.id !== undefined ? 'Cancel' : 'Close'}
             </Button>
-            <Button
-              color="primary"
-              type="submit"
-              className={`${ticketQueue.status === 'queue' ? (isSelected ? 'bg-[#3b82f6]' : 'bg-[#A0C4FD]') : 'bg-[#3b82f6]'} font-semibold text-white p-2 rounded-md`}
-              isDisabled={ticketQueue.status === 'queue' ? !isSelected || isLoading : false}
-            >
-              {isLoading ? 'Loading..' : 'Submit'}
-            </Button>
+            {ticketQueue.id !== undefined && (
+              <Button
+                color="primary"
+                type="submit"
+                className={`${ticketQueue.status === 'queue' ? (isSelected ? 'bg-[#3b82f6]' : 'bg-[#A0C4FD]') : 'bg-[#3b82f6]'} font-semibold text-white p-2 rounded-md`}
+                isDisabled={ticketQueue.status === 'queue' ? !isSelected || isLoading : false}
+              >
+                {isLoading ? 'Loading..' : 'Submit'}
+              </Button>
+            )}
           </div>
         </form>
       </ModalUi>

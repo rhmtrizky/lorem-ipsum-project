@@ -1,5 +1,5 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ModalUpdateUser from './ModalUpdateUser';
 import { Button, useDisclosure } from '@nextui-org/react';
 import ModalDeleteUser from './ModalDeleteUser';
@@ -10,15 +10,13 @@ import TablePatients from './Tables/TablePatients';
 import TablePharmacy from './Tables/TablePharmacy';
 import TableAllUsers from './Tables/TableAllUsers';
 import ButtonTab from '../Ui/ButtonTab';
-import { useSession } from 'next-auth/react';
-import specialistService from '@/services/specialist';
+import useUser from '@/hooks/useUser';
 
-const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
+const AdminUsersView = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const session = useSession();
+  const { users, setUsers, searchUser, setSearchUser } = useUser();
   const [updateUser, setUpdateUser] = useState({});
   const [deleteUser, setDeleteUser] = useState({});
-  const [specialists, setSpecialists] = useState([]);
   const [addUser, setAddUser] = useState({
     status: false,
   });
@@ -27,26 +25,6 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
     status: true,
     type: 'all',
   });
-
-  // function to get specialists type
-  const getSpecialists = async () => {
-    try {
-      const result = await specialistService.getSpecialists(session.data.accessToken);
-      if (result.status === 200) {
-        setSpecialists(result.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (session?.data?.accessToken) {
-      getSpecialists();
-    }
-  }, [session]);
-
-  console.log(specialists);
 
   //function filtering data by role
   const filterByRole = (role) => {
@@ -145,7 +123,6 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
           onOpenChange={onOpenChange}
           isOpen={isOpen}
           setUsers={setUsers}
-          specialists={specialists}
         />
       )}
       {Object.keys(deleteUser).length > 0 && (
@@ -163,8 +140,6 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
           isOpen={isOpen}
           setUsers={setUsers}
           setAddUser={setAddUser}
-          specialists={specialists}
-          setSpecialists={setSpecialists}
         />
       ) : null}
     </>
