@@ -4,18 +4,19 @@ import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { roles, gender, golDarah } from '@/constraint/adminPanel';
-import ModalUi from '@/components/ui/Modal';
 import Image from 'next/image';
-import { uploadFile } from '@/libs/firebase/service';
 import ImageUpload from '../../Ui/ImageUpload';
+import handleImageUpload from '@/utils/uploadImage';
+import useSpecialist from '@/hooks/useSpecialist';
+import ModalUi from '../../Ui/Modal';
 
-const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, setUsers, specialists }) => {
+const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, setUsers }) => {
   const session = useSession();
+  const { specialists } = useSpecialist();
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState(dataUpdateUser.role);
   const [imageFile, setImageFile] = useState(null);
   const [schedules, setSchedules] = useState(dataUpdateUser.schedule || [{ day: '', startTime: '', endTime: '' }]);
-  console.log(imageFile);
 
   const [patients, setPatients] = useState(
     dataUpdateUser.patient || [
@@ -98,7 +99,16 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
 
       if (result.status === 200) {
         if (imageFile) {
-          await handleImageUpload(imageFile, dataUpdateUser.id);
+          const downloadUrl = await handleImageUpload(imageFile, dataUpdateUser.id, 'users', 'doctor image profile');
+          data.image = downloadUrl;
+          const result = await userService.updateUser(dataUpdateUser.id, data, session.data.accessToken);
+          if (result.status === 200) {
+            const { data } = await userService.getAllUsers(session.data.accessToken);
+            setUsers(data.data);
+            setUpdateUser({});
+            onOpenChange(false);
+            setIsLoading(false);
+          }
         } else {
           const { data } = await userService.getAllUsers(session.data.accessToken);
           setUsers(data.data);
@@ -111,41 +121,6 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
       console.log(error);
       setIsLoading(false);
     }
-  };
-
-  const handleImageUpload = async (file, userId) => {
-    setIsLoading(true);
-
-    await uploadFile(
-      userId,
-      'users',
-      'doctor image profile',
-      file,
-      (status, progressPercent) => {
-        console.log(`Upload progress: ${progressPercent}%`);
-      },
-      async (status, downloadURL, e) => {
-        if (status) {
-          const data = {
-            image: downloadURL,
-          };
-
-          const result = await userService.updateUser(userId, data, session.data.accessToken);
-
-          if (result.status === 200) {
-            const { data } = await userService.getAllUsers(session.data.accessToken);
-            setUsers(data.data);
-            setUpdateUser({});
-          } else {
-            console.log('failed upload image profile', result);
-          }
-        } else {
-          console.log('Size image should be less than 1MB');
-          setIsLoading(false);
-          e.target[0].value = '';
-        }
-      }
-    );
   };
 
   const addPatient = () => {

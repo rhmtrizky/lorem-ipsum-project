@@ -1,10 +1,6 @@
 import { Button } from '@nextui-org/react';
 
 const ButtonTab = ({ type, state, setState, basicColor, filter }) => {
-  console.log(filter);
-
-  console.log(state);
-
   const handleClick = () => {
     setState({
       status: true,

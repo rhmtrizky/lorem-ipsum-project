@@ -1,11 +1,11 @@
 import InputUi from '@/components/ui/Input';
-import ModalUi from '@/components/ui/Modal';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 import getDay from '@/utils/getDay';
 import activityService from '@/services/activity';
+import ModalUi from '../../Ui/Modal';
 
 const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue, specialists }) => {
   const [isLoading, setIsLoading] = useState(false);

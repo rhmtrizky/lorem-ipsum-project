@@ -4,9 +4,6 @@ import { useEffect } from 'react';
 import { GrView } from 'react-icons/gr';
 
 const TableExpired = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
-  console.log(filterByStatusActivity('expired'));
-  console.log(getDateForFilter);
-
   useEffect(() => {
     if (getDateForFilter !== '') {
       filterByStatusActivity('expired');
