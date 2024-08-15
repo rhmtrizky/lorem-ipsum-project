@@ -8,6 +8,7 @@ import { logo, next } from '@/assets/images/images';
 import { items } from '@/utils/datas';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const Sidebar = () => {
   const session = useSession();
@@ -72,15 +73,40 @@ export const Sidebar = () => {
                       <a
                         onClick={toggleSidebar}
                         href={href}
-                        className="flex items-center justify-between gap-5 transition-all m-5 hover:text-white"
+                        className="flex flex-col items-center gap-5 transition-all m-5 hover:text-white"
                       >
-                        <motion.div
-                          {...framerText(idx)}
-                          className="w-full flex justify-between text-center border-purple-900 border-2 hover:bg-[#654ab4a8] p-3 rounded-xl"
-                        >
-                          <span>{title}</span>
-                          <Icon className="text-2xl" />
-                        </motion.div>
+                        {idx < 2 && (
+                          <motion.div
+                            {...framerText(idx)}
+                            className="w-full flex justify-between text-center border-purple-900 border-2 hover:bg-[#654ab4a8] p-3 rounded-xl"
+                          >
+                            <span>{title}</span>
+                            <Icon className="text-2xl" />
+                          </motion.div>
+                        )}
+                        {
+                          idx == 2 ? (
+                            <motion.div
+                              {...framerText(idx)}
+                              className="group relative w-full hover:h-30 hover:transition-all hover:duration-1000 ease-linear text-center border-purple-900 border-2 p-3 rounded-xl"
+                              whileHover={{ backgroundColor: '#654ab4a8' }} // Change background color on hover
+                            >
+                              <div className="flex justify-between items-center">
+                                <span>{title}</span>
+                                <Icon className="text-2xl" />
+                              </div>
+                              <motion.div
+                                className="hidden group-hover:flex flex-col items-start mt-2"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                <Link href={'/faq'}>+ FAQ</Link>
+                                <Link href={'/flowRegisBpjs'}>+ Cara Daftar</Link>
+                              </motion.div>
+                            </motion.div>
+                          ) : null
+                        }
                       </a>
                     </li>
                   );

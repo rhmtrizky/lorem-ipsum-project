@@ -1,4 +1,5 @@
 import { call, instagram, linkedin, logo, mail, next, twitter } from '@/assets/images/images'
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { motion } from 'framer-motion'
 import { Sidebar } from '../Sidebar'
@@ -48,14 +49,31 @@ export default function Header() {
 
                     <div className='w-full h-1/2 flex justify-around items-center font-bold px-6' >
                         <ul className='flex gap-6 text-sm text-slate-400' >
-                            <li>
-                                <Link href={"/findDoctor"} className='hover:text-[#654AB4]' style={{transition: '.3s ease'}} >Cari Dokter</Link>
+                            <li >
+                                <Link href={"/findDoctor"} className='hover:text-[#654AB4] transition duration-[.3s] ease-linear' >Cari Dokter</Link>
                             </li>
                             <li>
-                                <Link href={"/"} className='hover:text-[#654AB4]' style={{transition: '.3s ease'}}>Informasi</Link>
+                                <Link href={"/"} className='hover:text-[#654AB4] transition duration-[.3s] ease-linear'>Informasi</Link>
                             </li>
                             <li>
-                                <Link href={"/"} className='hover:text-[#654AB4]' style={{transition: '.3s ease'}}>Kontak</Link>
+                                <Dropdown>
+                                    <DropdownTrigger>
+                                        <button 
+                                            className='flex items-center hover:text-[#654AB4] transition duration-[.3s] ease-linear outline-none'
+                                        >
+                                        Kontak
+                                        <i className='bx bx-chevron-down text-lg ' ></i>
+                                        </button>
+                                    </DropdownTrigger>
+                                    <DropdownMenu aria-label="Static Actions" className='bg-white shadow-xl border-t-2 border-purple-800 p-3 text-[14px]' >
+                                        <DropdownItem >
+                                            <Link href={'faq'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >FAQ</Link>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <Link href={'flowRegisBpjs'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >Cara Daftar</Link>
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
                             </li>
                         </ul>
                         <motion.button

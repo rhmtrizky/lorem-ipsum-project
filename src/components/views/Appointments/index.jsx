@@ -2,6 +2,7 @@ import { addUser, bufferBro, hospitalPurple } from '@/assets/images/images'
 import CardDoctorSchedule from '@/components/ui/Card/CardDoctorSchedule'
 import FormAdd from '@/components/ui/FormAdd'
 import Header from '@/components/ui/Header'
+import { DatePicker } from '@nextui-org/react'
 import Image from 'next/image'
 import React from 'react'
 
@@ -37,6 +38,7 @@ export default function AppointmentsView() {
                             </div>
                         </div>
                 </div>
+
             </section>
         </>
     )

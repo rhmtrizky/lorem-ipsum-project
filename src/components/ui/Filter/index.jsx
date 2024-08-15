@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ModalFilterUi from "../ModalFilter";
+import ModalFilterUi from "../Modal/ModalFilter";
 import Dropdown from "../Dropdown";
 
 export default function Filter() {
