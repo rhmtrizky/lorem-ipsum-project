@@ -14,6 +14,7 @@ export default function FindDoctor() {
     const [searchUser, setSearchUser] = useState('');
     const router = useRouter();
 
+
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
@@ -49,17 +50,11 @@ export default function FindDoctor() {
         debouncedSearch();
     }, [searchUser]);
 
-    const handleCardClick = (doctor) => {
-        router.push({
-            pathname: `/schedules`,
-            query: { name: doctor.fullname, specialist: doctor.specialist },
-        }
-        );
-    };
 
     const handleLoadMore = () => {
         setVisibleDoctors(prevVisibleDoctors => prevVisibleDoctors + 8);
     };
+
 
     return (
         <>
@@ -108,12 +103,12 @@ export default function FindDoctor() {
                         <div className='xl:w-[90%] flex flex-wrap gap-10 justify-center'>
                             {
                                 doctors.slice(0, visibleDoctors).map((doctor, index) => (
-                                    <div key={index} onClick={() => handleCardClick(doctor)}>
+                                    <Link href={`/schedules/${doctor.id}`} key={index}>
                                         <CardDoctor
                                             name={doctor.fullname}
                                             spesialisasi={doctor.specialist}
                                         />
-                                    </div>
+                                    </Link>
                                 ))
                             }
                         </div>
