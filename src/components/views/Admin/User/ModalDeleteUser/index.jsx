@@ -1,28 +1,27 @@
 import userService from '@/services/user';
-import { Button, Select, SelectItem } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-
-const { default: ModalUi } = require('@/components/ui/Modal');
+import ModalUi from '../../Ui/Modal';
 
 const ModalDeleteUser = ({ dataDeleteUser, setDeleteUser, onOpenChange, isOpen, setUsers }) => {
   const session = useSession();
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteUser = async (event) => {
     event.preventDefault();
-    setIsloading(true);
+    setIsLoading(true);
     try {
       const result = await userService.deleteUser(dataDeleteUser.id, session.data.accessToken);
       if (result.status === 200) {
         const { data } = await userService.getAllUsers(session.data.accessToken);
         setUsers(data.data);
         setDeleteUser({});
-        setIsloading(false);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
-      setIsloading(false);
+      setIsLoading(false);
     }
   };
 

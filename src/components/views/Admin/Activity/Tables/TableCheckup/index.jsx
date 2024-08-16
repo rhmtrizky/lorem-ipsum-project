@@ -1,8 +1,8 @@
 import TableUi from '@/components/ui/Table';
-import { GrView } from 'react-icons/gr';
 import { Button } from '@nextui-org/react';
+import { GrView } from 'react-icons/gr';
 
-const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
+const TableCheckup = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
   const columns = [
     {
       title: 'No.',
@@ -25,8 +25,16 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',
@@ -39,7 +47,6 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
       case 'index': {
         return <p>{data.index + 1}</p>;
       }
-
       case 'phoneNumber': {
         return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
       }
@@ -67,8 +74,7 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
         return data[columnKey];
     }
   };
-
-  const processedData = activities.map((queue, index) => ({ ...queue, index }));
+  const processedData = filterByStatusActivity('checkup').map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}
@@ -78,4 +84,4 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen }) => {
   );
 };
 
-export default TableAllStatus;
+export default TableCheckup;

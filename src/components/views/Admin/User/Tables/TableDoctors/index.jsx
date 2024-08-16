@@ -20,8 +20,8 @@ const TableDoctors = ({ setUpdateUser, setDeleteUser, filterByRole, onOpen }) =>
       uid: 'phoneNumber',
     },
     {
-      title: 'Role',
-      uid: 'role',
+      title: 'Specialist',
+      uid: 'specialist',
     },
     {
       title: 'Actions',

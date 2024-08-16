@@ -1,6 +1,5 @@
 import React from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from '@nextui-org/react';
-import ModalUpdateUser from '@/components/views/Admin/User/ModalUpdateUser';
+import { Modal, ModalContent, ModalHeader, ModalBody } from '@nextui-org/react';
 
 export default function ModalUi({ children, isOpen, onOpenChange, title, setCloseModal }) {
   return (

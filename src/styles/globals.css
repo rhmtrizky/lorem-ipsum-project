@@ -330,3 +330,24 @@ body {
   background-color: mediumpurple;
   color: #fff;
 }
+
+
+/* Background card dashboard patient */
+.blur-background {
+  width: 100%;
+  height: 150px;
+  background-image: url('/gradient-puprple.jpg');
+  background-size: contain;
+  background-position: center;
+  position: relative;
+  
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.testing-blur {
+  background-color: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(2px);
+  width: 100%;
+  height: 100%;
+}

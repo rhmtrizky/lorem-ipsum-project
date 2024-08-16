@@ -6,9 +6,18 @@ import { Sidebar } from '../Sidebar'
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Header() {
     const session = useSession();
+    const router = useRouter()
+
+    const handleToDashboard = () => {
+        router.push({
+            pathname: `/patient/dashboard`,
+        })
+    }
+
 
     return (
         <header className='top-0 right-0 w-full h-[90px] shadow-md bg-white' >
@@ -33,6 +42,7 @@ export default function Header() {
                         </div>
 
                         <div className='flex gap-4' >
+
                             <motion.div whileHover={{y: -4}} className='hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer' >
                                 <Image src={linkedin} width={13} height={13} alt='linkedin.png' />
                             </motion.div>
@@ -43,6 +53,13 @@ export default function Header() {
                                 <Image src={instagram} width={15} height={15} alt='instagram.png' />
                             </motion.div>
                             
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                className={`h-8 ${session.status == 'authenticated' ? 'flex' : 'hidden'} justify-center items-center gap-2 border-2 border-[#FFBEBE] text-white w-8 rounded-full shadow-lg hover:shadow-pink-300/100`}
+                                onClick={handleToDashboard}
+                                >
+                                <i class='bx bxs-user  text-white' ></i>
+                            </motion.button>
                         </div>
 
                     </div>
@@ -67,30 +84,35 @@ export default function Header() {
                                     </DropdownTrigger>
                                     <DropdownMenu aria-label="Static Actions" className='bg-white shadow-xl border-t-2 border-purple-800 p-3 text-[14px]' >
                                         <DropdownItem >
-                                            <Link href={'faq'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >FAQ</Link>
+                                            <Link href={'/faq'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >FAQ</Link>
                                         </DropdownItem>
                                         <DropdownItem>
-                                            <Link href={'flowRegisBpjs'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >Cara Daftar</Link>
+                                            <Link href={'/flowRegisBpjs'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >Cara Daftar</Link>
                                         </DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
                             </li>
+                            
                         </ul>
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            className="h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-full shadow-lg hover:shadow-purple-500/50"
-                            onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
-                            >
-                            <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
-                            <div className="w-5 h-5 flex items-center justify-center bg-[#FFBEBE] rounded-full">
-                                <Image
-                                src={next}
-                                width={15}
-                                height={15}
-                                alt="next.png"
-                                />
-                            </div>
-                        </motion.button>
+                        <div className='flex gap-3' >
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                className="h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-full shadow-lg hover:shadow-purple-500/50"
+                                onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
+                                >
+                                <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
+                                <div className="w-5 h-5 flex items-center justify-center bg-[#FFBEBE] rounded-full">
+                                    <Image
+                                    src={next}
+                                    width={15}
+                                    height={15}
+                                    alt="next.png"
+                                    />
+                                </div>
+                            </motion.button>
+                            
+                            
+                        </div>
 
                     </div>
 

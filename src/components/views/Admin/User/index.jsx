@@ -10,14 +10,17 @@ import TablePatients from './Tables/TablePatients';
 import TablePharmacy from './Tables/TablePharmacy';
 import TableAllUsers from './Tables/TableAllUsers';
 import ButtonTab from '../Ui/ButtonTab';
+import useUser from '@/hooks/useUser';
 
-const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
+const AdminUsersView = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { users, setUsers, searchUser, setSearchUser } = useUser();
   const [updateUser, setUpdateUser] = useState({});
   const [deleteUser, setDeleteUser] = useState({});
   const [addUser, setAddUser] = useState({
     status: false,
   });
+
   const [selectTab, setSelectTab] = useState({
     status: true,
     type: 'all',
@@ -56,19 +59,27 @@ const AdminUsersView = ({ users, setUsers, setSearchUser, searchUser }) => {
           <div className="flex justify-start items-center gap-2 mt-6">
             <ButtonTab
               type="all"
-              onClick={() => setSelectTab({ status: true, type: 'all' })}
+              state={selectTab}
+              setState={setSelectTab}
+              basicColor={'blue'}
             />
             <ButtonTab
               type="patient"
-              onClick={() => setSelectTab({ status: true, type: 'patient' })}
+              state={selectTab}
+              setState={setSelectTab}
+              basicColor={'blue'}
             />
             <ButtonTab
               type="doctor"
-              onClick={() => setSelectTab({ status: true, type: 'doctor' })}
+              state={selectTab}
+              setState={setSelectTab}
+              basicColor={'blue'}
             />
             <ButtonTab
               type="pharmacy"
-              onClick={() => setSelectTab({ status: true, type: 'pharmacy' })}
+              state={selectTab}
+              setState={setSelectTab}
+              basicColor={'blue'}
             />
           </div>
         </div>

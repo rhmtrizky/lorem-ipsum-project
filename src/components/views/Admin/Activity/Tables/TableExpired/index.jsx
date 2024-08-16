@@ -1,8 +1,15 @@
 import TableUi from '@/components/ui/Table';
 import { Button } from '@nextui-org/react';
+import { useEffect } from 'react';
 import { GrView } from 'react-icons/gr';
 
-const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
+const TableExpired = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
+  useEffect(() => {
+    if (getDateForFilter !== '') {
+      filterByStatusActivity('expired');
+    }
+  }, [getDateForFilter]);
+
   const columns = [
     {
       title: 'No.',
@@ -25,8 +32,16 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
       uid: 'bpjsNumber',
     },
     {
+      title: 'Book Date',
+      uid: 'bookDate',
+    },
+    {
       title: 'Specialist',
       uid: 'specialist',
+    },
+    {
+      title: 'Activity',
+      uid: 'status',
     },
     {
       title: 'Actions',
@@ -66,7 +81,7 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
         return data[columnKey];
     }
   };
-  const processedData = filterByStatusActivity('queue').map((user, index) => ({ ...user, index }));
+  const processedData = filterByStatusActivity('expired').map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}
@@ -76,4 +91,4 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen }) => {
   );
 };
 
-export default TableQueues;
+export default TableExpired;

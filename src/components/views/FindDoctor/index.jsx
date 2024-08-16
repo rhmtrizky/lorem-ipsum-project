@@ -1,15 +1,13 @@
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import CardDoctor from '@/components/ui/Card/CardDoctor';
 import Filter from '@/components/ui/Filter';
 import Header from '@/components/ui/Header';
 import useDebounce from '@/hooks/useDebounce';
-import userService from '@/services/user';
 import Link from 'next/link';
+import doctorService from '@/services/user/doctor';
 
 export default function FindDoctor() {
-    const { data: session } = useSession();
     const [doctors, setDoctors] = useState([]);
     const [visibleDoctors, setVisibleDoctors] = useState(15);
     const { debounce } = useDebounce();
@@ -18,31 +16,28 @@ export default function FindDoctor() {
 
     useEffect(() => {
         const fetchDoctors = async () => {
-            if (session) {
-                try {
-                    const response = await userService.getAllUsers(session.accessToken);
-                    const doctorData = response.data.data.filter(user => user.role === 'doctor');
-                    setDoctors(doctorData);
-                } catch (error) {
-                    console.error('Error fetching doctors', error);
-                }
+            try {
+                const response = await doctorService.getDoctors();
+                const doctorData = response.data.data.filter(user => user.role === 'doctor');
+                setDoctors(doctorData);
+            } catch (error) {
+                console.error('Error fetching doctors', error);
             }
         };
         fetchDoctors();
-    }, [session]);
+    }, []);
     
     const performSearch = async () => {
         if (searchUser !== '') {
             try {
-                const { data } = await userService.searchUser(searchUser, session.accessToken);
+                const { data } = await doctorService.searchDoctor(searchUser);
                 const filteredDoctors = data.data.filter(user => user.role === 'doctor');
                 setDoctors(filteredDoctors);
             } catch (err) {
                 console.error(err);
             }
         } else {
-            // Jika pencarian kosong, tampilkan semua dokter
-            const response = await userService.getAllUsers(session.accessToken);
+            const response = await doctorService.getDoctors();
             const doctorData = response.data.data.filter(user => user.role === 'doctor');
             setDoctors(doctorData);
         }
@@ -51,20 +46,15 @@ export default function FindDoctor() {
     const debouncedSearch = debounce(performSearch, 1000);
 
     useEffect(() => {
-        if (session) {
-            debouncedSearch();
-        }
-    }, [searchUser, session]);
+        debouncedSearch();
+    }, [searchUser]);
 
     const handleCardClick = (doctor) => {
         router.push({
-            pathname: '/schedules',
-            query: {
-                name: doctor.fullname,
-                specialist: doctor.specialist,
-                schedule: JSON.stringify(doctor.schedule),
-            },
-        });
+            pathname: `/schedules`,
+            query: { name: doctor.fullname, specialist: doctor.specialist },
+        }
+        );
     };
 
     const handleLoadMore = () => {

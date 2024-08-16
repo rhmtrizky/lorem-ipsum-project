@@ -33,9 +33,9 @@ export default function ModalAppointmentsUi({title, children}) {
                 <ModalBody>
                     {children}
                 </ModalBody>
-                <ModalFooter>
-                    <Button className='bg-[#654AB4] hover:bg-[#4e3a8b] rounded-lg text-white transition duration-300 ease-linear ' >Simpan</Button>
-                </ModalFooter>
+                {/* <ModalFooter>
+                    <Button type='submit' className='bg-[#654AB4] hover:bg-[#4e3a8b] rounded-lg text-white transition duration-300 ease-linear ' >Simpan</Button>
+                </ModalFooter> */}
                 </>
             )}
             </ModalContent>

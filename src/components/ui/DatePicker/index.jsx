@@ -95,12 +95,12 @@ const DatePicker = () => {
                     type="text"
                     className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Select Date"
-                    onClick={() => setDatePickerVisible(!isDatePickerVisible)}
                     value={selectedDate.toLocaleDateString("en-us", {
                     year: "numeric",
                     month: "2-digit",
                     day: "2-digit",
                     })}
+                    onChange={(e) => setTanggalLahir(e.target.value)}
                     readOnly
                 />
             </div>

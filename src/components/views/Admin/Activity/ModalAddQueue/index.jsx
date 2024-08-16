@@ -1,13 +1,13 @@
 import InputUi from '@/components/ui/Input';
-import ModalUi from '@/components/ui/Modal';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { specialistTypes } from '@/constraint/adminPanel';
+
 import getDay from '@/utils/getDay';
 import activityService from '@/services/activity';
+import ModalUi from '../../Ui/Modal';
 
-const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue }) => {
+const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue, specialists }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -64,7 +64,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
 
   useEffect(() => {
     if (selectedSchedule) {
-      setGetSchedule(getDocter.schedule[selectedSchedule]);
+      setGetSchedule(getDocter?.schedule[selectedSchedule]);
     }
   }, [getDocter, selectedSchedule]);
 
@@ -80,9 +80,31 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
   }, [bookDate]);
 
   useEffect(() => {
+    // get current date
     const currentDate = new Date();
     const selectedDate = new Date(bookDate);
 
+    // Get current hour
+    const currentHour = currentDate.getHours();
+    const scheduleHour = parseInt(getSchedule?.endTime?.split(':')[0], 10);
+
+    // condition to make sure slectedDate is same as currentDate
+    if (selectedDate.toDateString() === currentDate.toDateString()) {
+      // condition to check if currentHour is before time in scheduleHour
+      if (currentHour >= scheduleHour) {
+        setResultCompare({
+          status: false,
+          message: 'Jam sudah melebihi waktu yang tersedia.',
+        });
+        return;
+      }
+    }
+
+    // Set time part to 00:00:00 for both dates to compare only the date portion
+    currentDate.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    // condition to check if selectedDate is before currentDate
     if (selectedDate < currentDate) {
       setResultCompare({
         status: false,
@@ -179,6 +201,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
       setAddQueue({ status: false });
     }
   };
+
   return (
     <div>
       <ModalUi
@@ -327,13 +350,13 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
                   required
                   onChange={(e) => setSelectedSpesialist(e.target.value)}
                 >
-                  {specialistTypes.map((item) => (
+                  {specialists.map((item) => (
                     <SelectItem
-                      key={item.value}
-                      value={item.value}
+                      key={item.specialistName}
+                      value={item.specialistName}
                       className="w-full bg-white gap-0"
                     >
-                      {item.label}
+                      {item.specialistName}
                     </SelectItem>
                   ))}
                 </Select>
