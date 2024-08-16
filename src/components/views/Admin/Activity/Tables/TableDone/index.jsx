@@ -3,10 +3,10 @@ import { Button } from '@nextui-org/react';
 import { useEffect } from 'react';
 import { GrView } from 'react-icons/gr';
 
-const TablePrepare = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
+const TableDone = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
   useEffect(() => {
     if (getDateForFilter !== '') {
-      filterByStatusActivity('preparing');
+      filterByStatusActivity('done');
     }
   }, [getDateForFilter]);
 
@@ -44,6 +44,10 @@ const TablePrepare = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateF
       uid: 'status',
     },
     {
+      title: 'Note',
+      uid: 'note',
+    },
+    {
       title: 'Actions',
       uid: 'actions',
     },
@@ -63,8 +67,20 @@ const TablePrepare = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateF
             size="sm"
             className="bg-blue-500 text-white text-[12px] rounded-md font-semibold"
           >
-            {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
+            SELESAI
           </Button>
+        );
+      }
+      case 'note': {
+        return (
+          data?.isHandle?.isTaken === false && (
+            <Button
+              size="sm"
+              className="bg-red-500 text-white text-[12px] rounded-md font-semibold"
+            >
+              Obat Tidak Diambil
+            </Button>
+          )
         );
       }
       case 'actions':
@@ -84,7 +100,7 @@ const TablePrepare = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateF
         return data[columnKey];
     }
   };
-  const processedData = filterByStatusActivity('preparing').map((user, index) => ({ ...user, index }));
+  const processedData = filterByStatusActivity('done').map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}
@@ -94,4 +110,4 @@ const TablePrepare = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateF
   );
 };
 
-export default TablePrepare;
+export default TableDone;

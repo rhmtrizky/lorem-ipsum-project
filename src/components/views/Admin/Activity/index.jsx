@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
 import useActivity from '@/hooks/useActivity';
 import useSpecialist from '@/hooks/useSpecialist';
+import TableDone from './Tables/TableDone';
 
 const ActivityView = () => {
   const { data: session } = useSession();
@@ -105,17 +106,7 @@ const ActivityView = () => {
     <>
       <AdminLayout>
         <div className="w-full">
-          <div className="flex justify-between items-center mb-3">
-            <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
-
-            <Button
-              type="submit"
-              onClick={handleRefresh}
-              className="text-white font-semibold text-sm rounded-md  bg-blue-500"
-            >
-              Refresh Page <i className="bx bx-sync text-xl"></i>
-            </Button>
-          </div>
+          <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
           <div className="flex items-center justify-between w-full">
             <div className="relative w-3/5 text-neutral-600">
               <Search
@@ -124,28 +115,52 @@ const ActivityView = () => {
               />
             </div>
             <div className="w-2/5 flex justify-end">
-              <div className="flex justify-end mx-4 items-center gap-1">
-                <InputUi
-                  name="date"
-                  type="date"
-                  defaultValue={getDateForFilter}
-                  onChange={(e) => setGetDateForFilter(e.target.value)}
-                />
-                <Button
-                  type="button"
-                  className="text-white font-semibold text-[12px] bg-red-500 rounded-md"
-                  onPress={onOpen}
-                  value={getDateForFilter}
-                  onClick={() => setGetDateForFilter('')}
-                  size="sm"
-                >
-                  Reset
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                onClick={handleRefresh}
+                className="text-white font-semibold text-sm rounded-md  bg-blue-500"
+              >
+                Refresh Page <i className="bx bx-sync text-xl"></i>
+              </Button>
             </div>
           </div>
-          <div className="flex lg:flex-row md:flex-col-reverse lg:justify-between md:justify-start lg:items-center md:items-start mt-6 gap-3">
-            <div className="flex gap-2">
+          <div className="flex flex-col justify-start items-start mt-6 gap-3">
+            <div className="flex items-center justify-between w-full">
+              <div className="relative w-3/5 text-neutral-600">
+                <Button
+                  endContent={<i className="bx bx-plus-circle text-xl" />}
+                  type="button"
+                  className="text-white font-semibold text-[14px] bg-green-500 rounded-md px-3"
+                  onPress={onOpen}
+                  onClick={() => setAddQueue({ status: true })}
+                >
+                  Tambah Antrian
+                </Button>
+              </div>
+              <div className="w-2/5 flex justify-end">
+                <div className="flex justify-end mx-4 items-center gap-1">
+                  <p className="text-neutral-700">Filter by date:</p>
+                  <InputUi
+                    name="date"
+                    type="date"
+                    defaultValue={getDateForFilter}
+                    onChange={(e) => setGetDateForFilter(e.target.value)}
+                    className={' border-2 border-neutral-300 rounded-md px-2 text-sm'}
+                  />
+                  <Button
+                    type="button"
+                    className="text-white font-semibold text-[12px] bg-red-500 rounded-md"
+                    onPress={onOpen}
+                    value={getDateForFilter}
+                    onClick={() => setGetDateForFilter('')}
+                    size="sm"
+                  >
+                    Reset
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2 mt-3 w-full justify-start overflow-x-auto w-auto scrollbar-hide">
               <div className="relative">
                 <ButtonTab
                   type=""
@@ -180,21 +195,24 @@ const ActivityView = () => {
                 basicColor={'blue'}
               />
               <ButtonTab
+                type="done"
+                state={selectTab}
+                setState={setSelectTab}
+                basicColor={'blue'}
+              />
+              <ButtonTab
                 type="expired"
                 state={selectTab}
                 setState={setSelectTab}
                 basicColor={'red'}
               />
+              <ButtonTab
+                type="history"
+                state={selectTab}
+                setState={setSelectTab}
+                basicColor={'blue'}
+              />
             </div>
-            <Button
-              endContent={<i className="bx bx-plus-circle text-xl" />}
-              type="button"
-              className="text-white font-semibold text-[14px] bg-blue-500 rounded-md px-3"
-              onPress={onOpen}
-              onClick={() => setAddQueue({ status: true })}
-            >
-              Tambah Antrian
-            </Button>
           </div>
         </div>
         <div className="border-2 border-neutral-300 mt-3 w-full">
@@ -254,6 +272,13 @@ const ActivityView = () => {
           )}
           {selectTab.status && selectTab.type === 'take medicine' && (
             <TableTakeMedicine
+              filterByStatusActivity={filterByStatusActivity}
+              setTicketQueue={setTicketQueue}
+              onOpen={onOpen}
+            />
+          )}
+          {selectTab.status && selectTab.type === 'done' && (
+            <TableDone
               filterByStatusActivity={filterByStatusActivity}
               setTicketQueue={setTicketQueue}
               onOpen={onOpen}
