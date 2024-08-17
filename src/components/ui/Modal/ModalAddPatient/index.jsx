@@ -1,16 +1,16 @@
 import { Button, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react';
 import React from 'react';
 
-export default function ModalAddFamily({ title, children }) {
+export default function ModalAddPatient({ title, children }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>
       <Button
         onPress={onOpen}
-        className="hover:text-[#654AB4] transition duration-[.3s] ease-linear"
+        className="w-max bg-[#654AB4] hover:bg-[#4e3a8b] rounded-full py-3.5 px-5 my-4 text-white text-[12px] rubik"
       >
-        Tambah Anggota Keluarga
+        Lengkapi Profil Anda
       </Button>
       <Modal
         size="2xl"
