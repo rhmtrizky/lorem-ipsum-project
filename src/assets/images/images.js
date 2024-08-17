@@ -34,3 +34,25 @@ export const heart = "/heart.png"
 
 export const laptop = "/laptop.png"
 export const rightArrow = "/right-arrow.png"
+export const administrationImage = "/administration-image.jpg"
+export const dots = "/dots.png"
+export const arrowDottedLeft = "/left-dotted-arrowhead.png"
+
+export const doctorCard = "/confident-doctor.jpg"
+
+export const doctorCard1 = "/doctor-card1.jpg"
+
+export const stetoskopPurple = "/stethoscope-purple.png"
+export const hospitalPurple = "/hospital-purple.png"
+
+export const addUser = "/add-user.png"
+export const getTicket = "/validating-ticket.png"
+
+export const bufferBro = "/Buffer-bro.png"
+
+// Dashboard patient
+export const animateDoctor = '/animasi-doctor-dashboard.png'
+export const purpleFluid = '/purple-fluid-background-frame.png'
+export const injectionPink = '/animas-injection-pink.png'
+export const bandAids = '/band-aids.png'
+export const injectionNotes = '/animasi-injection-notes-dashboard.png'

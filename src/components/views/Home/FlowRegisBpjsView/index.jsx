@@ -1,22 +1,19 @@
 import { laptop, rightArrow } from '@/assets/images/images'
-import Header from '@/components/ui/Header'
 import { datasFlow } from '@/constraint'
+import Header from '@/components/ui/Header'
 import Image from 'next/image'
 import React from 'react'
+import BannerContact from '@/components/ui/BannerContact'
 
 export default function FlowRegisBpjs() {
     return (
         <>
             <Header/>
             <section className='min-h-screen  overflow-hidden' >
-                <div className='flex flex-col justify-center items-center gap-5 bg-flow-regis overflow-hidden' >
-                    <h1 className='text-xl min-[400px]:text-4xl font-bold text-[#fff] cursor-default' >Alur Pendaftaran BPJS</h1>
-                    <div className='flex items-center max-[300px]:flex-col max-[400px]:text-xs' >
-                        <a href='#' className='mr-1 mb-1.5 text-white font-semibold cursor-pointer hover:text-[#654AB4]' >Beranda</a>
-                        <Image src={rightArrow} width={14} height={14} alt='right-arrow.png' className='max-[300px]:hidden' />
-                        <p className='text-[#654AB4] blur-text p-1.5 rounded-full ml-2 cursor-default' >Pertanyaan seputar pendaftaran BPJS</p>
-                    </div>
-                </div>
+                <BannerContact
+                    title={'Alur Pendaftaran BPJS'}
+                    back={'Beranda'}
+                />
 
                 <div className='flex justify-evenly items-start max-[600px]:flex-col max-[6000px]:items-center min-[1550px]:justify-center min-[1550px]:gap-40 mt-5' >
                     <div>
@@ -41,8 +38,6 @@ export default function FlowRegisBpjs() {
                             ))
                         }
                     </div>
-
-
                 </div>
             </section>
         </>
