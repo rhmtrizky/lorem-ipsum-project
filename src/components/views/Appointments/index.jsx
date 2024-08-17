@@ -1,6 +1,6 @@
 import { addUser, bufferBro } from '@/assets/images/images';
 import CardDoctorSchedule from '@/components/ui/Card/CardDoctorSchedule'
-import FormAdd from '@/components/ui/FormAdd';
+import FormAdd from '@/components/ui/Form';
 import Header from '@/components/ui/Header'
 import Image from 'next/image';
 import { useRouter } from 'next/router'

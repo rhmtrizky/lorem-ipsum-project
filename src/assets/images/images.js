@@ -46,6 +46,7 @@ export const stetoskopPurple = "/stethoscope-purple.png"
 export const hospitalPurple = "/hospital-purple.png"
 
 export const addUser = "/add-user.png"
+export const getTicket = "/validating-ticket.png"
 
 export const bufferBro = "/Buffer-bro.png"
 

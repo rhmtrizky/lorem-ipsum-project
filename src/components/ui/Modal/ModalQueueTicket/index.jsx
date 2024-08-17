@@ -1,8 +1,8 @@
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, scrollBehavior } from '@nextui-org/react'
+import { Button, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react'
 import React from 'react'
 
 
-export default function ModalAppointmentsUi({title, children}) {
+export default function ModalQueueTicketUi({title, children}) {
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure()
 
@@ -10,7 +10,7 @@ export default function ModalAppointmentsUi({title, children}) {
     return (
         <>
         <Button onPress={onOpen} className='hover:text-[#654AB4] transition duration-[.3s] ease-linear'  >
-            Tambah Anggota Keluarga
+            Ambil Tiket Antrian
         </Button>
         <Modal 
             size='2xl'
@@ -33,9 +33,6 @@ export default function ModalAppointmentsUi({title, children}) {
                 <ModalBody>
                     {children}
                 </ModalBody>
-                {/* <ModalFooter>
-                    <Button type='submit' className='bg-[#654AB4] hover:bg-[#4e3a8b] rounded-lg text-white transition duration-300 ease-linear ' >Simpan</Button>
-                </ModalFooter> */}
                 </>
             )}
             </ModalContent>

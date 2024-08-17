@@ -1,13 +1,12 @@
-import { addUser, bufferBro } from '@/assets/images/images';
+import { addUser, bufferBro, getTicket } from '@/assets/images/images';
+import { useSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react'
 import CardDoctorSchedule from '@/components/ui/Card/CardDoctorSchedule'
-import FormAdd from '@/components/ui/FormAdd';
 import Header from '@/components/ui/Header'
 import userService from '@/services/user';
-import doctorService from '@/services/user/doctor';
 import Image from 'next/image';
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react';
+import FormQueueTicket from '@/components/ui/Form/FormQueueTicket';
+import FormAddFamily from '@/components/ui/Form/FormAddFamiily';
 
 export default function SchedulesDoctor({data}) {
 
@@ -35,6 +34,7 @@ export default function SchedulesDoctor({data}) {
             <section className='flex gap-3 my-8 mx-24' >
                 <div className='mt-12' >
                     <CardDoctorSchedule 
+                        image={data.image}
                         name={data.fullname}
                         specialist={data.specialist}
                     />
@@ -63,10 +63,14 @@ export default function SchedulesDoctor({data}) {
 
                 <div className='flex justify-center mt-12 ' >
                     <div className='bg-white w-[800px]' >
-                        <div className='w-full h-[70px] flex items-center px-8' >
-                            <div className='flex gap-1 items-center text-[#000000ab] hover:text-[#654AB4] font-normal' style={{transition: '.3s ease'}} >
-                                <Image src={addUser} width={25} height={25} alt='...' />
-                                <FormAdd data={data} user={user} />
+                        <div className='w-full h-[70px] flex justify-between items-center px-8' >
+                            <div className='flex items-center text-[#000000ab] hover:text-[#654AB4] font-normal' style={{transition: '.3s ease'}} >
+                                <Image src={getTicket} width={25} height={25} alt='...' />
+                                <FormQueueTicket data={data} user={user} />
+                            </div>
+                            <div className='flex items-center text-[#000000ab] hover:text-[#654AB4] font-normal' style={{transition: '.3s ease'}} >
+                                <Image src={addUser} width={20} height={25} alt='...' />
+                                <FormAddFamily/>
                             </div>
                         </div>
                         

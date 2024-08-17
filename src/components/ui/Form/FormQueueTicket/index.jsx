@@ -1,11 +1,8 @@
-import ModalAppointmentsUi from '../Modal/ModalAppointments';
 import { Select, SelectItem } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import userService from '@/services/user';
-import { gender } from '@/constraint/adminPanel';
+import ModalQueueTicketUi from '../../Modal/ModalQueueTicket';
 
-export default function FormAdd({user, data}) {
+export default function FormQueueTicket({user, data}) {
 
     const [patientIndex, setPatientIndex] = useState()
     const [dataPatient, setDataPatient] = useState({})
@@ -51,38 +48,31 @@ export default function FormAdd({user, data}) {
     // console.log('test', user)
 
     return (
-        <ModalAppointmentsUi title="Add Family">
+        <ModalQueueTicketUi title="Get Ticket">
             <form  className="w-full">
-                <div className="w-full flex items-end gap-5">
-                    <div className="w-full">
-                        <label htmlFor="nama-lengkap" className="mb-2 text-sm sr-only">Nama Lengkap</label>
-                        <p className="text-red-700">Harus diisi</p>
-                        <div className="relative">
-                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <i className="bx bxs-user"></i>
-                            </div>
-                            <input 
-                                type="text" 
-                                id="nama-lengkap" 
-                                name="fullName"
-                                defaultValue={user.fullname}
-                                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
-                                placeholder="Nama Lengkap Sesuai KTP " 
-                                required 
-                                readOnly
-                            />
-                        </div>
-                    </div>
-                    {/* <input 
-                        type="date" 
-                        name="birthDate"
-                        className="block w-full p-4 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
-                        required 
-                    /> */}
-                </div>
 
-                <div className='flex' >
                 <div className="w-full">
+                    <label htmlFor="nama-lengkap" className="mb-2 text-sm sr-only">Nama Lengkap</label>
+                    <div className="relative">
+                        <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <i className="bx bxs-user"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="nama-lengkap" 
+                            name="fullName"
+                            defaultValue={user.fullname}
+                            className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
+                            placeholder="Nama Lengkap Sesuai KTP " 
+                            required 
+                            readOnly
+                        />
+                    </div>
+                </div>
+                
+
+                <div className='flex gap-5 mt-4 ' >
+                    <div className="w-full">
                         <label htmlFor="email" className="mb-2 text-sm sr-only">Email</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -99,32 +89,41 @@ export default function FormAdd({user, data}) {
                         </div>
                     </div>
 
-                    <input 
-                        type="text" 
-                        name="no-hp"
-                        placeholder='No Hp'
-                        defaultValue={user.phoneNumber}
-                        className="block w-full p-4 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
-                        required 
-                        readOnly
-                    />
-
+                    <div className="w-full">
+                        <label htmlFor="phone" className="mb-2 text-sm sr-only">Phone</label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <i className="bx bxs-phone"></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="phone" 
+                                defaultValue={user.phoneNumber}
+                                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
+                                placeholder="Email - Optional" 
+                                readOnly
+                            />
+                        </div>
+                    </div>
                 </div>
                 
-
-                <div>
-                    <Select
-                        className='border-2 border-black'
-                        placeholder='Anggota Keluarga'
-                        onChange={(e) => setPatientIndex(e.target.value)}
-                    >
-                    {
-                        user.patient?.map((name, index) => (
-                            <SelectItem key={index} value={index} className='bg-white' >{name.name}</SelectItem>
-                        ))
-                    }
-                    </Select>
-                    
+                <div className="w-full mt-4">
+                    <p className="text-red-700">Harus diisi</p>
+                    <div className="flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg w-full">
+                        <label className="mb-2 text-sm sr-only">Pilih Anggota Keluarga</label>
+                        <i className="bx bxs-donate-blood pl-4"></i>
+                        <Select
+                                className='w-[90%] px-1.5 outline-none text-sm'
+                                placeholder='Pilih Anggota Keluarga'
+                                onChange={(e) => setPatientIndex(e.target.value)}
+                            >
+                            {
+                                user.patient?.map((name, index) => (
+                                        <SelectItem key={index} value={index} className='bg-white border-[1px] border-slate-400 py-3 rounded-lg' >{name.name}</SelectItem>
+                                ))
+                            }
+                            </Select>
+                    </div>
                 </div>
 
                 <div className="flex items-end gap-5 mt-4">
@@ -147,40 +146,64 @@ export default function FormAdd({user, data}) {
                         </div>
                     </div>
 
+                    <div className="w-full">
+                        <label htmlFor="tanggal-lahir" className="mb-2 text-sm sr-only">Tanggal Lahir</label>
+                        <p className="text-red-700">Harus diisi</p>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <i class='bx bxs-calendar-alt'></i>
+                            </div>
+                            <input 
+                                type="date" 
+                                id="tanggal-lahir" 
+                                name="bornDate"
+                                defaultValue={dataPatient?.bornDate}
+                                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
+                                placeholder="Tempat Lahir" 
+                                required 
+                                readOnly
+                            />
+                        </div>
+                    </div>
+
+
                     
                 </div>
 
                 <div className="flex items-end gap-5 mt-4">
-                   
-                <div>
-              <label className="text-sm font-medium text-neutral-800">Jenis Kelamin</label>
-              <input defaultValue={dataPatient?.gender} />
-              {/* <Select
-                name="gender"
-                size="sm"
-                placeholder="Jenis Kelamin"
-                className={'border-2 border-blue-300 rounded-md text-blue-900'}
-                defaultSelectedKeys={[dataPatient.gender]}
-                required
-              >
-                {gender.map((item) => (
-                  <SelectItem
-                    key={item.value}
-                    value={item.value}
-                    className="w-full bg-white gap-0"
-                  >
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </Select> */}
-            </div>
+
+                <div className="w-full">
+                        <label htmlFor="jenis-kelamin" className="mb-2 text-sm sr-only">Jenis Kelamin</label>
+                        <p className='text-red-700' >Harus diisi</p>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <i class='bx bx-male-female' ></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="jenis-kelamin" 
+                                defaultValue={dataPatient?.gender}
+                                placeholder='Jenis Kelamin'
+                                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
+                                readOnly
+                            />
+                        </div>
+                    </div>
 
                     <div className="w-full">
-                        <p className="text-red-700">Harus diisi</p>
-                        <div className="flex justify-start items-center border-[1px] h-14 border-slate-400 rounded-lg w-full">
-                            <label className="mb-2 text-sm sr-only">Golongan Darah</label>
-                            <i className="bx bxs-donate-blood pl-4"></i>
-                            <input defaultValue={dataPatient?.golDarah} />
+                        <label htmlFor="golongan-darah" className="mb-2 text-sm sr-only">Golongan Darah</label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <i class='bx bxs-donate-blood' ></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="golongan-darah" 
+                                placeholder='Golongan Darah'
+                                defaultValue={dataPatient?.golDarah}
+                                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none" 
+                                readOnly
+                            />
                         </div>
                     </div>
                 </div>
@@ -305,6 +328,6 @@ export default function FormAdd({user, data}) {
                     Submit
                 </button>
             </form>
-        </ModalAppointmentsUi>
+        </ModalQueueTicketUi>
     );
 }

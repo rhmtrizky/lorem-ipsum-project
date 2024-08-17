@@ -1,14 +1,13 @@
-import { doctorCard, hospitalPurple, stetoskopPurple } from '@/assets/images/images'
+import { hospitalPurple, stetoskopPurple } from '@/assets/images/images'
 import Image from 'next/image'
 import React from 'react'
 
-export default function CardDoctorSchedule({name, specialist}) {
+export default function CardDoctorSchedule({name, specialist, image}) {
     return (
-        // kalau appointments w-full sedangkan schedules w-1/2
         <div className='w-full' >
             <div className='flex items-center gap-6 bg-white w-full h-max shadow-lg p-3 rounded-lg' >
                 <div>
-                    <Image src={doctorCard} width={250} height={250} alt='doctor.png' />
+                    <Image src={image} width={250} height={250} alt='doctor.png' />
                 </div>
 
                 <div>
