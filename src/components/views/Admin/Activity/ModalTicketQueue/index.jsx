@@ -15,6 +15,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
   const [isSelected, setIsSelected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isTaken, setIsTaken] = useState(false);
+  const [apoteker, setApoteker] = useState(ticketQueue?.isHandle?.apoteker || '');
   const [resepDokter, setResepDokter] = useState(
     ticketQueue.resepDokter || [
       {
@@ -25,7 +26,6 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
       },
     ]
   );
-  console.log(isTaken);
 
   const addResepDokter = () => {
     setResepDokter([...resepDokter, { namaObat: '', dosis: '', hari: '', catatan: '' }]);
@@ -55,6 +55,8 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
   const handleUpdateStatusActivities = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    // form data
     const form = formRef.current;
 
     if (!form.checkValidity()) {
@@ -63,6 +65,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
       return;
     }
     const formData = new FormData(form);
+
     if (ticketQueue.status === 'queue') {
       const data = {
         id: ticketQueue.id,
@@ -183,6 +186,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
         id: ticketQueue.id,
         isHandle: {
           status: true,
+          apoteker: formData.get('apoteker'),
           taken: formData.get('taken'),
         },
       };
@@ -210,6 +214,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
         isHandle: {
           status: true,
           isTaken: isTaken ? true : false,
+          apoteker: formData.get('apoteker'),
           taken: 'done',
         },
       };
@@ -236,6 +241,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
         isHandle: {
           status: true,
           isTaken: isTaken ? true : false,
+          apoteker: formData.get('apoteker'),
           taken: 'done',
         },
       };
@@ -268,6 +274,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
       id: ticketQueue.id,
       isHandle: {
         status: true,
+        apoteker: apoteker,
         taken: 'waiting',
       },
     };
@@ -564,9 +571,24 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
                 </div>
               </>
             ) : null}
+            {ticketQueue.status === 'take medicine' && (
+              <InputUi
+                name="apoteker"
+                type={'text'}
+                placeholder={'Apoteker'}
+                label={'Apoteker'}
+                defaultValue={ticketQueue?.isHandle?.apoteker !== '' ? ticketQueue?.isHandle?.apoteker : ''}
+                className={'border-2 border-blue-300 rounded-md text-blue-900'}
+                colorLabel={'blue-900'}
+                onChange={(e) => setApoteker(e.target.value)}
+                disabled={ticketQueue.status !== 'take medicine' ? true : false}
+                required
+              />
+            )}
+
             {ticketQueue.status === 'take medicine' && ticketQueue.isHandle.status === false && (
               <div>
-                <label className="text-sm font-medium text-neutral-800">Hari ini/Besok?</label>
+                <label className="text-sm font-medium text-blue-900">Hari ini/Besok?</label>
                 <Select
                   name="taken"
                   size="sm"

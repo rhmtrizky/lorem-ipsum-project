@@ -59,6 +59,10 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, 
       uid: 'status',
     },
     {
+      title: 'Apoteker',
+      uid: 'apoteker',
+    },
+    {
       title: 'Note',
       uid: 'note',
     },
@@ -88,6 +92,9 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, 
             </Button>
           )
         );
+      }
+      case 'apoteker': {
+        return <p>{data?.isHandle?.apoteker}</p>;
       }
       case 'status': {
         return (

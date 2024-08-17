@@ -44,6 +44,10 @@ const TableDone = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForF
       uid: 'status',
     },
     {
+      title: 'Apoteker',
+      uid: 'apoteker',
+    },
+    {
       title: 'Note',
       uid: 'note',
     },
@@ -70,6 +74,9 @@ const TableDone = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForF
             SELESAI
           </Button>
         );
+      }
+      case 'apoteker': {
+        return <p>{data?.isHandle?.apoteker}</p>;
       }
       case 'note': {
         return (
