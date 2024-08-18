@@ -8,14 +8,20 @@ import Image from 'next/image';
 import FormQueueTicket from '@/components/ui/Form/FormQueueTicket';
 import FormAddFamily from '@/components/ui/Form/FormAddFamily';
 import FormAddPatient from '@/components/ui/Form/FormAddPatient';
-import { Button } from '@nextui-org/react';
-import Link from 'next/link';
+import { Button, useDisclosure } from '@nextui-org/react';
+import QueueTicket from '@/components/ui/Form/QueueTicket';
 
 export default function SchedulesDoctor({ data, doctorId }) {
   const { data: session } = useSession();
-
   const [user, setUser] = useState({});
-  console.log(user);
+  const [ticket, setTicket] = useState({});
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  useEffect(() => {
+    if (Object.keys(ticket).length > 0) {
+      onOpen();
+    }
+  }, [ticket]);
 
   const getDetailUser = async () => {
     try {
@@ -90,7 +96,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
               </div>
             )}
 
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center pt-5">
               <div className="flex flex-col items-center">
                 {session?.accessToken ? (
                   <div className="flex flex-col items-center">
@@ -101,6 +107,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
                           data={data}
                           user={user}
                           doctorId={doctorId}
+                          setTicket={setTicket}
                         />
                       </>
                     ) : (
@@ -137,6 +144,16 @@ export default function SchedulesDoctor({ data, doctorId }) {
           </div>
         </div>
       </section>
+      {Object.keys(ticket).length > 0 && (
+        <QueueTicket
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onOpenChange={onOpenChange}
+          ticket={ticket}
+          data={data}
+          user={user}
+        />
+      )}
     </>
   );
 }

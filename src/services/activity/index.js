@@ -7,6 +7,7 @@ const activityService = {
   updateActivity: (id, data, token) => instance.put(`/api/activity/${id}`, { data }, headers(token)),
   deleteActivity: (id, token) => instance.delete(`/api/activity/${id}`, headers(token)),
   searchActivities: (keyword, token) => instance.get(`/api/activity?search=${keyword}`, headers(token)),
+  getDetailActivity: (id) => instance.get(`/api/activity/${id}`),
 };
 
 export default activityService;

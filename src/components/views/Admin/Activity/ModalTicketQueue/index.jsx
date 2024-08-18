@@ -207,34 +207,7 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
       } finally {
         setIsLoading(false);
       }
-    } else if (ticketQueue.status === 'take medicine' && ticketQueue.isHandle.status && ticketQueue.isHandle.taken === 'today') {
-      const data = {
-        id: ticketQueue.id,
-        status: 'done',
-        isHandle: {
-          status: true,
-          isTaken: isTaken ? true : false,
-          apoteker: formData.get('apoteker'),
-          taken: 'done',
-        },
-      };
-
-      try {
-        // Update the activity status isHandle is true and get taken time
-        const result = await activityService.updateActivity(ticketQueue.id, data, session.accessToken);
-        if (result.status === 200) {
-          // Fetch the updated activities
-          const activitiesResult = await activityService.getAllActivities(session.accessToken);
-          setActivities(activitiesResult.data.data);
-          onOpenChange(false);
-          setTicketQueue({});
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    } else if (ticketQueue.status === 'take medicine' && ticketQueue.isHandle.status && ticketQueue.isHandle.taken === 'waiting') {
+    } else if (ticketQueue.status === 'take medicine' && ticketQueue.isHandle.status && (ticketQueue.isHandle.taken === 'today' || ticketQueue.isHandle.taken === 'waiting')) {
       const data = {
         id: ticketQueue.id,
         status: 'done',

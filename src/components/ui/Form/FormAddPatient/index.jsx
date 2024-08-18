@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { gender, golDarah } from '@/constraint/adminPanel';
 import { Select, SelectItem, useDisclosure } from '@nextui-org/react';
-import { BiData } from 'react-icons/bi';
-import { BsDatabase } from 'react-icons/bs';
 import userService from '@/services/user';
 import { useSession } from 'next-auth/react';
 import ModalAddPatient from '../../Modal/ModalAddPatient';
@@ -10,6 +8,7 @@ import ModalAddPatient from '../../Modal/ModalAddPatient';
 export default function FormAddPatient({ user, setUser }) {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleAddPatient = async (e) => {
     e.preventDefault();
@@ -44,15 +43,22 @@ export default function FormAddPatient({ user, setUser }) {
         const response = await userService.detailUser(session?.accessToken);
         setUser(response.data.data);
         setIsLoading(false);
+        onOpenChange(false);
       }
     } catch (err) {
       setIsLoading(false);
       console.log(err);
+      onOpenChange(false);
     }
   };
 
   return (
-    <ModalAddPatient title="Add Data Profile">
+    <ModalAddPatient
+      title="Add Data Profile"
+      isOpe={isOpen}
+      onOpen={onOpen}
+      onOpenChange={onOpenChange}
+    >
       <form
         className="w-full"
         onSubmit={handleAddPatient}

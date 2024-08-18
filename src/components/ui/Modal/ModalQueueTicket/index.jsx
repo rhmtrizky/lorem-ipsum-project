@@ -1,9 +1,7 @@
-import { Button, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react';
+import { Button, Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react';
 import React from 'react';
 
-export default function ModalQueueTicketUi({ title, children }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+export default function ModalQueueTicketUi({ title, children, isOpen, onOpen, onOpenChange }) {
   return (
     <>
       <Button

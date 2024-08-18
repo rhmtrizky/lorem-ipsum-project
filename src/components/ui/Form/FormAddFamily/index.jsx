@@ -11,6 +11,7 @@ import ModalAddFamily from '../../Modal/ModalAddFamily';
 export default function FormAddFamily({ user, setUser }) {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleAddPatient = async (e) => {
     e.preventDefault();
@@ -44,15 +45,22 @@ export default function FormAddFamily({ user, setUser }) {
         const response = await userService.detailUser(session?.accessToken);
         setUser(response.data.data);
         setIsLoading(false);
+        onOpenChange(false);
       }
     } catch (err) {
       setIsLoading(false);
       console.log(err);
+      onOpenChange(false);
     }
   };
 
   return (
-    <ModalAddFamily title={'Add Family'}>
+    <ModalAddFamily
+      title={'Add Family'}
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onOpenChange={onOpenChange}
+    >
       <form
         className="w-full"
         onSubmit={handleAddPatient}

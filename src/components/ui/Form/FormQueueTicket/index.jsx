@@ -1,4 +1,4 @@
-import { Select, SelectItem } from '@nextui-org/react';
+import { Select, SelectItem, useDisclosure } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import ModalQueueTicketUi from '../../Modal/ModalQueueTicket';
 import generateQueueNumber from '@/utils/generateQueueNumber';
@@ -8,13 +8,14 @@ import useActivity from '@/hooks/useActivity';
 import activityService from '@/services/activity';
 import { useSession } from 'next-auth/react';
 
-export default function FormQueueTicket({ user, data, doctorId }) {
+export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
   const { data: session } = useSession();
   const [patientIndex, setPatientIndex] = useState();
   const [dataPatient, setDataPatient] = useState({});
   const selectedSpesialist = data?.specialist;
   const [isLoading, setIsLoading] = useState(false);
   const { activities, setActivities } = useActivity();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
     if (patientIndex >= 0) {
@@ -139,21 +140,29 @@ export default function FormQueueTicket({ user, data, doctorId }) {
     };
 
     try {
-      const result = await activityService.addQueue(data, session.accessToken);
+      const resultQueue = await activityService.addQueue(data, session.accessToken);
 
-      if (result.status === 200) {
+      if (resultQueue.status === 200) {
         const result = await activityService.getAllActivities(session.accessToken);
         setActivities(result.data.data);
         setIsLoading(false);
+        onOpenChange(false);
+        setTicket(resultQueue.data.data);
       }
     } catch (err) {
       console.log(err);
       setIsLoading(false);
+      onOpenChange(false);
     }
   };
 
   return (
-    <ModalQueueTicketUi title="Get Ticket">
+    <ModalQueueTicketUi
+      title="Get Ticket"
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onOpenChange={onOpenChange}
+    >
       <form
         className="w-full"
         onSubmit={handleAddQueue}
