@@ -1,5 +1,4 @@
 import { useScroll, useTransform, motion } from 'framer-motion'
-import { Loading, Grid } from "@nextui-org/react";
 import Header from '../../components/ui/Header'
 import HomeBanner from './HomeBanner'
 import HomePoli from './HomePoli'
@@ -7,6 +6,7 @@ import HomeHelp from './HomeHelp'
 import React, { useEffect, useState } from 'react'
 import PoliCard from '@/components/ui/Card/PoliCard'
 import HomeLike from './HomeLike'
+import Loader from '@/components/ui/Loader'
 
 export default function HomeMain() {
 
@@ -16,10 +16,8 @@ export default function HomeMain() {
   const shadow = useTransform(scrollYProgress, [0, 1], ['0px 0px 0px rgba(0, 0, 0, 0)', '0px 10px 30px rgba(0, 0, 0, 0.3)'])
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000);
-  }, [isLoading])
+    setIsLoading(false)
+  }, [])
 
   return (
     <>
@@ -27,11 +25,7 @@ export default function HomeMain() {
         isLoading 
         ?
         (
-          <Grid.Container>
-            <Grid>
-              <Loading type="points" />
-            </Grid>
-          </Grid.Container>
+          <Loader/>
         )
         :
         (
