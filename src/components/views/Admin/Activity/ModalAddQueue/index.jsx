@@ -2,7 +2,6 @@ import InputUi from '@/components/ui/Input';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-
 import getDay from '@/utils/getDay';
 import activityService from '@/services/activity';
 import ModalUi from '../../Ui/Modal';

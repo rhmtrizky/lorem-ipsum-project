@@ -4,13 +4,13 @@ import React from 'react';
 export default function ModalTicketUi({ title, children, isOpen, onOpen, onOpenChange }) {
   return (
     <>
-      <Button
+      {/* <Button
         onPress={onOpen}
         className="w-max bg-[#654AB4] hover:bg-[#4e3a8b] rounded-full py-3.5 px-5 my-4 text-white text-[12px] rubik"
         style={{ transition: '.3s ease-out' }}
       >
         Tiket Antrian
-      </Button>
+      </Button> */}
       <Modal
         backdrop="blur"
         isOpen={isOpen}

@@ -39,7 +39,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
   return (
     <>
       <Header />
-      <section className="flex gap-3 my-8 mx-24">
+      <section className="flex gap-3 my-8 mx-8">
         <div className="mt-12">
           <CardDoctorSchedule
             image={data?.image}

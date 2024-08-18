@@ -25,11 +25,15 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
           src={ticketQueue}
           width={300}
           height={200}
-          className="w-full h-[200px] object-cover rounded-xl"
+          className="w-full h-[200px] object-cover rounded-t-xl"
         />
-        <div className="px-5 flex flex-col gap-3 bg-white  rounded-xl py-4">
+        <div className="px-5 flex flex-col gap-3 bg-white py-4">
           <div className="flex items-center gap-3">
-            <Avatar src={user?.image} />
+            <Avatar
+              src={user.image}
+              size="sm"
+              className="border-[1px] border-[#654AB4] bg-white"
+            />
             <h1 className="font-semibold text-lg">{ticket?.data?.name}</h1>
           </div>
           <div className="grid grid-cols-2 gap-5 px-2">
@@ -55,7 +59,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-5 px-5 bg-white rounded-xl py-4">
+        <div className="grid grid-cols-2 gap-5 px-5 bg-white rounded-b-xl py-4">
           {Object.keys(ticket).length > 0 ? (
             <div className="flex justify-center items-center">
               <QRCode
