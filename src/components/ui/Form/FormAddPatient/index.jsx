@@ -55,7 +55,7 @@ export default function FormAddPatient({ user, setUser }) {
   return (
     <ModalAddPatient
       title="Add Data Profile"
-      isOpe={isOpen}
+      isOpen={isOpen}
       onOpen={onOpen}
       onOpenChange={onOpenChange}
     >
