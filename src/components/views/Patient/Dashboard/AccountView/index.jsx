@@ -5,7 +5,7 @@ export default function AccountView() {
     return (
         <PatientDashboardLayout>
             <div>
-                fdafsdfsdaf
+                Terdapat Tiket Disini
             </div>
         </PatientDashboardLayout>
     )
