@@ -524,8 +524,8 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
             </div>
           </div>
         </div>
-        <div className="flex gap-3 justify-center w-full mt-4">
-          <div className="flex flex-col justify-start w-1/2">
+        <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-3 justify-center w-full mt-4">
+          <div className="flex flex-col justify-start lg:w-1/2 md:w-1/2 sm:w-full w-full">
             <label className="text-sm">Jadwal Dokter</label>
             <div className=" flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg mt-2">
               <i className="bx bxs-time pl-4"></i>
@@ -549,7 +549,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
               </Select>
             </div>
           </div>
-          <div className="flex flex-col justify-start w-1/2">
+          <div className="flex flex-col justify-start lg:w-1/2 md:w-1/2 sm:w-full w-full">
             <label className="text-sm">Pilih Tanggal Booking</label>
             <div className="flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg w-full mt-2">
               <i className="bx bxs-time pl-4"></i>
@@ -557,7 +557,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
               <InputUi
                 name="bookDate"
                 type="date"
-                className="w-[250px] outline-none text-sm mb-2"
+                className="lg:w-[250px] md:w-[250px] sm:w-full w-full outline-none text-sm mb-2"
                 placeholder="Tgl. Booking"
                 onChange={(e) => setBookDate(e.target.value)}
                 required

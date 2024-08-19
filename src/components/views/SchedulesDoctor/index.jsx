@@ -1,8 +1,7 @@
-import { addUser, bufferBro, getTicket } from '@/assets/images/images';
+import { addUser, bufferBro } from '@/assets/images/images';
 import { signIn, useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import CardDoctorSchedule from '@/components/ui/Card/CardDoctorSchedule';
-import Header from '@/components/ui/Header';
 import userService from '@/services/user';
 import Image from 'next/image';
 import FormQueueTicket from '@/components/ui/Form/FormQueueTicket';
@@ -10,18 +9,35 @@ import FormAddFamily from '@/components/ui/Form/FormAddFamily';
 import FormAddPatient from '@/components/ui/Form/FormAddPatient';
 import { Button, useDisclosure } from '@nextui-org/react';
 import QueueTicket from '@/components/ui/Form/QueueTicket';
+import useActivity from '@/hooks/useActivity';
 
 export default function SchedulesDoctor({ data, doctorId }) {
   const { data: session } = useSession();
+  const { activities } = useActivity();
   const [user, setUser] = useState({});
   const [ticket, setTicket] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [queuePasient, setQueuePasient] = useState(null);
 
   useEffect(() => {
     if (Object.keys(ticket).length > 0) {
       onOpen();
     }
   }, [ticket]);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    // Mengubah currentDate menjadi string dalam format yang sesuai, misalnya 'YYYY-MM-DD'
+    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+    console.log(formattedCurrentDate);
+
+    const filter = activities.filter((item) => {
+      // Mengubah item.bookDate menjadi format tanggal yang sama (jika bookDate adalah string)
+      const formattedBookDate = new Date(item.bookDate).toISOString().split('T')[0];
+      return item.doctorId === doctorId && item.status === 'queue' && formattedBookDate === formattedCurrentDate;
+    });
+    setQueuePasient(filter.length);
+  }, [activities, doctorId]);
 
   const getDetailUser = async () => {
     try {
@@ -37,22 +53,24 @@ export default function SchedulesDoctor({ data, doctorId }) {
   }, [session]);
 
   return (
-    <>
-      <Header />
-      <section className="flex gap-3 my-8 mx-8">
-        <div className="mt-12">
-          <CardDoctorSchedule
-            image={data?.image}
-            name={data?.fullname}
-            specialist={data?.specialist}
-          />
+    <div className="w-full lg:px-6 md:px-6 sm:px-3 px-3">
+      <section className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-3 my-8 justify-center items-start w-full">
+        <div className="lg:w-1/3 md:w-1/3 sm:w-full w-full">
+          <div className="flex justify-center items-center w-full">
+            <CardDoctorSchedule
+              image={data?.image}
+              name={data?.fullname}
+              specialist={data?.specialist}
+              queuePasient={queuePasient}
+            />
+          </div>
           <div className="mt-4">
-            <div className="w-[180px] h-[50px] flex justify-center items-center gap-2 bg-[#654AB4] shadow-lg ">
+            <div className="w-[160px] h-[40px] flex justify-center items-center gap-2 bg-[#654AB4] shadow-lg rounded-t-lg">
               <div className="dot"></div>
-              <p className="text-white font-semibold cursor-default">JADWAL DOKTER</p>
+              <p className="text-white font-semibold cursor-default text-[13px]">JADWAL DOKTER</p>
             </div>
-            <div className="bg-white border-2 border-dashed w-full h-max p-4">
-              <p className="mb-4 text-lg text-semibold text-slate-600">{data?.fullname}</p>
+            <div className="bg-white w-full h-max p-4 rounded-b-lg">
+              <p className="mb-4 text-md text-semibold text-slate-600">{data?.fullname}</p>
               <div className="flex flex-col gap-2.5 font-light">
                 {data?.schedule?.map((item, index) => (
                   <li
@@ -70,8 +88,8 @@ export default function SchedulesDoctor({ data, doctorId }) {
           </div>
         </div>
 
-        <div className="flex justify-center mt-12 ">
-          <div className="bg-white w-[800px]">
+        <div className="flex justify-center lg:w-2/3 md:w-2/3 sm:w-full w-full rounded-lg">
+          <div className="bg-white w-full rounded-lg">
             {user?.patient?.length > 0 && (
               <div
                 className="flex items-center text-[#000000ab] hover:text-[#654AB4] font-normal px-8 pt-3"
@@ -154,6 +172,6 @@ export default function SchedulesDoctor({ data, doctorId }) {
           user={user}
         />
       )}
-    </>
+    </div>
   );
 }
