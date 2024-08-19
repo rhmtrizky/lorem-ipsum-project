@@ -14,7 +14,7 @@ export default function Header() {
 
     const handleToDashboard = () => {
         router.push({
-            pathname: `/patient/dashboard`,
+            pathname: `/patient/dashboard/account`,
         })
     }
 
@@ -88,6 +88,9 @@ export default function Header() {
                                         </DropdownItem>
                                         <DropdownItem>
                                             <Link href={'/flowRegisBpjs'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >Cara Daftar</Link>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <Link href={'/feedback'} className='font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear' >Pengalaman Pelanggan</Link>
                                         </DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>

@@ -56,6 +56,8 @@ export const purpleFluid = '/purple-fluid-background-frame.png';
 export const injectionPink = '/animas-injection-pink.png';
 export const bandAids = '/band-aids.png';
 export const injectionNotes = '/animasi-injection-notes-dashboard.png';
+export const groupIcon = "/group-icon.png"
+export const clockIcon = "/clock.png"
 
 // ticket queue
 export const ticketQueue = '/ticket-queue.png';

@@ -1,5 +1,6 @@
 import SchedulesDoctor from '@/components/views/SchedulesDoctor/';
 import doctorService from '@/services/user/doctor';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -21,9 +22,14 @@ export default function Schedules() {
   }, [id]);
 
   return (
-    <SchedulesDoctor
-      data={data}
-      doctorId={id}
-    />
+    <>
+      <Head>
+        <title>RS Harapan Bunda | Schedule Doctor</title>
+      </Head>
+      <SchedulesDoctor
+        data={data}
+        doctorId={id}
+      />
+    </>
   );
 }
