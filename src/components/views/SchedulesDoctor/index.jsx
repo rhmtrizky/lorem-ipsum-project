@@ -1,6 +1,6 @@
 import { addUser, bufferBro, getTicket } from '@/assets/images/images';
+import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react'
 import CardDoctorSchedule from '@/components/ui/Card/CardDoctorSchedule'
 import Header from '@/components/ui/Header'
 import userService from '@/services/user';
@@ -39,7 +39,7 @@ export default function SchedulesDoctor({data}) {
             <section className='flex gap-3 my-8 mx-24' >
                 <div className='mt-12' >
                     <CardDoctorSchedule 
-                        // image={data.image}
+                        image={data.image}
                         name={data.fullname}
                         specialist={data.specialist}
                     />

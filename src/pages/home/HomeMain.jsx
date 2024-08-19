@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import PoliCard from '@/components/ui/Card/PoliCard'
 import HomeLike from './HomeLike'
 import Loader from '@/components/ui/Loader'
+import Head from 'next/head'
 
 export default function HomeMain() {
 
@@ -21,6 +22,9 @@ export default function HomeMain() {
 
   return (
     <>
+      <Head>
+        <title>RS Harapan Bunda | Home</title>
+      </Head>
       {
         isLoading 
         ?
