@@ -57,6 +57,16 @@ const TableExpired = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateF
       case 'phoneNumber': {
         return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
       }
+      case 'status': {
+        return (
+          <Button
+            size="sm"
+            className="bg-red-500 text-white text-[12px] rounded-md font-semibold"
+          >
+            {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
+          </Button>
+        );
+      }
       case 'actions':
         return (
           <div className="flex justify-center items-center">
@@ -67,13 +77,6 @@ const TableExpired = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateF
               onPress={onOpen}
               startContent={<GrView />}
               onClick={() => setTicketQueue(data)}
-            />
-            <Button
-              isIconOnly
-              type="button"
-              className="bx bxs-trash text-red-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              // onClick={() => setDeleteUser(data)}
             />
           </div>
         );

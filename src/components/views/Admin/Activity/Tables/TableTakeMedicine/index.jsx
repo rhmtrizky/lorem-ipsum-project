@@ -44,6 +44,14 @@ const TableTakeMedicine = ({ setTicketQueue, filterByStatusActivity, onOpen, get
       uid: 'status',
     },
     {
+      title: 'Status',
+      uid: 'isHandle',
+    },
+    {
+      title: 'Taken',
+      uid: 'taken',
+    },
+    {
       title: 'Actions',
       uid: 'actions',
     },
@@ -57,6 +65,51 @@ const TableTakeMedicine = ({ setTicketQueue, filterByStatusActivity, onOpen, get
       case 'phoneNumber': {
         return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
       }
+      case 'isHandle': {
+        return (
+          <>
+            {data?.isHandle?.status ? (
+              <Button
+                size="sm"
+                className="bg-green-500 text-white text-[12px] rounded-md font-semibold"
+              >
+                VERIFIED
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                className="bg-red-500 text-white text-[12px] rounded-md font-semibold"
+              >
+                UNVERIFIED
+              </Button>
+            )}
+          </>
+        );
+      }
+      case 'taken': {
+        return (
+          <>
+            {data.isHandle.status && (
+              <Button
+                size="sm"
+                className={`bg-${data.isHandle.taken === 'today' ? 'blue' : 'red'}-500 text-white text-[12px] rounded-md font-semibold`}
+              >
+                {data.isHandle.taken !== 'waiting' ? <p>{data.isHandle.taken === 'today' ? 'Hari Ini' : 'Besok'}</p> : <p>Belum diambil</p>}
+              </Button>
+            )}
+          </>
+        );
+      }
+      case 'status': {
+        return (
+          <Button
+            size="sm"
+            className="bg-blue-500 text-white text-[12px] rounded-md font-semibold"
+          >
+            {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
+          </Button>
+        );
+      }
       case 'actions':
         return (
           <div className="flex justify-center items-center">
@@ -67,13 +120,6 @@ const TableTakeMedicine = ({ setTicketQueue, filterByStatusActivity, onOpen, get
               onPress={onOpen}
               startContent={<GrView />}
               onClick={() => setTicketQueue(data)}
-            />
-            <Button
-              isIconOnly
-              type="button"
-              className="bx bxs-trash text-red-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              // onClick={() => setDeleteUser(data)}
             />
           </div>
         );

@@ -117,7 +117,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
       const isDayInSchedule = getDocter.schedule.some((item) => item.day.includes(bookDay));
 
       if (isDayInSchedule) {
-        if (bookDay !== getSchedule.day) {
+        if (bookDay !== getSchedule?.day) {
           setResultCompare({
             status: false,
             message: 'Schedule Dokter yang Anda pilih, tidak sesuai dengan hari yang Anda pilih.',
@@ -144,7 +144,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
 
   // generate queue number
   const getSpecialist = activities.filter((activity) => {
-    return activity.specialist === selectedSpesialist && activity.status === 'queue';
+    return activity.specialist === selectedSpesialist && (activity.status !== 'done' || activity.status !== 'expired') && activity.bookDate === bookDate;
   });
 
   const queueNumber = (getSpecialist.length + 1).toString();

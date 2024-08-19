@@ -4,8 +4,6 @@ import { Button } from '@nextui-org/react';
 import { useEffect } from 'react';
 
 const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, selectTabSpecialist, filterDataFotTableAllUsers, setFilterDataFotTableAllUsers, filterByStatusActivity }) => {
-  console.log(filterDataFotTableAllUsers.length);
-
   useEffect(() => {
     if (activities.length > 0) {
       if (getDateForFilter !== '' && selectTabSpecialist.type !== '') {
@@ -61,6 +59,15 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, 
       uid: 'status',
     },
     {
+      title: 'Apoteker',
+      uid: 'apoteker',
+    },
+    {
+      title: 'Note',
+      uid: 'note',
+    },
+
+    {
       title: 'Actions',
       uid: 'actions',
     },
@@ -71,9 +78,33 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, 
       case 'index': {
         return <p>{data.index + 1}</p>;
       }
-
       case 'phoneNumber': {
         return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
+      }
+      case 'note': {
+        return (
+          data?.isHandle?.isTaken === false && (
+            <Button
+              size="sm"
+              className="bg-red-500 text-white text-[12px] rounded-md font-semibold"
+            >
+              Obat Tidak Diambil
+            </Button>
+          )
+        );
+      }
+      case 'apoteker': {
+        return <p>{data?.isHandle?.apoteker}</p>;
+      }
+      case 'status': {
+        return (
+          <Button
+            size="sm"
+            className={`bg-${data.status === 'expired' ? 'red' : 'blue'}-500 text-white text-[12px] rounded-md font-semibold`}
+          >
+            {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
+          </Button>
+        );
       }
       case 'actions':
         return (
@@ -85,13 +116,6 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, 
               onPress={onOpen}
               startContent={<GrView />}
               onClick={() => setTicketQueue(data)}
-            />
-            <Button
-              isIconOnly
-              type="button"
-              className="bx bxs-trash text-red-500 font-semibold text-[14px]"
-              onPress={onOpen}
-              // onClick={() => setDeleteUser(data)}
             />
           </div>
         );

@@ -53,7 +53,10 @@ export default function TableUi({ data, columns, renderCellContent }) {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={items}>
+      <TableBody
+        items={items}
+        emptyContent={'No rows to display.'}
+      >
         {(item) => (
           <TableRow
             key={item.id}
