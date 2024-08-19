@@ -87,9 +87,9 @@ const RegisterView = () => {
       isError={isError}
       errorText="Email/Phone number already registered"
     >
-      <div className="min-w-[320px]">
+      <div className="w-full">
         <form
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-2 w-full"
           action=""
           onSubmit={handleSubmit}
         >
@@ -97,7 +97,7 @@ const RegisterView = () => {
             type="text"
             name="fullname"
             placeholder="Fullname"
-            className={'input-auth text-white shadow-md rounded mt-2'}
+            className={'input-auth text-white shadow-md rounded mt-2 max-[830px]:w-[400px] max-[467px]:w-[240px] max-w-[250px]:mt-12 '}
           />
           {formErrors.fullname && <div className="text-color-red">{formErrors.fullname}</div>}
 
@@ -105,14 +105,14 @@ const RegisterView = () => {
             type="email"
             name="email"
             placeholder="Email"
-            className={'input-auth text-white shadow-md rounded mt-2'}
+            className={'input-auth text-white shadow-md rounded mt-2 max-[830px]:w-[400px] max-[467px]:w-[240px]'}
           />
           {formErrors.email && <div className="text-color-red">{formErrors.email}</div>}
           <InputUi
             type="number"
             name="phoneNumber"
             placeholder="Phone Number"
-            className={'input-auth text-white shadow-md rounded mt-2'}
+            className={'input-auth text-white shadow-md rounded mt-2 max-[830px]:w-[400px] max-[467px]:w-[240px]'}
           />
           {formErrors.phoneNumber && <div className="text-color-red">{formErrors.phoneNumber}</div>}
 
@@ -120,16 +120,16 @@ const RegisterView = () => {
             type="password"
             name="password"
             placeholder="Password"
-            className={'input-auth text-white shadow-md rounded mt-2'}
+            className={'input-auth text-white shadow-md rounded mt-2 max-[830px]:w-[400px] max-[467px]:w-[240px]'}
           />
           {formErrors.password && <div className="text-color-red">{formErrors.password}</div>}
           <InputUi
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-            className={'input-auth text-white shadow-md rounded mt-2'}
+            className={'input-auth text-white shadow-md rounded mt-2 max-[830px]:w-[400px] max-[467px]:w-[240px]'}
           />
-          {formErrors.confirmPassword && <div className="text-color-red">{formErrors.confirmPassword}</div>}
+          {formErrors.confirmPassword && <div className="text-color-red max-[467px]:text-xs">{formErrors.confirmPassword}</div>}
 
           <Button
             label={isLoading ? 'Loading...' : 'Register'}

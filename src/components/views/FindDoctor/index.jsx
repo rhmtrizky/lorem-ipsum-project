@@ -7,6 +7,7 @@ import useDebounce from '@/hooks/useDebounce';
 import Link from 'next/link';
 import doctorService from '@/services/user/doctor';
 import Loader from '@/components/ui/Loader';
+import Head from 'next/head';
 
 export default function FindDoctor() {
     const [isLoading, setIsLoading] = useState(true); // Set loading state to true initially
@@ -59,11 +60,15 @@ export default function FindDoctor() {
 
     return (
         <>
+            <Head>
+                <title>RS Harapan Bundab | Find Doctor</title>
+            </Head>
             {
                 isLoading
                 ? <Loader />
                 : (
                     <>
+                    
                         <Header />
                         <section className='flex flex-col items-center w-full min-h-screen'>
                             <div>

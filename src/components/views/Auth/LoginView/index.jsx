@@ -7,6 +7,7 @@ import GoogleIcon from '../../../../../public/googleIcon.png';
 import AuthLayout from '@/components/layouts/AuthLayout';
 
 const LoginView = () => {
+  
   const { push, query } = useRouter();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +69,7 @@ const LoginView = () => {
             <p className="italic text-sm pb-1">or</p>
             <div className="text-neutral-500 h-0.5 w-full bg-neutral-300" />
           </div>
-          <div className="flex justify-center items-center gap-2 mt-1">
+          <div className="flex  justify-center items-center gap-2 mt-1">
             <Button
               type="button"
               className=" flex justify-center items-center bg-color-primary text-color-dark py-2 px-3 rounded-md"
@@ -80,9 +81,9 @@ const LoginView = () => {
         </>
       }
     >
-      <div className="min-w-[320px]">
+      <div className="w-full">
         <form
-          className="flex flex-col gap-2"
+          className="flex w-full flex-col justify-center gap-2"
           action=""
           onSubmit={handleSubmit}
         >
