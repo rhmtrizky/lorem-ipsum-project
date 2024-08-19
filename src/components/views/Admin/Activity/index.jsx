@@ -19,6 +19,7 @@ import useUser from '@/hooks/useUser';
 import useActivity from '@/hooks/useActivity';
 import useSpecialist from '@/hooks/useSpecialist';
 import TableDone from './Tables/TableDone';
+import ModalCameraScanner from './ModalCameraScanner';
 
 const ActivityView = () => {
   const { data: session } = useSession();
@@ -29,6 +30,7 @@ const ActivityView = () => {
   const [addQueue, setAddQueue] = useState({ status: false });
   const [ticketQueue, setTicketQueue] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [camera, setCamera] = useState({ status: false });
 
   useEffect(() => {
     if (Object.keys(ticketQueue).length > 0) {
@@ -106,7 +108,17 @@ const ActivityView = () => {
     <>
       <AdminLayout>
         <div className="w-full">
-          <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
+            <Button
+              onClick={() => {
+                setCamera({ status: true });
+                onOpenChange(true);
+              }}
+            >
+              Open Camera
+            </Button>
+          </div>
           <div className="flex items-center justify-between w-full">
             <div className="relative w-3/5 text-neutral-600">
               <Search
@@ -314,6 +326,14 @@ const ActivityView = () => {
           ticketQueue={ticketQueue}
           setTicketQueue={setTicketQueue}
           setActivities={setActivities}
+        />
+      )}
+      {camera.status && (
+        <ModalCameraScanner
+          onOpenChange={onOpenChange}
+          isOpen={isOpen}
+          setTicketQueue={setTicketQueue}
+          setCamera={setCamera}
         />
       )}
     </>

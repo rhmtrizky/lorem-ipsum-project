@@ -15,18 +15,13 @@ export default async function handler(req, res) {
       return false;
     });
 
-    console.log('doctor id', doctorId)
-
     // Jika doctorId ada, ambil detail dokter dengan id tersebut
     if (doctorId) {
       const detailDoctor = await retrieveDataById('users', doctorId[0]);
       res.status(200).json({ status: true, message: 'success', data: detailDoctor });
     } else if (search) {
       // Filter berdasarkan search
-      const responseData = filteredUsers.filter((user) => 
-        user.fullname.toLowerCase().includes(search.toString().toLowerCase()) || 
-        (user.specialist && user.specialist.toLowerCase().includes(search.toString().toLowerCase()))
-      );
+      const responseData = filteredUsers.filter((user) => user.fullname.toLowerCase().includes(search.toString().toLowerCase()) || (user.specialist && user.specialist.toLowerCase().includes(search.toString().toLowerCase())));
       res.status(200).json({ status: true, message: 'Success', data: responseData });
     } else {
       res.status(200).json({

@@ -2,10 +2,10 @@ import InputUi from '@/components/ui/Input';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-
 import getDay from '@/utils/getDay';
 import activityService from '@/services/activity';
 import ModalUi from '../../Ui/Modal';
+import generateQueueNumber from '@/utils/generateQueueNumber';
 
 const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue, specialists }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -142,22 +142,6 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
     }
   }, [bookDate, bookDay, getDocter, getSchedule]);
 
-  // generate queue number
-  const getSpecialist = activities.filter((activity) => {
-    return activity.specialist === selectedSpesialist && (activity.status !== 'done' || activity.status !== 'expired') && activity.bookDate === bookDate;
-  });
-
-  const queueNumber = (getSpecialist.length + 1).toString();
-  let specialistId = '';
-  if (selectedSpesialist) {
-    specialistId = selectedSpesialist
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase())
-      .join('');
-  }
-  const formattedQueueNumber = queueNumber.padStart(3, '0');
-  const formattedResult = `${specialistId}${formattedQueueNumber}`;
-
   // handle add queue
   const handleAddQueue = async (event) => {
     event.preventDefault();
@@ -165,8 +149,15 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
     const form = event.target;
     const formData = new FormData(form);
 
+    const queueNumber = generateQueueNumber({
+      activities,
+      selectedSpesialist,
+      bookDate,
+    });
+    console.log(queueNumber);
+
     let data = {
-      queueNumber: formattedResult,
+      queueNumber: queueNumber,
       userId: patientAccId,
       name: currentPatientData.name,
       nik: formData.get('nik'),
