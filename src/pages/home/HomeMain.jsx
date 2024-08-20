@@ -8,6 +8,7 @@ import PoliCard from '@/components/ui/Card/PoliCard'
 import HomeLike from './HomeLike'
 import Loader from '@/components/ui/Loader'
 import Head from 'next/head'
+import HomeQualifiedDoctors from './HomeQualifiedDoctors'
 
 export default function HomeMain() {
 
@@ -53,6 +54,9 @@ export default function HomeMain() {
           </motion.section>
           <section className='flex justify-center p-5' >
             <HomeLike/>
+          </section>
+          <section className='min-h-screen m-5' >
+            <HomeQualifiedDoctors/>
           </section>
           </>
         )
