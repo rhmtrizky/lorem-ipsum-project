@@ -3,14 +3,36 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Header from '@/components/ui/Header'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import userService from '@/services/user'
+import FormEditUser from '@/components/ui/Form/FormEditUser'
 
 export default function PatientDashboardLayout({children}) {
 
     const router = useRouter()
     const isHome = router.pathname.split('/')
     const isFamily = router.pathname.split('/')
+
+    const {data: session} = useSession()
+    const [user, setUser] = useState({})
+
+    const getDetailUser = async () => {
+        try {
+            const response = await userService.detailUser(session.accessToken);
+            setUser(response.data.data);
+        }
+        catch(err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getDetailUser();
+    }, [session]);
+
+
 
     return (
         <>
@@ -38,16 +60,24 @@ export default function PatientDashboardLayout({children}) {
                 </div>
 
                 <div className='flex gap-3 mt-6' >
-                    <div className='relative bg-white w-[350px] h-[350px] rounded-[20px]' >
+                    <div className='group relative bg-white w-[350px] h-[350px] rounded-[20px]' >
                         <div className='blur-background ' >
                             <div className='blur-card-account' ></div>
                         </div>
-                        <div className='w-24 h-24 absolute flex items-center justify-center top-24 right-1/2 translate-x-1/2 bg-white shadow-lg rounded-full ' >
-                            <i class='bx bxs-user text-5xl' ></i>
+                        <div
+                            className={`group bg-cover bg-center w-24 h-24 absolute flex items-center justify-center top-24 right-1/2 translate-x-1/2 bg-white shadow-lg rounded-full overflow-hidden hover:bg-none `}
+                            style={{
+                                backgroundImage: `url(${user.image})`,
+                            }}
+                            >
+                        </div>
+                        <div className="opacity-0 w-24 h-24 group-hover:bg-purple-700 rounded-full group-hover:opacity-50 absolute top-24 right-1/2 translate-x-1/2 cursor-pointer transition duration-200 ease-linear " 
+                        >
+                            <FormEditUser image={user?.image} fullname={user?.fullname} email={user?.email} phoneNumber={user?.phoneNumber} password={user.password} />
                         </div>
                         <div className='mt-12 text-center' >
-                            <p>Muhammad Ghifani Ikhsan</p>
-                            <p className='text-xs' >ghifaniikhsan114@gmail.com</p>
+                            <p>{user.fullname}</p>
+                            <p className='text-xs' >{user.email}</p>
                             <Link href={'/patient/dashboard/account'} className={`flex items-center justify-center gap-1.5 mt-3 mb-1 font-semibold ${isHome[3] === 'account' ? 'text-purple-700' : 'text-black'} `} >
                                 <i class='bx bxs-calendar'></i>
                                 Home
@@ -56,41 +86,11 @@ export default function PatientDashboardLayout({children}) {
                                 <i class='bx bxs-user-plus'></i>
                                 Anggota Keluarga
                             </Link>
+
                         </div>
                     </div>
                     <div className='w-full h-[300px] bg- rounded-lg' >
                         {children}
-                        {/* <div className='flex justify-between' >
-                            <p>Anggota Keluarga Saya</p>
-                            <p>Tambah Anggota keluarga</p>
-                        </div> */}
-
-                        {/* <div className='flex items-center gap-3 h-full' >
-                            <div className='w-28 h-20 bg-white border-2 border-black rounded-xl' >
-                                <div className='text-end' >
-                                    <i class='bx bx-edit-alt'></i>
-                                </div>
-                                <div className='flex items-center justify-center' >
-                                    <p>Nama</p>
-                                </div>
-                            </div>
-                            <div className='w-28 h-20 bg-white border-2 border-black rounded-xl' >
-                                <div className='text-end' >
-                                    <i class='bx bx-edit-alt'></i>
-                                </div>
-                                <div className='flex items-center justify-center' >
-                                    <p>Nama</p>
-                                </div>
-                            </div>
-                            <div className='w-28 h-20 bg-white border-2 border-black rounded-xl' >
-                                <div className='text-end' >
-                                    <i class='bx bx-edit-alt'></i>
-                                </div>
-                                <div className='flex items-center justify-center' >
-                                    <p>Nama</p>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </section>
