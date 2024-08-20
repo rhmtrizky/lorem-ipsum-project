@@ -84,9 +84,11 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
       status: 'queue',
     };
 
+    console.log(data);
+
     try {
       const resultQueue = await activityService.addQueue(data, session.accessToken);
-
+      console.log(resultQueue);
       if (resultQueue.status === 200) {
         const result = await activityService.getAllActivities(session.accessToken);
         setActivities(result.data.data);
@@ -175,8 +177,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 id="phone"
                 defaultValue={user.phoneNumber}
                 className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Email - Optional"
-                readOnly
+                placeholder="Phone - Optional"
               />
             </div>
           </div>
