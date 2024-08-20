@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import activityService from '@/services/activity';
 import ModalUi from '../../Ui/Modal';
 import { Scanner } from '@yudiel/react-qr-scanner';
+import { useSession } from 'next-auth/react';
 
 const ModalCameraScanner = ({ onOpenChange, isOpen, setTicketQueue, setCamera }) => {
+  const { data: session } = useSession();
   const [dataScanner, setDataScanner] = useState([]);
   const userIdByScanner = dataScanner[0]?.rawValue;
 
   const getDataByScanner = async () => {
     try {
-      const result = await activityService.getDetailActivity(userIdByScanner);
+      const result = await activityService.getDetailActivity(userIdByScanner, session.accessToken);
       if (result.status === 200) {
         setCamera(false);
         onOpenChange(false);
@@ -21,8 +23,10 @@ const ModalCameraScanner = ({ onOpenChange, isOpen, setTicketQueue, setCamera })
   };
 
   useEffect(() => {
-    getDataByScanner();
-  }, [dataScanner]);
+    if (session.accessToken) {
+      getDataByScanner();
+    }
+  }, [dataScanner, session]);
 
   return (
     <div>
