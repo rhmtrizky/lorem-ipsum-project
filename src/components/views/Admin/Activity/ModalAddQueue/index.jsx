@@ -6,6 +6,7 @@ import getDay from '@/utils/getDay';
 import activityService from '@/services/activity';
 import ModalUi from '../../Ui/Modal';
 import generateQueueNumber from '@/utils/generateQueueNumber';
+import BookingRules from '@/utils/BookingRules';
 
 const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, setActivities, setTicketQueue, specialists }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -79,68 +80,11 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
     }
   }, [bookDate]);
 
+  // booking date rules
   useEffect(() => {
-    // get current date
-    const currentDate = new Date();
-    const selectedDate = new Date(bookDate);
-
-    // Get current hour
-    const currentHour = currentDate.getHours();
-    const scheduleHour = parseInt(getSchedule?.endTime?.split(':')[0], 10);
-
-    // condition to make sure slectedDate is same as currentDate
-    if (selectedDate.toDateString() === currentDate.toDateString()) {
-      // condition to check if currentHour is before time in scheduleHour
-      if (currentHour >= scheduleHour) {
-        setResultCompare({
-          status: false,
-          message: 'Jam sudah melebihi waktu yang tersedia.',
-        });
-        return;
-      }
-    }
-
-    // Set time part to 00:00:00 for both dates to compare only the date portion
-    currentDate.setHours(0, 0, 0, 0);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    // condition to check if selectedDate is before currentDate
-    if (selectedDate < currentDate) {
-      setResultCompare({
-        status: false,
-        message: 'Tanggal yang Anda pilih sudah lewat.',
-      });
-      return;
-    }
-
-    if (bookDay && getDocter?.schedule?.length > 0) {
-      const isDayInSchedule = getDocter.schedule.some((item) => item.day.includes(bookDay));
-
-      if (isDayInSchedule) {
-        if (bookDay !== getSchedule?.day) {
-          setResultCompare({
-            status: false,
-            message: 'Schedule Dokter yang Anda pilih, tidak sesuai dengan hari yang Anda pilih.',
-          });
-        } else {
-          setResultCompare({
-            status: true,
-            message: 'Jadwal Tersedia.',
-          });
-        }
-      } else {
-        setResultCompare({
-          status: false,
-          message: 'Jadwal Tidak Tersedia.',
-        });
-      }
-    } else {
-      setResultCompare({
-        status: false,
-        message: 'Tidak Tersedia',
-      });
-    }
-  }, [bookDate, bookDay, getDocter, getSchedule]);
+    BookingRules({ bookDate, bookDay, getDocter, getSchedule });
+    setResultCompare(BookingRules({ bookDate, bookDay, getDocter, getSchedule }));
+  }, [bookDate, bookDay, getDocter, getSchedule, setResultCompare]);
 
   // handle add queue
   const handleAddQueue = async (event) => {

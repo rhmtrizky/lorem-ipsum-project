@@ -3,12 +3,11 @@ import specialistService from '@/services/specialist';
 import { useSession } from 'next-auth/react';
 
 const useSpecialist = () => {
-  const { data: session } = useSession();
   const [specialists, setSpecialists] = useState([]);
 
   const getSpecialists = async () => {
     try {
-      const result = await specialistService.getSpecialists(session.accessToken);
+      const result = await specialistService.getSpecialists();
       if (result.status === 200) {
         setSpecialists(result.data.data);
       }
@@ -18,10 +17,8 @@ const useSpecialist = () => {
   };
 
   useEffect(() => {
-    if (session?.accessToken) {
-      getSpecialists();
-    }
-  }, [session]);
+    getSpecialists();
+  }, []);
 
   return { specialists, setSpecialists };
 };

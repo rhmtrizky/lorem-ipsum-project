@@ -10,6 +10,7 @@ import FormAddPatient from '@/components/ui/Form/FormAddPatient';
 import { Button, useDisclosure } from '@nextui-org/react';
 import QueueTicket from '@/components/ui/Form/QueueTicket';
 import useActivity from '@/hooks/useActivity';
+import currentDate from '@/utils/currentDate';
 
 export default function SchedulesDoctor({ data, doctorId }) {
   const { data: session } = useSession();
@@ -26,10 +27,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
   }, [ticket]);
 
   useEffect(() => {
-    const currentDate = new Date();
-    // Mengubah currentDate menjadi string dalam format yang sesuai, misalnya 'YYYY-MM-DD'
-    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
-    console.log(formattedCurrentDate);
+    const formattedCurrentDate = currentDate();
 
     const filter = activities.filter((item) => {
       // Mengubah item.bookDate menjadi format tanggal yang sama (jika bookDate adalah string)
@@ -47,6 +45,8 @@ export default function SchedulesDoctor({ data, doctorId }) {
       console.log(err);
     }
   };
+
+  console.log(user);
 
   useEffect(() => {
     getDetailUser();

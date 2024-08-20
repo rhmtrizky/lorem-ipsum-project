@@ -55,7 +55,7 @@ const LoginView = () => {
   };
   return (
     <AuthLayout
-      title="Login to Your Account"
+      title="Login"
       link="/auth/register"
       linkText="Don't have an account?"
       linkTitle="Create an account"
@@ -63,15 +63,15 @@ const LoginView = () => {
       errorText="Invalid email or password"
       subChildren={
         <>
-          <div className="flex justify-center items-center gap-2 w-full">
-            <div className="text-neutral-500 h-0.5 w-full bg-neutral-300" />
+          <div className="flex justify-center items-center gap-2 w-[75%]">
+            <div className="text-neutral-500 h-0.5 w-full bg-neutral-300 w-[200px]" />
             <p className="italic text-sm pb-1">or</p>
             <div className="text-neutral-500 h-0.5 w-full bg-neutral-300" />
           </div>
           <div className="flex justify-center items-center gap-2 mt-1">
             <Button
               type="button"
-              className=" flex justify-center items-center bg-color-primary text-color-dark py-2 px-3 rounded-md"
+              className=" flex justify-center items-center bg-white text-color-dark py-2 px-3 rounded-md"
               onClick={() => signIn('google', { callbackUrl: '/', redirect: false })}
               icon={GoogleIcon}
               label={'Login with Google'}
@@ -91,6 +91,7 @@ const LoginView = () => {
             name="email"
             placeholder="Email"
             className={'input-auth text-white shadow-md rounded mt-2'}
+            required={true}
           />
           {formErrors.email && <div className="text-color-red">{formErrors.email}</div>}
           <InputUi
@@ -98,6 +99,7 @@ const LoginView = () => {
             name="password"
             placeholder="Password"
             className={'input-auth text-white shadow-md rounded mt-2'}
+            required={true}
           />
           {formErrors.password && <div className="text-color-red">{formErrors.password}</div>}
           <Button

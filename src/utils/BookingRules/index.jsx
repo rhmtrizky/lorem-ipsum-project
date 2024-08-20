@@ -1,8 +1,4 @@
-import React, { useState } from 'react';
-
 const BookingRules = ({ bookDate, bookDay, getDocter, getSchedule }) => {
-  const [resultCompare, setResultCompare] = useState({});
-
   // Get current date
   const currentDate = new Date();
   const selectedDate = new Date(bookDate);
@@ -14,11 +10,10 @@ const BookingRules = ({ bookDate, bookDay, getDocter, getSchedule }) => {
   // Condition to make sure selectedDate is the same as currentDate
   if (selectedDate?.toDateString() === currentDate.toDateString()) {
     if (currentHour >= scheduleHour) {
-      setResultCompare({
+      return {
         status: false,
         message: 'Jam sudah melebihi waktu yang tersedia.',
-      });
-      return;
+      };
     }
   }
 
@@ -28,11 +23,10 @@ const BookingRules = ({ bookDate, bookDay, getDocter, getSchedule }) => {
 
   // Condition to check if selectedDate is before currentDate
   if (selectedDate < currentDate) {
-    setResultCompare({
+    return {
       status: false,
       message: 'Tanggal yang Anda pilih sudah lewat.',
-    });
-    return;
+    };
   }
 
   if (bookDay && getDocter?.schedule?.length > 0) {
@@ -40,30 +34,28 @@ const BookingRules = ({ bookDate, bookDay, getDocter, getSchedule }) => {
 
     if (isDayInSchedule) {
       if (bookDay !== getSchedule?.day) {
-        setResultCompare({
+        return {
           status: false,
           message: 'Schedule Dokter yang Anda pilih, tidak sesuai dengan hari yang Anda pilih.',
-        });
+        };
       } else {
-        setResultCompare({
+        return {
           status: true,
           message: 'Jadwal Tersedia.',
-        });
+        };
       }
     } else {
-      setResultCompare({
+      return {
         status: false,
         message: 'Jadwal Tidak Tersedia.',
-      });
+      };
     }
   } else {
-    setResultCompare({
+    return {
       status: false,
       message: 'Tidak Tersedia',
-    });
+    };
   }
-
-  return <div>{Object.keys(resultCompare).length > 0 && <p className={`${resultCompare.status ? 'text-blue-800' : 'text-red-500'} text-sm italic`}>*{resultCompare.message}</p>}</div>;
 };
 
 export default BookingRules;

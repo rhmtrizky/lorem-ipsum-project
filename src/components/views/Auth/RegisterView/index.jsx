@@ -98,38 +98,43 @@ const RegisterView = () => {
             name="fullname"
             placeholder="Fullname"
             className={'input-auth text-white shadow-md rounded mt-2'}
+            required={true}
           />
-          {formErrors.fullname && <div className="text-color-red">{formErrors.fullname}</div>}
+          {formErrors.fullname && <div className="text-red-500">{formErrors.fullname}</div>}
 
           <InputUi
             type="email"
             name="email"
             placeholder="Email"
             className={'input-auth text-white shadow-md rounded mt-2'}
+            required={true}
           />
-          {formErrors.email && <div className="text-color-red">{formErrors.email}</div>}
+          {formErrors.email && <div className="text-red-500">{formErrors.email}</div>}
           <InputUi
             type="number"
             name="phoneNumber"
             placeholder="Phone Number"
             className={'input-auth text-white shadow-md rounded mt-2'}
+            required={true}
           />
-          {formErrors.phoneNumber && <div className="text-color-red">{formErrors.phoneNumber}</div>}
+          {formErrors.phoneNumber && <div className="text-red-500">{formErrors.phoneNumber}</div>}
 
           <InputUi
             type="password"
             name="password"
             placeholder="Password"
             className={'input-auth text-white shadow-md rounded mt-2'}
+            required={true}
           />
-          {formErrors.password && <div className="text-color-red">{formErrors.password}</div>}
+          {formErrors.password && <div className="text-red-500">{formErrors.password}</div>}
           <InputUi
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
             className={'input-auth text-white shadow-md rounded mt-2'}
+            required={true}
           />
-          {formErrors.confirmPassword && <div className="text-color-red">{formErrors.confirmPassword}</div>}
+          {formErrors.confirmPassword && <div className="text-red-500">{formErrors.confirmPassword}</div>}
 
           <Button
             label={isLoading ? 'Loading...' : 'Register'}

@@ -320,10 +320,10 @@ export default function FormAddFamily({ user, setUser }) {
           </div>
         </div>
 
-        <div className="flex justify-end w-full">
+        <div className="flex justify-center w-full">
           <button
             type="submit"
-            className="mt-4 bg-[#654AB4] text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-[#654AB4] text-white py-2 px-4 rounded-lg w-full"
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>

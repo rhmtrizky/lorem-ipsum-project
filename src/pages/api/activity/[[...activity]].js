@@ -3,38 +3,38 @@ import verify from '@/utils/verify';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    // verify(req, res, async (decoded) => {
-    //   if (decoded) {
-    const search = req.query.search;
-    const patientActivities = await retrieveData('patientActivities');
-    const patientActivityId = req.query.activity;
-    console.log(patientActivityId);
+    verify(req, res, async (decoded) => {
+      if (decoded) {
+        const search = req.query.search;
+        const patientActivities = await retrieveData('patientActivities');
+        const patientActivityId = req.query.activity;
+        console.log(patientActivityId);
 
-    if (search) {
-      const searchResult = patientActivities.filter((item) => {
-        return item.name.toLowerCase().includes(search.toString().toLowerCase()) || item.nik.toLowerCase().includes(search.toLowerCase()) || item.queueNumber.toLowerCase().includes(search.toLowerCase()) || item.bpjsNumber.includes(search) || item.bookDate.includes(search);
-      });
-      res.status(200).json({
-        status: true,
-        message: 'Success',
-        data: searchResult,
-      });
-    } else if (patientActivityId) {
-      const normalizedId = patientActivityId[0].toLowerCase();
-      const detailPatientActivity = patientActivities.find((activity) => activity.id.toLowerCase() === normalizedId);
-      if (detailPatientActivity) {
-        res.status(200).json({ status: true, message: 'success', data: detailPatientActivity });
-      } else {
-        res.status(404).json({ status: false, message: 'Patient activity not found' });
+        if (search) {
+          const searchResult = patientActivities.filter((item) => {
+            return item.name.toLowerCase().includes(search.toString().toLowerCase()) || item.nik.toLowerCase().includes(search.toLowerCase()) || item.queueNumber.toLowerCase().includes(search.toLowerCase()) || item.bpjsNumber.includes(search) || item.bookDate.includes(search);
+          });
+          res.status(200).json({
+            status: true,
+            message: 'Success',
+            data: searchResult,
+          });
+        } else if (patientActivityId) {
+          const normalizedId = patientActivityId[0].toLowerCase();
+          const detailPatientActivity = patientActivities.find((activity) => activity.id.toLowerCase() === normalizedId);
+          if (detailPatientActivity) {
+            res.status(200).json({ status: true, message: 'success', data: detailPatientActivity });
+          } else {
+            res.status(404).json({ status: false, message: 'Patient activity not found' });
+          }
+        } else {
+          const data = patientActivities.map((patientActivity) => {
+            return patientActivity;
+          });
+          res.status(200).json({ status: true, message: 'Success', data: data });
+        }
       }
-    } else {
-      const data = patientActivities.map((patientActivity) => {
-        return patientActivity;
-      });
-      res.status(200).json({ status: true, message: 'Success', data: data });
-    }
-    // }
-    // });
+    });
   } else if (req.method === 'POST') {
     verify(req, res, async (decoded) => {
       if (decoded) {

@@ -5,6 +5,7 @@ import Header from '@/components/ui/Header';
 import useDebounce from '@/hooks/useDebounce';
 import Link from 'next/link';
 import doctorService from '@/services/user/doctor';
+import SkeletonCard from '@/components/ui/SkeletonCard';
 
 export default function FindDoctor() {
   const [doctors, setDoctors] = useState([]);
@@ -22,8 +23,6 @@ export default function FindDoctor() {
       console.error('Error fetching doctors', error);
     }
   };
-
-  console.log(doctors);
 
   useEffect(() => {
     fetchDoctors();
@@ -71,9 +70,9 @@ export default function FindDoctor() {
               htmlFor="default-search"
               className="mb-2 text-sm font-medium sr-only"
             >
-              Cari Berdasarkan Nama Dokter
+              Cari Nama Dokter
             </label>
-            <div className="relative flex lg:w-[500px] md:w-full sm:w-full w-full items-center">
+            <div className="relative flex lg:w-[700px] md:w-full sm:w-full w-full items-center">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-5000"
@@ -96,7 +95,7 @@ export default function FindDoctor() {
                 type="search"
                 id="default-search"
                 className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-purple-500 focus:border-purple-500 dark:focus:ring-purple-500 dark:focus:border-purple-500 cursor-pointer"
-                placeholder="Cari berdasarkan Nama Dokter"
+                placeholder="Cari Nama Dokter"
                 style={{ outline: 'none' }}
               />
             </div>
