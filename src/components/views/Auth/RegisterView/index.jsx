@@ -87,7 +87,7 @@ const RegisterView = () => {
       isError={isError}
       errorText="Email/Phone number already registered"
     >
-      <div className="min-w-[320px]">
+      <div className="lg:min-w-[320px] md:min-w-[320px] sm:w-[290px] w-[290px]">
         <form
           className="flex flex-col gap-2"
           action=""
