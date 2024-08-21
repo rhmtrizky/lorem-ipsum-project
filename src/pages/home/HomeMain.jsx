@@ -9,6 +9,8 @@ import HomeLike from './HomeLike'
 import Loader from '@/components/ui/Loader'
 import Head from 'next/head'
 import HomeQualifiedDoctors from './HomeQualifiedDoctors'
+import { HomeFeedback } from './HomeFeedback'
+import Footer from '@/components/ui/Footer'
 
 export default function HomeMain() {
 
@@ -58,6 +60,12 @@ export default function HomeMain() {
           <section className='min-h-screen m-5' >
             <HomeQualifiedDoctors/>
           </section>
+          <section>
+            <HomeFeedback/>
+          </section>
+          <footer>
+            <Footer/>
+          </footer>
           </>
         )
       }

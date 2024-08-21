@@ -11,6 +11,8 @@ module.exports = {
       animation: {
         "border-beam": "border-beam 12s infinite linear",
         "gradient": "gradient 8s linear infinite",
+        marquee: "marquee 20s linear infinite",
+        "marquee-vertical": "marquee-vertical 20s linear infinite",
       },
       keyframes: {
         "border-beam": {
@@ -22,6 +24,14 @@ module.exports = {
           to: {
             backgroundPosition: "200% 0", // Menggunakan nilai konkret untuk backgroundPosition
           },
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
         },
       },
       backgroundImage: {

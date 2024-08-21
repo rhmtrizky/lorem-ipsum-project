@@ -3,20 +3,11 @@ import { useSession } from 'next-auth/react'
 import PatientDashboardLayout from '@/components/layouts/PatientDashboardLayout'
 import CardFamily from '@/components/ui/Card/CardFamily'
 import userService from '@/services/user'
-import { useDisclosure } from '@nextui-org/react'
 
 export default function FamilyView() {
     const { data: session } = useSession();
     const [user, setUser] = useState({ patient: [] }); 
-    const [ticket, setTicket] = useState({});
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  
-    useEffect(() => {
-      if (Object.keys(ticket).length > 0) {
-        onOpen();
-      }
-    }, [ticket]);
-  
+
     const getDetailUser = async () => {
       try {
         const response = await userService.detailUser(session.accessToken);
@@ -32,8 +23,8 @@ export default function FamilyView() {
     console.log('user', user)
 
 
-    const testing = user.patient; // Jangan buat array dengan user.patient
-    let patientArray = Array.isArray(testing) ? testing : []; // Pastikan patientArray adalah array
+    const data = user.patient; 
+    let patientArray = Array.isArray(data) ? data : [];
 
     return (
         <PatientDashboardLayout>

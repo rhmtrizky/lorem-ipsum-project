@@ -16,8 +16,8 @@ export default function HomeQualifiedDoctors() {
     }
 
     return (
-        <div className="flex justify-between bg-slate-100 w-full h-[75vh] rounded-md p-8" >
-            <div className="flex gap-8" >
+        <div className="flex justify-between bg-gradient-radial w-full h-[75vh] rounded-md p-8" >
+            <div className="flex gap-8 ml-12" >
                 <div className="flex flex-col gap-8" >
                     <CardQualifiedDoctor
                         name="Dr. Muhammad Ghifani Ikhsan SpD"
