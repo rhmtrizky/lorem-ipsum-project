@@ -108,7 +108,7 @@ export default function Header() {
             <ul className="flex gap-6 text-sm text-slate-400">
               <li>
                 <Link
-                  href={'/findDoctor'}
+                  href={'/find-doctor'}
                   className="hover:text-[#654AB4] transition duration-[.3s] ease-linear"
                 >
                   Cari Dokter
@@ -144,7 +144,7 @@ export default function Header() {
                     </DropdownItem>
                     <DropdownItem>
                       <Link
-                        href={'/flowRegisBpjs'}
+                        href={'/flow-bpjs-regis'}
                         className="font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear"
                       >
                         Cara Daftar
