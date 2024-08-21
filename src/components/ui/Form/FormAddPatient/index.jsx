@@ -55,7 +55,7 @@ export default function FormAddPatient({ user, setUser }) {
   return (
     <ModalAddPatient
       title="Add Data Profile"
-      isOpe={isOpen}
+      isOpen={isOpen}
       onOpen={onOpen}
       onOpenChange={onOpenChange}
     >
@@ -318,10 +318,10 @@ export default function FormAddPatient({ user, setUser }) {
           </div>
         </div>
 
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-center">
           <button
             type="submit"
-            className="mt-4 bg-[#654AB4] text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-[#654AB4] text-white py-2 px-4 rounded-lg w-full"
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>

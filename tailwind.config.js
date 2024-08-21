@@ -22,7 +22,7 @@ module.exports = {
         },
         "gradient": {
           to: {
-            backgroundPosition: "200% 0", // Menggunakan nilai konkret untuk backgroundPosition
+            backgroundPosition: "200% 0",
           },
         },
         marquee: {

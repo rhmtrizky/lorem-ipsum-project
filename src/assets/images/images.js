@@ -50,6 +50,8 @@ export const getTicket = '/validating-ticket.png';
 
 export const bufferBro = '/Buffer-bro.png';
 
+export const userIcon = '/user-icon.png';
+
 // Dashboard patient
 export const animateDoctor = '/animasi-doctor-dashboard.png';
 export const purpleFluid = '/purple-fluid-background-frame.png';

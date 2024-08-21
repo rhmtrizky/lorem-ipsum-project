@@ -3,15 +3,11 @@ import verify from '@/utils/verify';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    verify(req, res, async (decoded) => {
-      if (decoded) {
-        const specialists = await retrieveData('specialists');
-        const data = specialists.map((specialist) => {
-          return specialist;
-        });
-        res.status(200).json({ status: true, message: 'Success', data: data });
-      }
+    const specialists = await retrieveData('specialists');
+    const data = specialists.map((specialist) => {
+      return specialist;
     });
+    res.status(200).json({ status: true, message: 'Success', data: data });
   } else if (req.method === 'POST') {
     verify(req, res, async (decoded) => {
       if (decoded) {

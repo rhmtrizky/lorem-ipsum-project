@@ -6,6 +6,8 @@ export default async function handler(req, res) {
     const users = await retrieveData('users');
 
     const doctorId = req.query.doctor;
+    const specialist = req.query.specialist; // Menambahkan parameter specialist
+    const scheduleDay = req.query.day; // Menambahkan parameter hari schedule
 
     let filteredUsers = users.filter((user) => {
       if (user.role === 'doctor') {
@@ -19,11 +21,21 @@ export default async function handler(req, res) {
     if (doctorId) {
       const detailDoctor = await retrieveDataById('users', doctorId[0]);
       res.status(200).json({ status: true, message: 'success', data: detailDoctor });
-    } else if (search) {
-      // Filter berdasarkan search
-      const responseData = filteredUsers.filter((user) => user.fullname.toLowerCase().includes(search.toString().toLowerCase()) || (user.specialist && user.specialist.toLowerCase().includes(search.toString().toLowerCase())));
-      res.status(200).json({ status: true, message: 'Success', data: responseData });
     } else {
+      // Filter berdasarkan search
+      if (search) {
+        filteredUsers = filteredUsers.filter((user) => user.fullname.toLowerCase().includes(search.toString().toLowerCase()) || (user.specialist && user.specialist.toLowerCase().includes(search.toString().toLowerCase())));
+      }
+
+      // Filter berdasarkan specialist dan hari schedule
+      if (specialist) {
+        filteredUsers = filteredUsers.filter((user) => user.specialist.toLowerCase() === specialist.toString().toLowerCase());
+      }
+
+      if (scheduleDay) {
+        filteredUsers = filteredUsers.filter((user) => user.schedule.some((schedule) => schedule.day.toLowerCase() === scheduleDay.toString().toLowerCase()));
+      }
+
       res.status(200).json({
         status: true,
         message: 'Success',

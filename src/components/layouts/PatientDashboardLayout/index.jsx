@@ -36,7 +36,6 @@ export default function PatientDashboardLayout({children}) {
 
     return (
         <>
-            <Header/>
             <section className='px-12 py-4 ' >
                 <div className='relative w-full h-80 bg-purple-900 rounded-xl overflow-hidden ' >
                     <div className='absolute -top-12' >

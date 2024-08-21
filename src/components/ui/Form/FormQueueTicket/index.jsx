@@ -7,15 +7,18 @@ import InputUi from '../../Input';
 import useActivity from '@/hooks/useActivity';
 import activityService from '@/services/activity';
 import { useSession } from 'next-auth/react';
+import BookingRules from '@/utils/BookingRules';
 
 export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
   const { data: session } = useSession();
-  const [patientIndex, setPatientIndex] = useState();
+  const [patientIndex, setPatientIndex] = useState(null);
   const [dataPatient, setDataPatient] = useState({});
   const selectedSpesialist = data?.specialist;
   const [isLoading, setIsLoading] = useState(false);
   const { activities, setActivities } = useActivity();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  console.log(patientIndex);
 
   useEffect(() => {
     if (patientIndex >= 0) {
@@ -45,67 +48,9 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
   }, [bookDate]);
 
   useEffect(() => {
-    // get current date
-    const currentDate = new Date();
-    const selectedDate = new Date(bookDate);
-
-    // Get current hour
-    const currentHour = currentDate.getHours();
-    const scheduleHour = parseInt(getSchedule?.endTime?.split(':')[0], 10);
-
-    // condition to make sure slectedDate is same as currentDate
-    if (selectedDate.toDateString() === currentDate.toDateString()) {
-      // condition to check if currentHour is before time in scheduleHour
-      if (currentHour >= scheduleHour) {
-        setResultCompare({
-          status: false,
-          message: 'Jam sudah melebihi waktu yang tersedia.',
-        });
-        return;
-      }
-    }
-
-    // Set time part to 00:00:00 for both dates to compare only the date portion
-    currentDate.setHours(0, 0, 0, 0);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    // condition to check if selectedDate is before currentDate
-    if (selectedDate < currentDate) {
-      setResultCompare({
-        status: false,
-        message: 'Tanggal yang Anda pilih sudah lewat.',
-      });
-      return;
-    }
-
-    if (bookDay && data?.schedule?.length > 0) {
-      const isDayInSchedule = data?.schedule?.some((item) => item.day.includes(bookDay));
-
-      if (isDayInSchedule) {
-        if (bookDay !== getSchedule?.day) {
-          setResultCompare({
-            status: false,
-            message: 'Schedule Dokter yang Anda pilih, tidak sesuai dengan hari yang Anda pilih.',
-          });
-        } else {
-          setResultCompare({
-            status: true,
-            message: 'Jadwal Tersedia.',
-          });
-        }
-      } else {
-        setResultCompare({
-          status: false,
-          message: 'Jadwal Tidak Tersedia.',
-        });
-      }
-    } else {
-      setResultCompare({
-        status: false,
-        message: 'Tidak Tersedia',
-      });
-    }
-  }, [bookDate, bookDay, data, getSchedule]);
+    BookingRules({ bookDate, bookDay, getDocter: data, getSchedule });
+    setResultCompare(BookingRules({ bookDate, bookDay, getDocter: data, getSchedule }));
+  }, [bookDate, bookDay, data, getSchedule, setResultCompare]);
 
   const handleAddQueue = async (event) => {
     event.preventDefault();
@@ -139,9 +84,11 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
       status: 'queue',
     };
 
+    console.log(data);
+
     try {
       const resultQueue = await activityService.addQueue(data, session.accessToken);
-
+      console.log(resultQueue);
       if (resultQueue.status === 200) {
         const result = await activityService.getAllActivities(session.accessToken);
         setActivities(result.data.data);
@@ -230,8 +177,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 id="phone"
                 defaultValue={user.phoneNumber}
                 className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Email - Optional"
-                readOnly
+                placeholder="Phone - Optional"
               />
             </div>
           </div>
@@ -259,317 +205,322 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
             </Select>
           </div>
         </div>
+        {patientIndex !== null && patientIndex !== '' && (
+          <div>
+            <div className="flex items-end gap-5 mt-4">
+              <div className="w-full">
+                <label
+                  htmlFor="tempat-lahir"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Tempat Lahir
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i className="bx bxs-map-alt"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="tempat-lahir"
+                    name="bornPlace"
+                    defaultValue={dataPatient?.bornPlace}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Tempat Lahir"
+                    required
+                    readOnly
+                  />
+                </div>
+              </div>
 
-        <div className="flex items-end gap-5 mt-4">
-          <div className="w-full">
-            <label
-              htmlFor="tempat-lahir"
-              className="mb-2 text-sm sr-only"
-            >
-              Tempat Lahir
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i className="bx bxs-map-alt"></i>
+              <div className="w-full">
+                <label
+                  htmlFor="tanggal-lahir"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Tanggal Lahir
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i class="bx bxs-calendar-alt"></i>
+                  </div>
+                  <input
+                    type="date"
+                    id="tanggal-lahir"
+                    name="bornDate"
+                    defaultValue={dataPatient?.bornDate}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Tempat Lahir"
+                    required
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="tempat-lahir"
-                name="bornPlace"
-                defaultValue={dataPatient?.bornPlace}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Tempat Lahir"
-                required
-              />
             </div>
-          </div>
 
-          <div className="w-full">
-            <label
-              htmlFor="tanggal-lahir"
-              className="mb-2 text-sm sr-only"
-            >
-              Tanggal Lahir
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i class="bx bxs-calendar-alt"></i>
+            <div className="flex items-end gap-5 mt-4">
+              <div className="w-full">
+                <label
+                  htmlFor="jenis-kelamin"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Jenis Kelamin
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i class="bx bx-male-female"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="jenis-kelamin"
+                    name="gender"
+                    defaultValue={dataPatient?.gender}
+                    placeholder="Jenis Kelamin"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="date"
-                id="tanggal-lahir"
-                name="bornDate"
-                defaultValue={dataPatient?.bornDate}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Tempat Lahir"
-                required
-                readOnly
-              />
-            </div>
-          </div>
-        </div>
 
-        <div className="flex items-end gap-5 mt-4">
-          <div className="w-full">
-            <label
-              htmlFor="jenis-kelamin"
-              className="mb-2 text-sm sr-only"
-            >
-              Jenis Kelamin
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i class="bx bx-male-female"></i>
+              <div className="w-full">
+                <label
+                  htmlFor="golongan-darah"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Golongan Darah
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i class="bx bxs-donate-blood"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="golongan-darah"
+                    name="golDarah"
+                    placeholder="Golongan Darah"
+                    defaultValue={dataPatient?.golDarah}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="jenis-kelamin"
-                name="gender"
-                defaultValue={dataPatient?.gender}
-                placeholder="Jenis Kelamin"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                readOnly
-              />
             </div>
-          </div>
 
-          <div className="w-full">
-            <label
-              htmlFor="golongan-darah"
-              className="mb-2 text-sm sr-only"
-            >
-              Golongan Darah
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i class="bx bxs-donate-blood"></i>
+            <div className="flex gap-5 mt-4">
+              <div className="w-full">
+                <label
+                  htmlFor="nama-ibu"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Nama Ibu
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i className="bx bxs-user"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="nama-ibu"
+                    name="motherName"
+                    defaultValue={dataPatient?.motherName}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Nama Ibu"
+                    required
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="golongan-darah"
-                name="golDarah"
-                placeholder="Golongan Darah"
-                defaultValue={dataPatient?.golDarah}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                readOnly
-              />
-            </div>
-          </div>
-        </div>
 
-        <div className="flex gap-5 mt-4">
-          <div className="w-full">
-            <label
-              htmlFor="nama-ibu"
-              className="mb-2 text-sm sr-only"
-            >
-              Nama Ibu
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i className="bx bxs-user"></i>
+              <div className="w-full">
+                <label
+                  htmlFor="nama-ayah"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Nama Ayah
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i className="bx bxs-user"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="nama-ayah"
+                    name="fatherName"
+                    defaultValue={dataPatient?.fatherName}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Nama Ayah"
+                    required
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="nama-ibu"
-                name="motherName"
-                defaultValue={dataPatient?.motherName}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Nama Ibu"
-                required
-              />
             </div>
-          </div>
 
-          <div className="w-full">
-            <label
-              htmlFor="nama-ayah"
-              className="mb-2 text-sm sr-only"
-            >
-              Nama Ayah
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i className="bx bxs-user"></i>
+            <div className="flex gap-5 mt-4">
+              <div className="w-full">
+                <label
+                  htmlFor="nik"
+                  className="mb-2 text-sm sr-only"
+                >
+                  NIK
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i className="bx bxs-file"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="nik"
+                    name="nik"
+                    defaultValue={dataPatient?.nik}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="NIK"
+                    required
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="nama-ayah"
-                name="fatherName"
-                defaultValue={dataPatient?.fatherName}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Nama Ayah"
-                required
-              />
-            </div>
-          </div>
-        </div>
 
-        <div className="flex gap-5 mt-4">
-          <div className="w-full">
-            <label
-              htmlFor="nik"
-              className="mb-2 text-sm sr-only"
-            >
-              NIK
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i className="bx bxs-file"></i>
+              <div className="w-full">
+                <label
+                  htmlFor="bpjsNumber"
+                  className="mb-2 text-sm sr-only"
+                >
+                  No BPJS
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i className="bx bxs-id-card"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="bpjsNumber"
+                    name="bpjsNumber"
+                    defaultValue={dataPatient?.bpjsNumber}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Nomor BPJS"
+                    required
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="nik"
-                name="nik"
-                defaultValue={dataPatient?.nik}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="NIK"
-                required
-              />
             </div>
-          </div>
 
-          <div className="w-full">
-            <label
-              htmlFor="bpjsNumber"
-              className="mb-2 text-sm sr-only"
-            >
-              No BPJS
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i className="bx bxs-id-card"></i>
+            <div className="flex gap-5 mt-4">
+              <div className="w-full">
+                <label
+                  htmlFor="alamat"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Alamat
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i className="bx bxs-map"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="alamat"
+                    name="address"
+                    defaultValue={dataPatient?.address}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Alamat"
+                    required
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="bpjsNumber"
-                name="bpjsNumber"
-                defaultValue={dataPatient?.bpjsNumber}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Nomor BPJS"
-                required
-              />
             </div>
-          </div>
-        </div>
 
-        <div className="flex gap-5 mt-4">
-          <div className="w-full">
-            <label
-              htmlFor="alamat"
-              className="mb-2 text-sm sr-only"
-            >
-              Alamat
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i className="bx bxs-map"></i>
+            <div className="flex gap-5 mt-4">
+              <div className="w-full">
+                <label
+                  htmlFor="suku"
+                  className="mb-2 text-sm sr-only"
+                >
+                  Suku
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i className="bx bxs-map"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="suku"
+                    name="suku"
+                    defaultValue={dataPatient?.suku}
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Suku"
+                    required
+                    readOnly
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="alamat"
-                name="address"
-                defaultValue={dataPatient?.address}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Alamat"
-                required
-              />
             </div>
-          </div>
-        </div>
-
-        <div className="flex gap-5 mt-4">
-          <div className="w-full">
-            <label
-              htmlFor="suku"
-              className="mb-2 text-sm sr-only"
-            >
-              Suku
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i className="bx bxs-map"></i>
+            <div className="flex gap-5 mt-4">
+              <div className="w-full">
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i class="bx bx-shield-plus"></i>
+                  </div>
+                  <input
+                    name="keluhan"
+                    type="text"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    placeholder="Keluhan"
+                    required
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                id="suku"
-                name="suku"
-                defaultValue={dataPatient?.suku}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Suku"
-                required
-              />
             </div>
-          </div>
-        </div>
-        <div className="flex gap-5 mt-4">
-          <div className="w-full">
-            <label
-              htmlFor="suku"
-              className="mb-2 text-sm sr-only"
-            >
-              Suku
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i class="bx bx-shield-plus"></i>
-              </div>
-              <input
-                name="keluhan"
-                type="text"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
-                placeholder="Keluhan"
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex gap-3 justify-center w-full mt-4">
-          <div className="flex flex-col justify-start w-1/2">
-            <label className="text-sm">Jadwal Dokter</label>
-            <div className=" flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg mt-2">
-              <i className="bx bxs-time pl-4"></i>
-              <Select
-                name="schedule"
-                size="sm"
-                placeholder="Pilih Jadwal Dokter"
-                className="w-full px-1.5 outline-none text-sm"
-                onChange={(e) => setSelectedSchedule(e.target.value)}
-                required
-              >
-                {data?.schedule?.map((item, index) => (
-                  <SelectItem
-                    key={index}
-                    value={index}
-                    className="bg-white border-[1px] border-slate-400 py-3 rounded-lg"
+            <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-3 justify-center w-full mt-4">
+              <div className="flex flex-col justify-start lg:w-1/2 md:w-1/2 sm:w-full w-full">
+                <label className="text-sm">Jadwal Dokter</label>
+                <div className=" flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg mt-2">
+                  <i className="bx bxs-time pl-4"></i>
+                  <Select
+                    name="schedule"
+                    size="sm"
+                    placeholder="Pilih Jadwal Dokter"
+                    className="w-full px-1.5 outline-none text-sm"
+                    onChange={(e) => setSelectedSchedule(e.target.value)}
+                    required
                   >
-                    {`${item.day} - (${item.startTime} - ${item.endTime})`}
-                  </SelectItem>
-                ))}
-              </Select>
-            </div>
-          </div>
-          <div className="flex flex-col justify-start w-1/2">
-            <label className="text-sm">Pilih Tanggal Booking</label>
-            <div className="flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg w-full mt-2">
-              <i className="bx bxs-time pl-4"></i>
+                    {data?.schedule?.map((item, index) => (
+                      <SelectItem
+                        key={index}
+                        value={index}
+                        className="bg-white border-[1px] border-slate-400 py-3 rounded-lg"
+                      >
+                        {`${item.day} - (${item.startTime} - ${item.endTime})`}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              <div className="flex flex-col justify-start lg:w-1/2 md:w-1/2 sm:w-full w-full">
+                <label className="text-sm">Pilih Tanggal Booking</label>
+                <div className="flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg w-full mt-2">
+                  <i className="bx bxs-time pl-4"></i>
 
-              <InputUi
-                name="bookDate"
-                type="date"
-                className="w-[250px] outline-none text-sm mb-2"
-                placeholder="Tgl. Booking"
-                onChange={(e) => setBookDate(e.target.value)}
-                required
-              />
+                  <InputUi
+                    name="bookDate"
+                    type="date"
+                    className="lg:w-[250px] md:w-[250px] sm:w-full w-full outline-none text-sm mb-2"
+                    placeholder="Tgl. Booking"
+                    onChange={(e) => setBookDate(e.target.value)}
+                    required
+                  />
+                </div>
+                {Object.keys(resultCompare).length > 0 && <p className={`${resultCompare.status ? 'text-blue-800' : 'text-red-500 my-1'} text-sm italic`}>*{resultCompare.message}</p>}
+              </div>
             </div>
-            {Object.keys(resultCompare).length > 0 && <p className={`${resultCompare.status ? 'text-blue-800' : 'text-red-500 my-1'} text-sm italic`}>*{resultCompare.message}</p>}
           </div>
-        </div>
-        <div className="flex justify-end w-full">
+        )}
+
+        <div className="flex justify-center w-full mt-4">
           <button
             type="submit"
-            className={`${resultCompare.status ? 'bg-[#654AB4]' : 'bg-[#AD99E8]'} text-white py-2 px-4 rounded-lg`}
+            className={`${resultCompare.status ? 'bg-[#654AB4]' : 'bg-[#AD99E8]'} text-white py-2 px-4 rounded-lg w-full`}
             disabled={isLoading || !resultCompare.status}
           >
             {isLoading ? 'Loading...' : 'Submit'}

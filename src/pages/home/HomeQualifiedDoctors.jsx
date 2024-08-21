@@ -11,7 +11,7 @@ export default function HomeQualifiedDoctors() {
 
     const handleClickCheckDoctor = () => {
         router.push({
-            pathname: '/findDoctor'
+            pathname: '/find-doctor'
         })
     }
 

@@ -25,6 +25,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
           src={ticketQueue}
           width={300}
           height={200}
+          alt='tiket'
           className="w-full h-[200px] object-cover rounded-t-xl"
         />
         <div className="px-5 flex flex-col gap-3 bg-white py-4">
