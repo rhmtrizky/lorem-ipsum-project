@@ -1,11 +1,11 @@
 import { animateDoctor, injectionNotes, injectionPink, purpleFluid } from '@/assets/images/images'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 import Header from '@/components/ui/Header'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useSession } from 'next-auth/react'
 import userService from '@/services/user'
 import FormEditUser from '@/components/ui/Form/FormEditUser'
 

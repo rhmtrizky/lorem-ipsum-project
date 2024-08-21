@@ -2,7 +2,7 @@ import React from 'react'
 import FormEditPatient from '../../Form/FormEditPatient'
 import { Button } from '@nextui-org/react'
 
-export default function CardFamily({ user, setUser, data, index, patient }) {
+export default function CardFamily({ user, setUser, data, patient }) {
     return (
         <div className="flex flex-col items-center gap-3 bg-white border-2 border-purple-700 w-max h-max rounded-lg p-3">
             <div className="flex items-center justify-between w-full">
