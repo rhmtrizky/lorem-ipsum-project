@@ -10,7 +10,7 @@ export default function ModalFilterUi({ title, children, setSpecialist, setDay }
         onPress={onOpen}
         className="w-14 h-13 bg-white flex items-center justify-center rounded-lg"
       >
-        <i className="bx bx-filter-alt text-[#654AB4] bg-white font"></i>
+        <i className="bx bx-filter-alt text-primary bg-white font"></i>
       </Button>
       <Modal
         backdrop="blur"

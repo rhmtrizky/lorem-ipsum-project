@@ -6,8 +6,8 @@ export default function HomeBanner() {
   return (
     <article className="w-full h-[550px] bg-gradient-radial flex flex-col min-[921px]:flex-row justify-center items-center relative rounded-xl mx-3 min-[774px]:ml-3 overflow-hidden">
       <div className="ml-3 md:ml-7 mt-5 min-[430px]:mt-24 min-[921px]:mt-0 text-white">
-        <p className="text-xl font-semibold">Selamat datang di</p>
-        <h1 className=" text-5xl max-[430px]:text-3xl min-[640px]:text-6xl font-bold my-2 ">
+        <p className="text-xl font-semibold font-poppins ">Selamat datang di</p>
+        <h1 className=" text-5xl font-poppins max-[430px]:text-3xl min-[640px]:text-6xl font-bold my-2 ">
           Rumah Sakit <br /> Harapan Bunda
         </h1>
         <p className="text-xs min-[430px]:text-sm mt-6">

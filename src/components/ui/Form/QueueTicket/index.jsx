@@ -18,7 +18,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
       onOpenChange={onOpenChange}
     >
       <div
-        className="bg-[#654AB4] p-4 rounded-lg"
+        className="bg-primary p-4 rounded-lg"
         ref={contentRef}
       >
         <Image
@@ -33,7 +33,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
             <Avatar
               src={user.image}
               size="sm"
-              className="border-[1px] border-[#654AB4] bg-white"
+              className="border-[1px] border-primary bg-white"
             />
             <h1 className="font-semibold text-lg">{ticket?.data?.name}</h1>
           </div>
@@ -84,7 +84,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
               <h1 className=" text-md">RS Harapan Bunda</h1>
             </div>
             <Button
-              className="bg-[#654AB4] text-white rounded-full text-xs mt-2"
+              className="bg-primary text-white rounded-full text-xs mt-2"
               size="sm"
               type="submit"
               onClick={() => generatePDF(contentRef, { filename: `${ticket?.data?.name}-${ticket?.data?.queueNumber}.pdf` })}

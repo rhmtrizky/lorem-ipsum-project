@@ -73,7 +73,7 @@ export default function PoliCard() {
                     alt={poli.name}
                   />
                 </div>
-                <h3 className="text-[#654AB4] font-bold ">{poli.name}</h3>
+                <h3 className="text-primary font-bold ">{poli.name}</h3>
               </div>
               <div className="flex gap-1 text-slate-500">
                 <p>Jumlah Antrian: </p>
@@ -115,7 +115,7 @@ export default function PoliCard() {
                     alt={poli.name}
                   />
                 </div>
-                <h3 className="text-[#654ab4] font-bold">{poli.name}</h3>
+                <h3 className="text-primary font-bold">{poli.name}</h3>
                 <div className="flex gap-1 text-slate-500 text-xs min-[585px]:text-sm">
                   <p>Jumlah Antrian: </p>
                   <motion.p>{arrayPoli[index]}</motion.p>

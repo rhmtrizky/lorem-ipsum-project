@@ -36,7 +36,7 @@ export default function CardDoctorSchedule({ name, specialist, image, queuePasie
               height={15}
               alt="stetoskop.png"
             />
-            <p className="text-[#654AB4] cursor-default text-[14px]">{specialist}</p>
+            <p className="text-primary cursor-default text-[14px]">{specialist}</p>
           </div>
           <div className="flex items-center gap-1.5">
             <Image
@@ -45,9 +45,9 @@ export default function CardDoctorSchedule({ name, specialist, image, queuePasie
               height={15}
               alt="hospital.png"
             />
-            <p className="text-[#654AB4] cursor-default text-[14px]">RS.Harapan Bunda</p>
+            <p className="text-primary cursor-default text-[14px]">RS.Harapan Bunda</p>
           </div>
-          <Button className="h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-3 px-4 rounded-full shadow-lg hover:shadow-purple-500/50 text-sm mt-3 font-semibold">Antrian Hari Ini : {queuePasient}</Button>
+          <Button className="h-8 flex items-center gap-2 bg-gradient-to-r from-secondary to-primary text-white py-3 px-4 rounded-full shadow-lg hover:shadow-purple-500/50 text-sm mt-3 font-semibold">Antrian Hari Ini : {queuePasient}</Button>
         </div>
       </div>
     </div>

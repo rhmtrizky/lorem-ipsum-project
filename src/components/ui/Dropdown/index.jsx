@@ -6,7 +6,7 @@ export default function Dropdown({ toggleDropDown, dropdownOpen, testingDay, tit
             <label>{title}</label>
             <button
                 onClick={toggleDropDown}
-                className="flex justify-between text-[#654AB4] bg-white font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center border-2 border-[#654AB4]  "
+                className="flex justify-between text-primary bg-white font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center border-2 border-primary  "
                 type="button"
             >
                 Dropdown button

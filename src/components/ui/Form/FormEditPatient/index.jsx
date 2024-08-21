@@ -87,7 +87,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
               type="text"
               id="nama-lengkap"
               name="name"
-              className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+              className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
               placeholder="Nama Lengkap Sesuai KTP "
               defaultValue={patient.name}
               required
@@ -111,7 +111,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="text"
                 id="tempat-lahir"
                 name="bornPlace"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Tempat Lahir"
                 defaultValue={patient.bornPlace}
                 required
@@ -134,7 +134,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="date"
                 id="tanggal-lahir"
                 name="bornDate"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Tempat Lahir"
                 defaultValue={patient.bornDate}
                 required
@@ -208,7 +208,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="text"
                 id="nama-ibu"
                 name="motherName"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Nama Ibu"
                 required
                 defaultValue={patient.motherName}
@@ -231,7 +231,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="text"
                 id="nama-ayah"
                 name="fatherName"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Nama Ayah"
                 required
                 defaultValue={patient.fatherName}
@@ -256,7 +256,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="number"
                 id="nik"
                 name="nik"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="NIK"
                 defaultValue={patient.nik}
               />
@@ -278,7 +278,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="number"
                 id="bpjsNumber"
                 name="bpjsNumber"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Nomor BPJS"
                 required
                 defaultValue={patient.bpjsNumber}
@@ -303,7 +303,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="text"
                 id="alamat"
                 name="address"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Alamat"
                 required
                 defaultValue={patient.address}
@@ -328,7 +328,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
                 type="text"
                 id="suku"
                 name="suku"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Suku"
                 required
                 defaultValue={patient.suku}
@@ -340,7 +340,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
         <div className="flex justify-end w-full">
           <button
             type="submit"
-            className="mt-4 bg-[#654AB4] text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-primary text-white py-2 px-4 rounded-lg"
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>

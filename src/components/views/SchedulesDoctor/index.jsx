@@ -65,7 +65,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
             />
           </div>
           <div className="mt-4">
-            <div className="w-[160px] h-[40px] flex justify-center items-center gap-2 bg-[#654AB4] shadow-lg rounded-t-lg">
+            <div className="w-[160px] h-[40px] flex justify-center items-center gap-2 bg-primary shadow-lg rounded-t-lg">
               <div className="dot"></div>
               <p className="text-white font-semibold cursor-default text-[13px]">JADWAL DOKTER</p>
             </div>
@@ -92,7 +92,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
           <div className="bg-white w-full rounded-lg">
             {user?.patient?.length > 0 && (
               <div
-                className="flex items-center text-[#000000ab] hover:text-[#654AB4] font-normal px-8 pt-3"
+                className="flex items-center text-[#000000ab] hover:text-primary font-normal px-8 pt-3"
                 style={{ transition: '.3s ease' }}
               >
                 <Image
@@ -140,9 +140,9 @@ export default function SchedulesDoctor({ data, doctorId }) {
                   </div>
                 ) : (
                   <>
-                    <p className="text-lg text-[#654AB4] font-semibold">Silahkan login terlebih dahulu</p>
+                    <p className="text-lg text-primary font-semibold">Silahkan login terlebih dahulu</p>
                     <Button
-                      className="w-max bg-[#654AB4] hover:bg-[#4e3a8b] rounded-full py-3.5 px-5 my-4 text-white text-[12px] rubik"
+                      className="w-max bg-primary hover:bg-[#4e3a8b] rounded-full py-3.5 px-5 my-4 text-white text-[12px] rubik"
                       onClick={() => signIn()}
                     >
                       Login

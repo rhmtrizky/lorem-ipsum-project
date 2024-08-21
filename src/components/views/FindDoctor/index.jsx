@@ -55,7 +55,7 @@ export default function FindDoctor() {
       <div className="w-full">
         <div className="relative overflow-hidden bg-[#ffbebed7] mt-4 mb-8 mx-2 p-8 shadow-lg rounded-md">
           <div className="mb-4">
-            <div className="flex items-center text-xs font-medium text-[#654AB4] mt-4 mb-8">
+            <div className="flex items-center text-xs font-medium text-primary mt-4 mb-8">
               <Link href="/">Beranda</Link>
               <i className="bx bx-chevrons-right mt-0.5"></i>
               <span className="text-black">Cari Dokter</span>
@@ -133,7 +133,7 @@ export default function FindDoctor() {
             </div>
           ) : (
             <div className="flex flex-col justify-center items-center">
-              <i className="bx bxs-message-alt-error text-8xl text-[#654AB4]"></i>
+              <i className="bx bxs-message-alt-error text-8xl text-primary"></i>
               <p className="text-lg font-semibold">Dokter tidak ditemukan.</p>
             </div>
           )}
@@ -142,7 +142,7 @@ export default function FindDoctor() {
           <div className="flex justify-center mt-6">
             <button
               onClick={handleLoadMore}
-              className="bg-[#654ab4da] text-white rounded-full py-2 px-6 text-sm font-semibold hover:bg-[#654AB4] transition duration-300 ease-linear"
+              className="bg-[#654ab4da] text-white rounded-full py-2 px-6 text-sm font-semibold hover:bg-primary transition duration-300 ease-linear"
             >
               Load More
             </button>

@@ -22,9 +22,9 @@ export default function CardQualifiedDoctor({name, spesialisasi}) {
                 </p>
                 <div className='flex gap-2 my-1.5'>
                     <Image src={stetoskopPurple} width={15} height={15} alt='stetoskop.png' />
-                    <p className='text-xs text-[#654AB4] font-semibold cursor-default'>{spesialisasi}</p>
+                    <p className='text-xs text-primary font-semibold cursor-default'>{spesialisasi}</p>
                 </div>
-                <button className='border-2 border-[#654AB4] hover:bg-[#654AB4] hover:text-white rounded-full py-1 px-4 text-xs font-semibold mt-3 transition duration-[.3s] ease-linear'>
+                <button className='border-2 border-primary hover:bg-primary hover:text-white rounded-full py-1 px-4 text-xs font-semibold mt-3 transition duration-[.3s] ease-linear'>
                     Lihat Jadwal
                 </button>
             </div>

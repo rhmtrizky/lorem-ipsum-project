@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function HomeLike() {
     return (
-        <div className="  relative bg-blur bg-[#ffffff49] h-[120px] w-[40%] flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
+        <div className="relative bg-[#ffffff49] h-[120px] w-[40%] flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
             <div className="flex justify-evenly w-full ">
                 <div className='flex  flex-col items-center justify-center relative bg-purpl-950 w-[150px] h-[80px] rounded-lg text-purple-900' >
                     <div className=' ' >

@@ -36,7 +36,7 @@ export default function Header() {
         </div>
 
         <nav className="hidden min-[600px]:block w-full h-full">
-          <div className="flex items-center justify-around max-[950px]:justify-center h-1/2 px-1 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] ">
+          <div className="flex items-center justify-around max-[950px]:justify-center h-1/2 px-1 bg-gradient-to-r from-secondary to-primary ">
             <div className="flex gap-5 h-max">
               <div className="flex items-center gap-1">
                 <Image
@@ -96,7 +96,7 @@ export default function Header() {
 
               <motion.button
                 whileHover={{ scale: 1.1 }}
-                className={`h-8 ${session.status == 'authenticated' ? 'flex' : 'hidden'} justify-center items-center gap-2 border-2 border-[#FFBEBE] text-white w-8 rounded-full shadow-lg hover:shadow-pink-300/100`}
+                className={`h-8 ${session.status == 'authenticated' ? 'flex' : 'hidden'} justify-center items-center gap-2 border-2 border-secondary text-white w-8 rounded-full shadow-lg hover:shadow-pink-300/100`}
                 onClick={handleToDashboard}
               >
                 <i className="bx bxs-user  text-white"></i>
@@ -117,7 +117,7 @@ export default function Header() {
               <li>
                 <Link
                   href={'/'}
-                  className="hover:text-[#654AB4] transition duration-[.3s] ease-linear"
+                  className="hover:text-primary transition duration-[.3s] ease-linear"
                 >
                   Informasi
                 </Link>
@@ -125,7 +125,7 @@ export default function Header() {
               <li>
                 <Dropdown>
                   <DropdownTrigger>
-                    <button className="flex items-center hover:text-[#654AB4] transition duration-[.3s] ease-linear outline-none">
+                    <button className="flex items-center hover:text-primary transition duration-[.3s] ease-linear outline-none">
                       Kontak
                       <i className="bx bx-chevron-down text-lg " />
                     </button>
@@ -137,7 +137,7 @@ export default function Header() {
                     <DropdownItem>
                       <Link
                         href={'/faq'}
-                        className="font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear"
+                        className="font-semibold text-slate-400 hover:text-primary transition duration-[.3s] ease-linear"
                       >
                         FAQ
                       </Link>
@@ -145,7 +145,7 @@ export default function Header() {
                     <DropdownItem>
                       <Link
                         href={'/flowRegisBpjs'}
-                        className="font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear"
+                        className="font-semibold text-slate-400 hover:text-primary transition duration-[.3s] ease-linear"
                       >
                         Cara Daftar
                       </Link>
@@ -153,7 +153,7 @@ export default function Header() {
                     <DropdownItem>
                       <Link
                         href={'/feedback'}
-                        className="font-semibold text-slate-400 hover:text-[#654AB4] transition duration-[.3s] ease-linear"
+                        className="font-semibold text-slate-400 hover:text-primary transition duration-[.3s] ease-linear"
                       >
                         Pengalaman Pelanggan
                       </Link>
@@ -165,11 +165,11 @@ export default function Header() {
             <div className="flex gap-3">
               <motion.button
                 whileHover={{ scale: 1.1 }}
-                className="h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-full shadow-lg hover:shadow-purple-500/50"
+                className="h-8 flex items-center gap-2 bg-gradient-to-r from-secondary to-primary text-white py-2 px-4 rounded-full shadow-lg hover:shadow-purple-500/50"
                 onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
               >
                 <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
-                <div className="w-5 h-5 flex items-center justify-center bg-[#FFBEBE] rounded-full">
+                <div className="w-5 h-5 flex items-center justify-center bg-secondary rounded-full">
                   <Image
                     src={next}
                     width={15}

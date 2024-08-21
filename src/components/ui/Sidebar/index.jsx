@@ -116,12 +116,12 @@ export const Sidebar = () => {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   {...framerButton}
-                  className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-[#FFBEBE] to-[#654AB4] text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-purple-500/50"
+                  className="m-5 h-8 flex items-center gap-2 bg-gradient-to-r from-secondary to-primary text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-purple-500/50"
                   onClick={session.status == 'authenticated' ? () => signOut() : () => signIn()}
                   aria-label="masuk"
                 >
                   <p className="text-xs">{`${session.status == 'authenticated' ? 'Keluar' : 'Masuk'}`}</p>
-                  <div className="w-5 h-5 flex items-center justify-center bg-[#FFBEBE] rounded-full">
+                  <div className="w-5 h-5 flex items-center justify-center bg-secondary rounded-full">
                     <Image
                       src={next}
                       width={15}

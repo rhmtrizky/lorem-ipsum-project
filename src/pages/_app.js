@@ -5,6 +5,8 @@ import 'boxicons/css/boxicons.min.css';
 import { useRouter } from 'next/router';
 import Header from '@/components/ui/Header';
 
+
+
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const excludedPaths = ['/auth', '/admin', '/doctor'];

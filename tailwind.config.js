@@ -8,6 +8,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        "primary": "#654AB4",
+        "secondary": "#FFBEBE"
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        archivoBlack: ["Archivo Black", "sans-serif"]
+      },
       animation: {
         "border-beam": "border-beam 12s infinite linear",
         "gradient": "gradient 8s linear infinite",

@@ -6,7 +6,7 @@ export default function ModalAddPatient({ title, children, isOpen, onOpen, onOpe
     <>
       <Button
         onPress={onOpen}
-        className="w-max bg-[#654AB4] hover:bg-[#4e3a8b] rounded-full py-3.5 px-5 my-4 text-white text-[12px] rubik"
+        className="w-max bg-primary hover:bg-[#4e3a8b] rounded-full py-3.5 px-5 my-4 text-white text-[12px] rubik"
       >
         Lengkapi Profil Anda
       </Button>

@@ -46,11 +46,11 @@ export default function HomeQualifiedDoctors() {
 
             {/* div for text */}
             <div className="w-1/2 flex flex-col justify-center" >
-                <h1 className='text-xl font-bold text-[#654AB4] mb-3' >Qualified Doctors</h1>
-                <h2 className='text-6xl font-bold text-slate-800' >Keep doctors and <br/> loved ones in the</h2>
+                <h1 className='text-xl font-bold text-primary mb-3' >Qualified Doctors</h1>
+                <h2 className='text-6xl font-bold text-slate-800 font-sans' >Keep doctors and <br/> loved ones in the</h2>
                 <p className='font-semibold text-slate-500 mt-5' >Security share your comprehensive medical history with <br/> doctors and loved ones, for better communication and <br/> care.</p>
                 <Button
-                    className='w-max border-2 border-[#654AB4] rounded-full mt-12'
+                    className='w-max border-2 border-primary rounded-full mt-12'
                     onClick={() => handleClickCheckDoctor()}
                 >
                     Check Doctors

@@ -130,7 +130,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
               id="nama-lengkap"
               name="fullName"
               defaultValue={user.fullname}
-              className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+              className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
               placeholder="Nama Lengkap Sesuai KTP "
               required
               readOnly
@@ -154,7 +154,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 type="text"
                 id="email"
                 defaultValue={user.email}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Email - Optional"
                 readOnly
               />
@@ -176,7 +176,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 type="text"
                 id="phone"
                 defaultValue={user.phoneNumber}
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Phone - Optional"
               />
             </div>
@@ -224,7 +224,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="tempat-lahir"
                     name="bornPlace"
                     defaultValue={dataPatient?.bornPlace}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Tempat Lahir"
                     required
                     readOnly
@@ -248,7 +248,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="tanggal-lahir"
                     name="bornDate"
                     defaultValue={dataPatient?.bornDate}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Tempat Lahir"
                     required
                     readOnly
@@ -275,7 +275,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     name="gender"
                     defaultValue={dataPatient?.gender}
                     placeholder="Jenis Kelamin"
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     readOnly
                   />
                 </div>
@@ -298,7 +298,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     name="golDarah"
                     placeholder="Golongan Darah"
                     defaultValue={dataPatient?.golDarah}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     readOnly
                   />
                 </div>
@@ -322,7 +322,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="nama-ibu"
                     name="motherName"
                     defaultValue={dataPatient?.motherName}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Nama Ibu"
                     required
                     readOnly
@@ -346,7 +346,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="nama-ayah"
                     name="fatherName"
                     defaultValue={dataPatient?.fatherName}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Nama Ayah"
                     required
                     readOnly
@@ -372,7 +372,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="nik"
                     name="nik"
                     defaultValue={dataPatient?.nik}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="NIK"
                     required
                     readOnly
@@ -396,7 +396,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="bpjsNumber"
                     name="bpjsNumber"
                     defaultValue={dataPatient?.bpjsNumber}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Nomor BPJS"
                     required
                     readOnly
@@ -422,7 +422,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="alamat"
                     name="address"
                     defaultValue={dataPatient?.address}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Alamat"
                     required
                     readOnly
@@ -448,7 +448,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                     id="suku"
                     name="suku"
                     defaultValue={dataPatient?.suku}
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Suku"
                     required
                     readOnly
@@ -465,7 +465,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                   <input
                     name="keluhan"
                     type="text"
-                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                    className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                     placeholder="Keluhan"
                     required
                   />
@@ -520,7 +520,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
         <div className="flex justify-center w-full mt-4">
           <button
             type="submit"
-            className={`${resultCompare.status ? 'bg-[#654AB4]' : 'bg-[#AD99E8]'} text-white py-2 px-4 rounded-lg w-full`}
+            className={`${resultCompare.status ? 'bg-primary' : 'bg-[#AD99E8]'} text-white py-2 px-4 rounded-lg w-full`}
             disabled={isLoading || !resultCompare.status}
           >
             {isLoading ? 'Loading...' : 'Submit'}

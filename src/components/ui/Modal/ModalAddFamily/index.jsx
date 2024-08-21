@@ -6,7 +6,7 @@ export default function ModalAddFamily({ title, children, isOpen, onOpen, onOpen
     <>
       <Button
         onPress={onOpen}
-        className="hover:text-[#654AB4] transition duration-[.3s] ease-linear"
+        className="hover:text-primary transition duration-[.3s] ease-linear"
       >
         Tambah Anggota Keluarga
       </Button>

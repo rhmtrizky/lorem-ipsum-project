@@ -101,7 +101,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="text"
                 id="tempat-lahir"
                 name="bornPlace"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Tempat Lahir"
                 required
               />
@@ -123,7 +123,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="date"
                 id="tanggal-lahir"
                 name="bornDate"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Tempat Lahir"
                 required
               />
@@ -194,7 +194,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="text"
                 id="nama-ibu"
                 name="motherName"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Nama Ibu"
                 required
               />
@@ -216,7 +216,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="text"
                 id="nama-ayah"
                 name="fatherName"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Nama Ayah"
                 required
               />
@@ -240,7 +240,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="number"
                 id="nik"
                 name="nik"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="NIK"
                 required
               />
@@ -262,7 +262,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="number"
                 id="bpjsNumber"
                 name="bpjsNumber"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Nomor BPJS"
                 required
               />
@@ -286,7 +286,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="text"
                 id="alamat"
                 name="address"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Alamat"
                 required
               />
@@ -310,7 +310,7 @@ export default function FormAddPatient({ user, setUser }) {
                 type="text"
                 id="suku"
                 name="suku"
-                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-[#654AB4] focus:shadow-lg bg-white rounded-lg outline-none"
+                className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="Suku"
                 required
               />
@@ -321,7 +321,7 @@ export default function FormAddPatient({ user, setUser }) {
         <div className="w-full flex justify-center">
           <button
             type="submit"
-            className="mt-4 bg-[#654AB4] text-white py-2 px-4 rounded-lg w-full"
+            className="mt-4 bg-primary text-white py-2 px-4 rounded-lg w-full"
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>
