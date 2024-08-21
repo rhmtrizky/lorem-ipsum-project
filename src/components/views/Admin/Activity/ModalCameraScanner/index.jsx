@@ -31,7 +31,7 @@ const ModalCameraScanner = ({ onOpenChange, isOpen, setTicketQueue, setCamera })
   return (
     <div>
       <ModalUi
-        title={'Add New Queue'}
+        title={'Scan QR Code'}
         onOpenChange={onOpenChange}
         isOpen={isOpen}
         setCloseModal={setCamera}

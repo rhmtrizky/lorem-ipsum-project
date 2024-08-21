@@ -1,6 +1,6 @@
 import ActivityView from '@/components/views/Admin/Activity';
-const QueuePage = () => {
+const ActivityPage = () => {
   return <ActivityView />;
 };
 
-export default QueuePage;
+export default ActivityPage;
