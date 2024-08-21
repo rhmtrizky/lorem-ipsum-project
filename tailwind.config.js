@@ -14,7 +14,8 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
-        archivoBlack: ["Archivo Black", "sans-serif"]
+        archivoBlack: ["Archivo Black", "sans-serif"],
+        pacifico: ["Pacifico", "cursive"]
       },
       animation: {
         "border-beam": "border-beam 12s infinite linear",

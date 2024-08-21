@@ -64,3 +64,7 @@ export const clockIcon = "/clock.png"
 // ticket queue
 export const ticketQueue = '/ticket-queue.png';
 export const qrCode = '/qr-code.png';
+
+// feedback
+export const loves = "/loves.png"
+export const feedbackAnimation = "/feedback-animation.png"
