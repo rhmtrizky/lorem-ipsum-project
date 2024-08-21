@@ -1,77 +1,67 @@
-
-import { useScroll, useTransform, motion } from 'framer-motion'
-import HomeBanner from './HomeBanner'
-import HomeHelp from './HomeHelp'
-import React, { useEffect, useState } from 'react'
-import PoliCard from '@/components/ui/Card/PoliCard'
-import HomeLike from './HomeLike'
-import Loader from '@/components/ui/Loader'
-import Head from 'next/head'
-import HomeQualifiedDoctors from './HomeQualifiedDoctors'
-import { HomeFeedback } from './HomeFeedback'
-import Footer from '@/components/ui/Footer'
+import { useScroll, useTransform, motion } from 'framer-motion';
+import HomeBanner from './HomeBanner';
+import HomeHelp from './HomeHelp';
+import React, { useEffect, useState } from 'react';
+import PoliCard from '@/components/ui/Card/PoliCard';
+import HomeLike from './HomeLike';
+import Loader from '@/components/ui/Loader';
+import Head from 'next/head';
+import HomeQualifiedDoctors from './HomeQualifiedDoctors';
+import HomeFeedback from './HomeFeedback';
+import Footer from '@/components/ui/Footer';
 
 export default function HomeMain() {
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [isLoading, setIsLoading] = useState(true)
-
-  const { scrollYProgress } = useScroll()
-  const shadow = useTransform(scrollYProgress, [0, 1], ['0px 0px 0px rgba(0, 0, 0, 0)', '0px 10px 30px rgba(0, 0, 0, 0.3)'])
+  const { scrollYProgress } = useScroll();
+  const shadow = useTransform(scrollYProgress, [0, 1], ['0px 0px 0px rgba(0, 0, 0, 0)', '0px 10px 30px rgba(0, 0, 0, 0.3)']);
 
   useEffect(() => {
-    setIsLoading(false)
-  }, [])
+    setIsLoading(false);
+  }, []);
 
   return (
     <>
       <Head>
         <title>RS Harapan Bunda | Home</title>
       </Head>
-      {
-        isLoading 
-        ?
-        (
-          <>
-          <Loader/>
-          </>
-        )
-        :
-        (
-          <>
-            <section className='w-full h-fit relative flex flex-col min-[774px]:flex-row justify-center gap-3 mt-3'>
-              <div className='w-full min-[774px]:w-[80%] xl:w-full flex justify-center' >
-                <HomeBanner />
-              </div>
-                <PoliCard/>
-            </section>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <section className="w-full h-fit relative flex flex-col min-[774px]:flex-row justify-center gap-3 mt-3">
+            <div className="w-full min-[774px]:w-[80%] xl:w-full flex justify-center">
+              <HomeBanner />
+            </div>
+            <PoliCard />
+          </section>
 
-            <motion.section
-              // style={{ boxShadow: shadow }}
-              className='flex justify-center min-h-[60vh] mt-2'
-            >
-              <div className='w-full flex justify-center' >
-                <HomeHelp />
-              </div>
-            </motion.section>
+          <motion.section
+            // style={{ boxShadow: shadow }}
+            className="flex justify-center min-h-[60vh] mt-2"
+          >
+            <div className="w-full flex justify-center">
+              <HomeHelp />
+            </div>
+          </motion.section>
 
-            <section className='flex justify-center p-5' >
-              <HomeLike/>
-            </section>
+          <section className="flex justify-center p-5">
+            <HomeLike />
+          </section>
 
-            <section className='min-h-screen m-5' >
-              <HomeQualifiedDoctors/>
-            </section>
+          <section className="min-h-screen m-5">
+            <HomeQualifiedDoctors />
+          </section>
 
-            <section>
-              <HomeFeedback/>
-            </section>
-            
-            <footer>
-              <Footer/>
-            </footer>
-          </>
-        )
-      }
+          <section>
+            <HomeFeedback />
+          </section>
+
+          <footer>
+            <Footer />
+          </footer>
+        </>
+      )}
     </>
   );
 }
