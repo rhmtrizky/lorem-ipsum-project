@@ -32,6 +32,7 @@ export default async function handler(req, res) {
       if (decoded && decoded.role === 'admin') {
         const { data } = req.body;
         data.password = await bcrypt.hash(data.password, 10);
+
         try {
           await addData('users', data, (status, result) => {
             if (status) {
@@ -48,7 +49,7 @@ export default async function handler(req, res) {
   } else if (req.method === 'PUT') {
     verify(req, res, async (decoded) => {
       const { data } = req.body;
-
+      data.password = await bcrypt.hash(data.password, 10);
       if (decoded) {
         await updateData('users', user[0], data, (result) => {
           if (result) {

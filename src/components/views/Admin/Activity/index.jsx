@@ -163,7 +163,6 @@ const ActivityView = () => {
                   <Button
                     type="button"
                     className="text-white font-semibold text-[12px] bg-red-500 rounded-md"
-                    onPress={onOpen}
                     value={getDateForFilter}
                     onClick={() => setGetDateForFilter('')}
                     size="sm"

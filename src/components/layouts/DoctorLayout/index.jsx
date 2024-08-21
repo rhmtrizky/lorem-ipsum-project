@@ -7,14 +7,19 @@ const SideBarItems = [
     icon: 'bxs-dashboard',
   },
   {
-    title: 'Patient Activity',
-    url: '/doctor/activities',
+    title: 'Patient Queue',
+    url: '/doctor/queues',
     icon: 'bx bx-list-ul',
   },
   {
-    title: 'Users Management',
-    url: '/doctor/users',
+    title: 'Patient History',
+    url: '/doctor/histories',
     icon: 'bxs-group',
+  },
+  {
+    title: 'Profile settings',
+    url: '/doctor/settings',
+    icon: 'bxs-cog',
   },
 ];
 
