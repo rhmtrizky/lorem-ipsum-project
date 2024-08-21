@@ -3,22 +3,22 @@ import SideBar from '../SideBar';
 const SideBarItems = [
   {
     title: 'Dashboard',
-    url: '/admin',
+    url: '/doctor',
     icon: 'bxs-dashboard',
   },
   {
     title: 'Patient Activity',
-    url: '/admin/activities',
+    url: '/doctor/activities',
     icon: 'bx bx-list-ul',
   },
   {
     title: 'Users Management',
-    url: '/admin/users',
+    url: '/doctor/users',
     icon: 'bxs-group',
   },
 ];
 
-const AdminLayout = ({ children }) => {
+const DoctorLayout = ({ children }) => {
   return (
     <>
       <div className="flex lg:flex md:flex sm:hidden hidden">
@@ -29,15 +29,15 @@ const AdminLayout = ({ children }) => {
 
         <SideBar
           lists={SideBarItems}
-          title="Admin Panel"
+          title="Doctor Panel"
           bgColor={'pink'}
         />
       </div>
       <div className="w-full h-screen lg:hidden md:hidden sm:flex flex justify-center items-center">
-        <h1>For admin panel, you can open in dekstop only</h1>
+        <h1>For Doctor panel, you can open in dekstop only</h1>
       </div>
     </>
   );
 };
 
-export default AdminLayout;
+export default DoctorLayout;

@@ -7,7 +7,7 @@ import Header from '@/components/ui/Header';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
-  const excludedPaths = ['/auth', '/admin'];
+  const excludedPaths = ['/auth', '/admin', '/doctor'];
   const showNavbar = !excludedPaths.some((path) => router.pathname.startsWith(path));
   return (
     <SessionProvider session={session}>

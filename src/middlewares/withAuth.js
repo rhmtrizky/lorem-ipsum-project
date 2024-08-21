@@ -2,7 +2,7 @@ import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 
 const onlyAdmin = ['admin'];
-const onlyDocter = ['docter'];
+const onlyDoctor = ['doctor'];
 const onlyPharmacy = ['pharmacy'];
 const authPage = ['auth'];
 
@@ -29,7 +29,10 @@ export default function WithAuth(middleware, requireAuth) {
         if (token.role !== 'admin' && onlyAdmin.includes(pathname)) {
           return NextResponse.redirect(new URL('/', req.url));
         }
-        if (token.role !== 'docter' && token.role !== 'pharmacy' && token.role !== 'admin' && onlyDocter.includes(pathname) && onlyPharmacy.includes(pathname)) {
+        if (token.role !== 'doctor' && onlyDoctor.includes(pathname) && token.role !== 'admin') {
+          return NextResponse.redirect(new URL('/', req.url));
+        }
+        if (token.role !== 'pharmacy' && onlyPharmacy.includes(pathname)) {
           return NextResponse.redirect(new URL('/', req.url));
         }
       }

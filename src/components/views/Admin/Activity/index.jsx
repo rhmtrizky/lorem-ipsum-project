@@ -108,15 +108,16 @@ const ActivityView = () => {
     <>
       <AdminLayout>
         <div className="w-full">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold mb-5">Patient Activity</h1>
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-2xl font-bold mb-5 text-blue-900">Patient Activity</h1>
             <Button
               onClick={() => {
                 setCamera({ status: true });
                 onOpenChange(true);
               }}
+              className="text-blue-900 font-semibold text-sm rounded-md border-[1px] border-blue-500"
             >
-              Open Camera
+              Scanner<i className="bx bxs-camera text-xl"></i>
             </Button>
           </div>
           <div className="flex items-center justify-between w-full">
@@ -138,7 +139,7 @@ const ActivityView = () => {
           </div>
           <div className="flex flex-col justify-start items-start mt-6 gap-3">
             <div className="flex items-center justify-between w-full">
-              <div className="relative w-3/5 text-neutral-600">
+              <div className="relative w-2/5 text-neutral-600">
                 <Button
                   endContent={<i className="bx bx-plus-circle text-xl" />}
                   type="button"
@@ -151,7 +152,7 @@ const ActivityView = () => {
               </div>
               <div className="w-2/5 flex justify-end">
                 <div className="flex justify-end mx-4 items-center gap-1">
-                  <p className="text-neutral-700">Filter by date:</p>
+                  <p className="text-neutral-700 text-sm">Filter by date:</p>
                   <InputUi
                     name="date"
                     type="date"
