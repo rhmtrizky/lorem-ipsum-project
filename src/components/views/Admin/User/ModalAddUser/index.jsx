@@ -89,7 +89,6 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
         address: formData.get('address'),
         schedule: schedules,
       };
-      console.log(data);
     } else if (data.role == 'pharmacy') {
       data = {
         ...data,
