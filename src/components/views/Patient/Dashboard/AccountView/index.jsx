@@ -19,6 +19,8 @@ export default function AccountView() {
   const { onOpen, isOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(true);
 
+  console.log(tickets);
+
   // Fetches activities for the logged-in user
   const getActivity = () => {
     const filter = activities.filter((item) => item.userId === session?.user?.id);
@@ -59,7 +61,7 @@ export default function AccountView() {
               <div className="flex justify-center items-center w-full h-64">
                 <p>Loading...</p>
               </div>
-            ) : tickets ? (
+            ) : tickets.length > 0 ? (
               tickets.map((ticket) => {
                 const doctor = getDetailDoctor(ticket.doctorId);
                 return (
