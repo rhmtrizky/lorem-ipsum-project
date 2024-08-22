@@ -1,5 +1,5 @@
 import PoliCard from '@/components/ui/Card/PoliCard';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export default function HomePoli() {
   return (

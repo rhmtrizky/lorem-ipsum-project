@@ -1,4 +1,4 @@
-import { retrieveData, retrieveDataById } from '@/libs/firebase/service';
+import { retrieveData } from '@/libs/firebase/service';
 import currentDate from '@/utils/currentDate';
 
 export default async function handler(req, res) {

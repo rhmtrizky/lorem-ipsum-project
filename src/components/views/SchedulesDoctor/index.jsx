@@ -57,8 +57,8 @@ export default function SchedulesDoctor({ data, doctorId }) {
           <div className="flex justify-center items-center w-full">
             <CardDoctorSchedule
               image={data?.image}
-              name={data?.fullname}
-              specialist={data?.specialist}
+              name={data?.fullname || 'Loading..'}
+              specialist={data?.specialist || 'Loading..'}
               queuePasient={queuePasient}
             />
           </div>
@@ -68,7 +68,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
               <p className="text-white font-semibold cursor-default text-[13px]">JADWAL DOKTER</p>
             </div>
             <div className="bg-white w-full h-max p-4 rounded-b-lg">
-              <p className="mb-4 text-md text-semibold text-slate-600">{data?.fullname}</p>
+              <p className="mb-4 text-md text-semibold text-slate-600">{data?.fullname || 'Loading..'}</p>
               <div className="flex flex-col gap-2.5 font-light">
                 {data?.schedule?.map((item, index) => (
                   <li

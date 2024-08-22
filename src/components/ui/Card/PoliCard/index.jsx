@@ -4,12 +4,10 @@ import { FreeMode, Pagination } from 'swiper/modules';
 import { datas } from '@/constraint';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
 import queueActivityService from '@/services/activity/queue';
-import useSpecialist from '@/hooks/useSpecialist';
 
 const useCounterAnimation = (initialValue, endValue, duration) => {
   const count = useMotionValue(initialValue);
@@ -24,7 +22,6 @@ const useCounterAnimation = (initialValue, endValue, duration) => {
 };
 
 export default function PoliCard() {
-  //   const { specialists } = useSpecialist();
   const [queue, setQueue] = useState([]);
   const getQueueActivity = async () => {
     try {

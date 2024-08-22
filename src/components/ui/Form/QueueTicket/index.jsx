@@ -25,7 +25,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
           src={ticketQueue}
           width={300}
           height={200}
-          alt='tiket'
+          alt="tiket"
           className="w-full h-[200px] object-cover rounded-t-xl"
         />
         <div className="px-5 flex flex-col gap-3 bg-white py-4">
@@ -35,7 +35,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
               size="sm"
               className="border-[1px] border-[#654AB4] bg-white"
             />
-            <h1 className="font-semibold text-lg">{ticket?.data?.name}</h1>
+            <h1 className="font-semibold text-lg">{ticket?.data?.name || ticket?.name}</h1>
           </div>
           <div className="grid grid-cols-2 gap-5 px-2">
             <div className="flex flex-col justify-start items-start">
@@ -44,18 +44,18 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
             </div>
             <div className="flex flex-col justify-start items-start pl-3">
               <h1 className="font-semibold text-md">Poli Specialist</h1>
-              <h1 className=" text-md">{ticket?.data?.specialist?.toUpperCase()}</h1>
+              <h1 className=" text-md">{ticket?.data?.specialist?.toUpperCase() || ticket?.specialist?.toUpperCase()}</h1>
             </div>
             <div className="flex flex-col justify-start items-start">
               <h1 className="font-semibold text-md">Book Date</h1>
               <h1 className=" text-md">
-                {getDay(ticket?.data?.bookDate)}, {ticket?.data?.bookDate}
+                {getDay(ticket?.data?.bookDate) || getDay(ticket?.bookDate)}, {ticket?.data?.bookDate || ticket?.bookDate}
               </h1>
             </div>
             <div className="flex flex-col justify-start items-start pl-3">
               <h1 className="font-semibold text-md">Book Time</h1>
               <h1 className=" text-md">
-                {ticket?.data?.schedule?.startTime} - {ticket?.data?.schedule?.endTime}
+                {ticket?.data?.schedule?.startTime || ticket?.schedule?.startTime} - {ticket?.data?.schedule?.endTime || ticket?.schedule?.endTime}
               </h1>
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function QueueTicket({ isOpen, onOpen, onOpenChange, ticket, data
           <div className="flex flex-col justify-center items-start pl-3 gap-2">
             <div>
               <h1 className="font-semibold text-md">Queue Number</h1>
-              <h1 className=" text-md">{ticket?.data?.queueNumber}</h1>
+              <h1 className=" text-md">{ticket?.data?.queueNumber || ticket?.queueNumber}</h1>
             </div>
             <div>
               <h1 className="font-semibold text-md">Location</h1>

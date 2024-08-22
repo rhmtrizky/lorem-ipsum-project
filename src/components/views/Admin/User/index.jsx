@@ -28,7 +28,7 @@ const AdminUsersView = () => {
 
   //function filtering data by role
   const filterByRole = (role) => {
-    const result = users.filter((user) => user.role === role);
+    const result = users?.filter((user) => user.role === role);
     return result;
   };
 

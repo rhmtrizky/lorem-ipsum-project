@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { gender, golDarah } from '@/constraint/adminPanel';
 import { Select, SelectItem, useDisclosure } from '@nextui-org/react';
-import { BiData } from 'react-icons/bi';
-import { BsDatabase } from 'react-icons/bs';
 import userService from '@/services/user';
 import { useSession } from 'next-auth/react';
-import ModalAddPatient from '../../Modal/ModalAddPatient';
 import ModalAddFamily from '../../Modal/ModalAddFamily';
 
 export default function FormAddFamily({ user, setUser }) {
@@ -119,7 +116,7 @@ export default function FormAddFamily({ user, setUser }) {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i class="bx bxs-calendar-alt"></i>
+                <i className="bx bxs-calendar-alt"></i>
               </div>
               <input
                 type="date"

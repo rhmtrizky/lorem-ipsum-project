@@ -52,10 +52,10 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
   const renderCellContent = (data, columnKey) => {
     switch (columnKey) {
       case 'index': {
-        return <p>{data.index + 1}</p>;
+        return <p>{data?.index + 1}</p>;
       }
       case 'phoneNumber': {
-        return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
+        return <p>{!data?.phoneNumber ? '--' : data?.phoneNumber}</p>;
       }
       case 'status': {
         return (
@@ -63,7 +63,7 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
             size="sm"
             className="bg-blue-500 text-white text-[12px] rounded-md font-semibold"
           >
-            {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
+            {data?.status?.charAt(0).toUpperCase() + data?.status?.slice(1)}
           </Button>
         );
       }
@@ -84,7 +84,7 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
         return data[columnKey];
     }
   };
-  const processedData = filterByStatusActivity('queue').map((user, index) => ({ ...user, index }));
+  const processedData = filterByStatusActivity('queue')?.map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}

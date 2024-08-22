@@ -57,7 +57,7 @@ const ActivityView = () => {
 
   //function filtering data by status activities
   const filterByStatusActivity = (activityStatus) => {
-    const result = activities?.filter((activity) => (activityStatus === '' || activity?.status === activityStatus) && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type));
+    const result = activities?.filter((activity) => (activityStatus === '' || activity?.status === activityStatus) && (getDateForFilter === '' || activity?.bookDate === getDateForFilter) && (selectTabSpecialist?.type === '' || activity.specialist === selectTabSpecialist?.type));
 
     setGetActivityStatus(activityStatus || '');
     return result;
@@ -67,21 +67,21 @@ const ActivityView = () => {
   useEffect(() => {
     if (activities?.length > 0 && getActivityStatus !== '') {
       // Get length by specialist within the filtered status
-      const filteredByActivities = activities.filter((activity) => getActivityStatus === '' || (activity?.status === getActivityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter)));
+      const filteredByActivities = activities?.filter((activity) => getActivityStatus === '' || (activity?.status === getActivityStatus && (getDateForFilter === '' || activity?.bookDate === getDateForFilter)));
 
       setSelectTab({
         ...selectTab,
         length: filteredByActivities.length,
       });
 
-      const filteredBySpecialist = filteredByActivities.filter((activity) => selectTabSpecialist.type === '' || activity.specialist === selectTabSpecialist.type);
+      const filteredBySpecialist = filteredByActivities?.filter((activity) => selectTabSpecialist?.type === '' || activity.specialist === selectTabSpecialist?.type);
 
       setSelectTabSpecialist({
         ...selectTabSpecialist,
         length: filteredBySpecialist.length,
       });
     }
-  }, [activities, getActivityStatus, selectTabSpecialist.type, getDateForFilter]);
+  }, [activities, getActivityStatus, selectTabSpecialist?.type, getDateForFilter]);
 
   // function to refresh expired activities
   const handleRefresh = async (e) => {
@@ -91,7 +91,7 @@ const ActivityView = () => {
     currentDate.setHours(0, 0, 0, 0);
 
     // Filter untuk menemukan aktivitas dengan status 'queue' dan tanggal sebelum currentDate
-    const result = activities.filter((activity) => {
+    const result = activities?.filter((activity) => {
       const activityDate = new Date(activity.bookDate);
       activityDate.setHours(0, 0, 0, 0); // Mengatur waktu activityDate ke awal hari
       return activity.status === 'queue' && activityDate < currentDate;
@@ -99,7 +99,7 @@ const ActivityView = () => {
 
     if (result.length > 0) {
       // Update aktivitas yang sudah kedaluwarsa satu per satu
-      result.forEach(async (activity) => await activityService.updateActivity(activity.id, { id: activity.id, status: 'expired' }, session.accessToken));
+      result.forEach(async (activity) => await activityService.updateActivity(activity.id, { id: activity.id, status: 'expired' }, session?.accessToken));
       router.reload();
     }
   };
@@ -180,7 +180,7 @@ const ActivityView = () => {
                   setState={setSelectTab}
                   basicColor={'blue'}
                 />
-                <p className={'flex justify-center items-center text-sm font-semibold bg-white text-green-500 absolute -top-1 -right-1 rounded-full px-2'}>{filterDataFotTableAllUsers.length}</p>
+                <p className={'flex justify-center items-center text-sm font-semibold bg-white text-green-500 absolute -top-1 -right-1 rounded-full px-2'}>{filterDataFotTableAllUsers?.length}</p>
               </div>
               <ButtonTab
                 type="queue"
@@ -235,7 +235,7 @@ const ActivityView = () => {
               setState={setSelectTabSpecialist}
               basicColor={'green'}
             />
-            {specialists.map((specialist) => (
+            {specialists?.map((specialist) => (
               <div key={specialist.specialistName}>
                 <ButtonTab
                   type={specialist.specialistName}
@@ -258,7 +258,7 @@ const ActivityView = () => {
               filterByStatusActivity={filterByStatusActivity}
             />
           )}
-          {selectTab.status && selectTab.type === 'queue' && (
+          {selectTab?.status && selectTab?.type === 'queue' && (
             <div className="flex flex-col">
               <TableQueues
                 filterByStatusActivity={filterByStatusActivity}
