@@ -20,7 +20,7 @@ const PatientQueueView = () => {
   const getDataPatient = useCallback(() => {
     if (!activities || !session) return;
 
-    const filteredPatients = activities.filter((item) => item.doctorId === session.user.id && (!getDateForFilter || item.bookDate === getDateForFilter) && (item.status === 'queue' || item.status === 'checkup'));
+    const filteredPatients = activities.filter((item) => item.doctorId === session.user.id && (!getDateForFilter || item.bookDate === getDateForFilter) && (item.status === 'queue' || item.status === 'checkup' || item.status === 'preparing'));
 
     setPatients(filteredPatients);
   }, [activities, getDateForFilter, session]);

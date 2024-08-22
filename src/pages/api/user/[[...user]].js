@@ -20,7 +20,6 @@ export default async function handler(req, res) {
           });
         } else {
           const data = users.map((user) => {
-            delete user.password;
             return user;
           });
           res.status(200).json({ status: true, message: 'Success', data: data });
@@ -49,7 +48,9 @@ export default async function handler(req, res) {
   } else if (req.method === 'PUT') {
     verify(req, res, async (decoded) => {
       const { data } = req.body;
-      data.password = await bcrypt.hash(data.password, 10);
+      if (data.password) {
+        data.password = await bcrypt.hash(data.password, 10);
+      }
       if (decoded) {
         await updateData('users', user[0], data, (result) => {
           if (result) {

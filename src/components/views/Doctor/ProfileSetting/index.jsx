@@ -1,14 +1,12 @@
-import { doctorCard, hospitalPurple, stetoskopPurple } from '@/assets/images/images';
+import { doctorCard, hospitalPurple, stetoskopPurple, userIcon } from '@/assets/images/images';
 import DoctorLayout from '@/components/layouts/DoctorLayout';
 import doctorService from '@/services/user/doctor';
 import { Button, useDisclosure } from '@nextui-org/react';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ModalUpdateProfile from './ModalUpdateProfile';
 
 const ProfileSettingView = ({ doctorId, token }) => {
-  const { data: session } = useSession();
   const [doctor, setDoctor] = useState({});
   const [profile, setProfile] = useState(true);
   const [schedule, setSchedule] = useState(false);
@@ -38,14 +36,24 @@ const ProfileSettingView = ({ doctorId, token }) => {
       <DoctorLayout>
         <div className="w-full flex justify-center">
           <div className="w-[85%] flex flex-col ">
-            <div className="doctor-profile-settings w-full h-[180px] relative">
-              <Image
-                src={doctorCard}
-                alt="doctor.png"
-                width={300}
-                height={300}
-                className="absolute rounded-full w-[180px] h-[180px] bg-gradient-to-t from-[#654AB4] to-[#FFBEBE] object-cover right-0 left-0 m-auto top-0 bottom-0 mt-20"
-              />
+            <div className="doctor-profile-settings w-full h-[180px] relative bg-white">
+              {doctor?.image ? (
+                <Image
+                  src={doctor?.image}
+                  width={230}
+                  height={230}
+                  alt="doctor.png"
+                  className="absolute rounded-full w-[180px] h-[180px] bg-gradient-to-t from-[#654AB4] to-[#FFBEBE] object-cover right-0 left-0 m-auto top-0 bottom-0 mt-20 border-4 border-white"
+                />
+              ) : (
+                <Image
+                  src={userIcon}
+                  width={150}
+                  height={150}
+                  alt="doctor.png"
+                  className="absolute rounded-full w-[180px] h-[180px] bg-gradient-to-t from-[#654AB4] to-[#FFBEBE] object-cover right-0 left-0 m-auto top-0 bottom-0 mt-20 border-4 border-white"
+                />
+              )}
             </div>
 
             <div className="bg-white w-full h-aoto flex justify-center pb-5 rounded-b-xl">

@@ -1,16 +1,20 @@
 import InputUi from '@/components/ui/Input';
+import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
 import ModalUi from '@/components/views/Admin/Ui/Modal';
 import useSpecialist from '@/hooks/useSpecialist';
 import userService from '@/services/user';
 import doctorService from '@/services/user/doctor';
+import handleImageUpload from '@/utils/uploadImage';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, setDoctor, doctorId, token }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { specialists } = useSpecialist();
-  const [schedules, setSchedules] = useState(() => (openModal?.schedule?.length > 0 ? openModal.schedule : [{ day: '', startTime: '', endTime: '' }]));
+  const [imageFile, setImageFile] = useState(null);
+  const [schedules, setSchedules] = useState(openModal.schedule || [{ day: '', startTime: '', endTime: '' }]);
 
   const addSchedule = () => {
     setSchedules([...schedules, { day: '', startTime: '', endTime: '' }]);
@@ -28,7 +32,7 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
 
   useEffect(() => {
     if (openModal?.schedule) {
-      setSchedules(openModal.schedule.length > 0 ? openModal.schedule : [{ day: '', startTime: '', endTime: '' }]);
+      setSchedules(openModal.schedule || [{ day: '', startTime: '', endTime: '' }]);
     }
   }, [openModal]);
 
@@ -43,7 +47,7 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
     const data = {
       fullname: formData.get('fullname'),
       email: formData.get('email'),
-      password: formData.get('password') || openModal.password,
+      password: formData.get('password'),
       phoneNumber: formData.get('phoneNumber'),
       address: formData.get('address'),
       licenceNumber: formData.get('licenceNumber'),
@@ -51,17 +55,37 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
       schedule: schedules,
     };
 
+    if (!formData.get('password')) {
+      delete data.password;
+    }
+
     try {
       const result = await userService.updateUser(doctorId, data, token);
       if (result.status === 200) {
-        const getData = await doctorService.getDoctorById(doctorId);
-        setDoctor(getData.data.data);
-        setOpenModal({});
-        onOpenChange();
-        setIsLoading(false);
+        if (imageFile) {
+          const downloadUrl = await handleImageUpload(imageFile, doctorId, 'users', 'doctor image profile');
+          data.image = downloadUrl;
+          const result = await userService.updateUser(doctorId, data, token);
+          if (result.status === 200) {
+            const getData = await doctorService.getDoctorById(doctorId);
+            setDoctor(getData.data.data);
+            setOpenModal({});
+            onOpenChange();
+            setIsLoading(false);
+          }
+        } else {
+          const getData = await doctorService.getDoctorById(doctorId);
+          setDoctor(getData.data.data);
+          setOpenModal({});
+          onOpenChange();
+          setIsLoading(false);
+        }
       }
     } catch (e) {
       console.log(e);
+      setOpenModal({});
+      onOpenChange();
+      setIsLoading(false);
     }
   };
 
@@ -76,6 +100,36 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
         onSubmit={handleSubmit}
         className="flex flex-col gap-3"
       >
+        {openModal?.image ? (
+          <div className="flex flex-col items-center gap-2 justify-center w-full">
+            <Image
+              src={imageFile !== null || '' ? URL.createObjectURL(imageFile) : openModal?.image}
+              alt="profile"
+              width={300}
+              height={300}
+              className="rounded-full h-[200px] w-[200px] object-cover"
+            />
+            <div className="relative">
+              <Button
+                size="sm"
+                className="bg-blue-500 text-white text-sm rounded-md"
+              >
+                Change Image
+              </Button>
+              <input
+                className="absolute bg-color-gray z-0 bottom-0 left-0 w-full h-full opacity-0"
+                type="file"
+                name="image"
+                onChange={(e) => setImageFile(e.target.files[0])}
+              />
+            </div>
+          </div>
+        ) : (
+          <ImageUpload
+            stateImage={imageFile}
+            setStateImage={setImageFile}
+          />
+        )}
         <InputUi
           name="fullname"
           type={'text'}
