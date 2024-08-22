@@ -1,8 +1,6 @@
-import { doctorCard } from '@/assets/images/images'
-import CardQualifiedDoctor from '@/components/ui/Card/CardQualifiedDoctors.jsx'
-import { Button } from '@nextui-org/react'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { Button } from '@nextui-org/react'
+import CardQualifiedDoctor from '@/components/ui/Card/CardQualifiedDoctors.jsx'
 import React from 'react'
 
 export default function HomeQualifiedDoctors() {
@@ -38,13 +36,12 @@ export default function HomeQualifiedDoctors() {
                     />
 
                     <CardQualifiedDoctor
-                        name="Dr. Ninyomant Anita Rahmadaniarta SpD"
+                        name="Dr. Ninyoman Anita Rahmadaniarta SpD"
                         spesialisasi="Penyakit Dalam"
                     />
                 </div> 
             </div>
 
-            {/* div for text */}
             <div className="w-1/2 flex flex-col justify-center" >
                 <h1 className='text-xl font-bold text-primary mb-3' >Qualified Doctors</h1>
                 <h2 className='text-6xl font-bold text-slate-800 font-sans' >Keep doctors and <br/> loved ones in the</h2>
