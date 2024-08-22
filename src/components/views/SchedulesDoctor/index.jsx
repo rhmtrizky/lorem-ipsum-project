@@ -46,8 +46,6 @@ export default function SchedulesDoctor({ data, doctorId }) {
     }
   };
 
-  console.log(user);
-
   useEffect(() => {
     getDetailUser();
   }, [session]);
