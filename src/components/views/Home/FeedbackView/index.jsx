@@ -5,23 +5,23 @@ import React from 'react'
 
 export default function FeedbackView() {
     return (
-        <section className='relative flex justify-center w-full h-[90vh] bg-gradient-to-b from-secondary to-primary overflow-hidden ' >
+        <section className='relative flex justify-center w-full h-max bg-gradient-to-b from-secondary to-primary px-12 overflow-hidden ' >
             <div className="bg-gradient-to-b to-[#e562a8] from-purple-900 w-52 h-52 absolute top-12 left-52 rounded-full" ></div>
             <div className="bg-[#e562a8] w-24 h-24 absolute top-52 left-52 rounded-full" ></div>
             <div className="w-[992px] h-max bg-feedback rounded-xl my-20 pb-10" >
-                <div className="flex justify-between" >
-                    <div className="m-10" >
-                        <h1 className='text-primary text-4xl font-pacifico leading-[3rem] tracking-wider' >Bantu Kami dengan <br/> Masukkan Anda 😉</h1>
-                        <p className='text-sm font-normal text-slate-600 mt-2' >Dukung kami dengan cara memberikan saran atau <br/>kritikan supaya kami bisa berkembang.</p>
+                <div className="flex max-lg:flex-col-reverse max-md:items-center xlitems-start" >
+                    <div className="p-8 min-[520px]:mb-2 min-[780px]:text-start text-center" >
+                        <h1 className='text-primary max-sm:text-2xl max-lg:text-4xl lg:text-4xl font-pacifico leading-[3rem] tracking-wider max-[936px]:tracking-normal ' >Bantu Kami dengan <br/> Masukkan Anda 😉</h1>
+                        <p className='text-xs md:text-sm font-normal text-slate-600 mt-2' >Dukung kami dengan cara memberikan saran atau <br/>kritikan supaya kami bisa berkembang.</p>
                     </div>
-                    <div className="w-[500px] absolute -top-32 right-0 " >
+                    <div className="lg:w-[500px] sm:w-[400px] min-[780px]:absolute -top-32 -right-8" >
                         <Image src={feedbackAnimation} width={500} height={100} alt='loves.png'  />
                     </div>
                 </div>
 
-                <div className=" px-12 mt-20" >
+                <div className="px-4 lg:mt-40" >
                     <form className='w-full' >
-                        <div className="flex items-end gap-4" >
+                        <div className="flex max-[600px]:flex-col items-end gap-4" >
                             <div className="w-full">
                                 <label
                                     htmlFor="nama-lengkap"
@@ -44,7 +44,7 @@ export default function FeedbackView() {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-start w-full">
-                                <label>Seberapa Mudah Melakuan Pendaftaran Online?</label>
+                                <label className='text-xs' >Seberapa Mudah Melakuan Pendaftaran Online?</label>
                                 <div className="bg-white flex justify-start items-center border-[1px]  border-slate-400 rounded-lg mt-2">
                                 <i className="bx bxs-time pl-4"></i>
                                 <Select
