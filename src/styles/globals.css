@@ -370,6 +370,7 @@ body {
   backdrop-filter: blur(10px);
 }
 
+
 .doctor-profile-settings {
   background: rgb(191, 191, 191);
   background: linear-gradient(39deg, rgba(191, 191, 191, 1) 0%, rgb(121, 104, 230) 56%);
