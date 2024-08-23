@@ -49,17 +49,17 @@ export default function HomeMain() {
             <HomeLike />
           </section>
 
-          <section className=" min-h-screen m-5">
+          <section className=" m-5">
             <HomeQualifiedDoctors />
           </section>
 
-          {/* <section>
+          <section className='xl:mt-12' >
             <HomeFeedback />
           </section>
 
           <footer>
             <Footer />
-          </footer> */}
+          </footer>
         </>
       )}
     </>

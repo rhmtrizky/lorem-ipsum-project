@@ -26,14 +26,6 @@ export default function CardQualifiedDoctor({name, spesialisasi}) {
                     slidesPerView: 2,
                     spaceBetween: 15
                 }
-                // 768: {
-                //     slidesPerView: 3,
-                //     spaceBetween: 10
-                // },
-                // 1000: {
-                //     slidesPerView: 4,
-                //     spaceBetween: 15,
-                // },
             }}
             freeMode={true}
             pagination={{
@@ -44,12 +36,12 @@ export default function CardQualifiedDoctor({name, spesialisasi}) {
                     {
                         datasQualifiedDoctor.map((data, index) => (
                             <SwiperSlide key={index} >
-                                <div  className='flex flex-col w-[220px] h-[290px] bg-white shadow-lg rounded-xl p-4 transform hover:scale-105 transition duration-500 ease-in-out cursor-pointer mb-8'>
+                                <div  className='flex flex-col w-[220px] h-[290px] bg-white shadow-lg rounded-xl p-4 transform transition duration-500 ease-in-out cursor-pointer mb-8'>
                                     <div className='w-full flex justify-center'>
                                         <Image src={doctorCard} width={200} height={200} alt='doctor.png' className='rounded-lg' />
                                     </div>
                                     <div className='mt-3'>
-                                        <p className='font-bold font-sans cursor-default'>
+                                        <p className='font-bold font-sans'>
                                             {data.name}
                                         </p>
                                         <div className='flex gap-2 my-1.5'>
