@@ -1,9 +1,9 @@
-import React from 'react'
 import { doctorCard, stetoskopPurple } from '@/assets/images/images'
-import Image from 'next/image'
 import { datasQualifiedDoctor } from '@/constraint';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
+import Image from 'next/image'
+import React from 'react'
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
