@@ -6,4 +6,4 @@ export function mainMiddleware() {
   return res;
 }
 
-export default WithAuth(mainMiddleware, ['admin', 'auth', 'doctor', 'pharmacy', 'patient']);
+export default WithAuth(mainMiddleware, ['admin', 'auth', 'doctor', 'pharmacy', 'patient', 'feedback']);

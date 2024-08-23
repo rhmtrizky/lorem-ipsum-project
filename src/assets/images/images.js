@@ -66,7 +66,9 @@ export const ticketQueue = '/ticket-queue.png';
 export const qrCode = '/qr-code.png';
 
 // feedback
-export const loves = "/loves.png"
-export const feedbackAnimation = "/feedback-animation.png"
+export const loves = '/loves.png';
+export const feedbackAnimation = '/feedback-animation.png';
 
 export const emptyData = '/empty-data.jpg';
+
+export const notFound = '/not-found.jpg';

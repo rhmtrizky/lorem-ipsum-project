@@ -2,7 +2,7 @@ import TableUi from '@/components/ui/Table';
 import { GrView } from 'react-icons/gr';
 const { Button } = require('@nextui-org/react');
 
-const TablePatientQueue = ({ patients, setUpdatePatient, onOpen }) => {
+const TablePatientPharmacyQueue = ({ patients, setUpdatePatient, onOpen }) => {
   const columns = [
     {
       title: 'No.',
@@ -36,7 +36,14 @@ const TablePatientQueue = ({ patients, setUpdatePatient, onOpen }) => {
       title: 'Status',
       uid: 'status',
     },
-
+    {
+      title: 'Status',
+      uid: 'isHandle',
+    },
+    {
+      title: 'Taken',
+      uid: 'taken',
+    },
     {
       title: 'Actions',
       uid: 'actions',
@@ -59,6 +66,41 @@ const TablePatientQueue = ({ patients, setUpdatePatient, onOpen }) => {
           >
             {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
           </Button>
+        );
+      }
+      case 'isHandle': {
+        return (
+          <>
+            {data?.isHandle?.status ? (
+              <Button
+                size="sm"
+                className="bg-green-500 text-white text-[12px] rounded-md font-semibold"
+              >
+                VERIFIED
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                className="bg-red-500 text-white text-[12px] rounded-md font-semibold"
+              >
+                UNVERIFIED
+              </Button>
+            )}
+          </>
+        );
+      }
+      case 'taken': {
+        return (
+          <>
+            {data.isHandle.status && (
+              <Button
+                size="sm"
+                className={`bg-${data.isHandle.taken === 'today' ? 'blue' : 'red'}-500 text-white text-[12px] rounded-md font-semibold`}
+              >
+                {data.isHandle.taken !== 'waiting' ? <p>{data.isHandle.taken === 'today' ? 'Hari Ini' : 'Besok'}</p> : <p>Belum diambil</p>}
+              </Button>
+            )}
+          </>
         );
       }
       case 'actions':
@@ -88,4 +130,4 @@ const TablePatientQueue = ({ patients, setUpdatePatient, onOpen }) => {
   );
 };
 
-export default TablePatientQueue;
+export default TablePatientPharmacyQueue;

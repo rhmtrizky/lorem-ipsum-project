@@ -67,7 +67,7 @@ const ProfileSettingView = ({ doctorId, token }) => {
                   }}
                   className="text-white font-semibold text-sm rounded-md  bg-blue-500"
                 >
-                  Edit <i class="bx bxs-message-square-edit text-lg"></i>
+                  Edit <i className="bx bxs-message-square-edit text-lg"></i>
                 </Button>
                 <h1 className="font-semibold text-2xl ">{doctor.fullname}</h1>
                 <div className="flex items-center gap-1.5 ">
