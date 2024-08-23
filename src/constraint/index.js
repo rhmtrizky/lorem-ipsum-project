@@ -28,6 +28,29 @@ export const datas = [
     },
 ];
 
+export const datasQualifiedDoctor = [
+    {
+        name: 'Muhammad Ghifani Ikhsan SpD',
+        specialist: 'Poli Penyakit Dalam'
+    },
+    {
+        name: 'Rahmat Rizky Rivai SpD',
+        specialist: 'Poli Gigi'
+    },
+    {
+        name: 'Wahyu Hidayat SpD',
+        specialist: 'Poli Mata'
+    },
+    // {
+    //     name: 'Anita Rahmadaniarta SpD',
+    //     specialist: 'Poli Penyakit Dalam'
+    // },
+    // {
+    //     name: 'Anita Rahmadaniarta SpD',
+    //     specialist: 'Poli Penyakit Dalam'
+    // },
+]
+
 export const datasFlow = [
     {
         no: '01',
