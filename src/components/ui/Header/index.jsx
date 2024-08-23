@@ -52,7 +52,9 @@ export default function Header() {
             </div>
 
             <div className="flex gap-4">
-              <SocialMedia/>
+              <div className='hidden min-[950px]:block' >
+                <SocialMedia/>
+              </div>
 
               <motion.button
                 whileHover={{ scale: 1.1 }}

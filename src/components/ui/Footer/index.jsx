@@ -1,15 +1,15 @@
+import { call, mail } from '@/assets/images/images'
 import React from 'react'
 import LogoHarapanBunda from '../Logo'
 import SocialMedia from '../SocialMedia'
 import Link from 'next/link'
 import Image from 'next/image'
-import { call, mail } from '@/assets/images/images'
 
 export default function Footer() {
     return (
-        <div className='w-full h-[300px]' >
-            <div className="bg-slate-900  flex items- justify-between w-full h-[252px] p-6" >
-                <div className='flex gap-12'>
+        <div className='w-full h-full border' >
+            <div className="bg-slate-900  flex items- justify-between w-full h-max min-[645px]:h-[252px] p-6" >
+                <div className='flex max-[645px]:flex-col gap-12'>
                     <LogoHarapanBunda/>
                     <div className='text-white' >
                         <h1 className='mb-2 text-secondary font-bold text-lg' >Services</h1>

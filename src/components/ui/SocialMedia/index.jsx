@@ -6,10 +6,10 @@ import React from 'react'
 
 export default function SocialMedia() {
     return (
-        <figure className='flex gap-4' >
+        <figure className='flex max-[950px]:flex-col gap-4' >
             <motion.div
                 whileHover={{ y: -4 }}
-                className="hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
             >
                 <Image
                     src={linkedin}
@@ -20,7 +20,7 @@ export default function SocialMedia() {
             </motion.div>
             <motion.div
                 whileHover={{ y: -4 }}
-                className="hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
             >
                 <Image
                     src={twitter}
@@ -32,7 +32,7 @@ export default function SocialMedia() {
 
             <motion.div
                 whileHover={{ y: -4 }}
-                className="hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
             >
                 <Image
                     src={instagram}
