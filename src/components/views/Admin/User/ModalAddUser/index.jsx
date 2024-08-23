@@ -89,7 +89,6 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
         address: formData.get('address'),
         schedule: schedules,
       };
-      console.log(data);
     } else if (data.role == 'pharmacy') {
       data = {
         ...data,
@@ -203,7 +202,12 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
             required
           />
           <div>
-            <label className="text-sm font-medium text-neutral-800">Pilih Role</label>
+            <label
+              htmlFor={'role'}
+              className="text-sm font-medium text-neutral-800"
+            >
+              Pilih Role
+            </label>
             <Select
               name="role"
               size="sm"
@@ -265,7 +269,12 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                     required
                   />
                   <div>
-                    <label className="text-sm font-medium text-neutral-800">Jenis Kelamin</label>
+                    <label
+                      htmlFor="gender"
+                      className="text-sm font-medium text-neutral-800"
+                    >
+                      Jenis Kelamin
+                    </label>
                     <Select
                       name={`patient[${index}].gender`}
                       size="sm"
@@ -386,7 +395,7 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
                       value={item.specialistName}
                       className="w-full bg-white gap-0"
                     >
-                      {item.specialistName.charAt(0).toUpperCase() + item.specialistName.slice(1)}
+                      {item?.specialistName?.charAt(0).toUpperCase() + item?.specialistName?.slice(1)}
                     </SelectItem>
                   ))}
                 </Select>

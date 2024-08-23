@@ -69,9 +69,14 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
     let data = {
       fullname: form.fullname.value,
       email: form.email.value,
+      password: form.password.value,
       phoneNumber: form.phoneNumber.value,
       role: form.role.value,
     };
+
+    if (!form.password.value) {
+      delete data.password;
+    }
 
     if (role === 'patient') {
       data = {
@@ -96,6 +101,7 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
 
     try {
       const result = await userService.updateUser(dataUpdateUser.id, data, session.data.accessToken);
+      console.log(result);
 
       if (result.status === 200) {
         if (imageFile) {
@@ -209,6 +215,12 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
             label={'Email'}
             defaultValue={dataUpdateUser.email}
             required
+          />
+          <InputUi
+            name={'password'}
+            type={'password'}
+            placeholder={'password'}
+            label={'password'}
           />
           <InputUi
             name={'phoneNumber'}

@@ -14,14 +14,14 @@ body {
 
 /* Font start */
 .rubik {
-  font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal;
 }
 
 .bebas-neue-regular {
-  font-family: "Bebas Neue", sans-serif;
+  font-family: 'Bebas Neue', sans-serif;
   font-weight: 700;
   font-style: normal;
 }
@@ -33,7 +33,7 @@ body {
 }
 
 .quicksand {
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
@@ -47,24 +47,24 @@ body {
 
 .bg-gradient-radial {
   background: rgb(32, 25, 25);
-  background: radial-gradient(circle, rgba(255,190,190,1) 0%, rgb(101, 74, 180) 100%);
+  background: radial-gradient(circle, rgba(255, 190, 190, 1) 0%, rgb(101, 74, 180) 100%);
 }
 
 /* Page Auth Start */
 .bg-auth {
-  background: url("/bg-auth.png");
+  background: url('/bg-auth.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .form-container {
-  border: 3px solid rgba(255, 255, 255, .3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
 }
 
 .col-first {
-  background-color: rgba(255, 255, 255, .3);
+  background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(30px);
   border-radius: 20px;
 }
@@ -76,16 +76,16 @@ body {
 .input-auth {
   background: rgba(3, 3, 3, 0.2);
   backdrop-filter: blur(20px);
-} 
+}
 
 .bg-button-auth {
-  background-color: rgba(255, 190, 190, .52);
+  background-color: rgba(255, 190, 190, 0.52);
 }
 /* Pagge Auth End */
 
 @keyframes scale-up {
   to {
-    transform: scale(.95);
+    transform: scale(0.95);
   }
 }
 
@@ -101,7 +101,7 @@ body {
 }
 
 .animate-up-down {
-  animation: up-down 3s ease-in-out alternate infinite ;
+  animation: up-down 3s ease-in-out alternate infinite;
 }
 
 @keyframes up-down {
@@ -111,7 +111,7 @@ body {
 }
 
 .bg-text-help {
-  background-color: rgba(255, 255, 255, .3);
+  background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   padding: 15px;
   border-radius: 20px;
@@ -122,7 +122,7 @@ body {
 .bg-flow-regis {
   width: 100%;
   height: 250px;
-  background-image: url("/close-up-doctor-writing.jpg");
+  background-image: url('/close-up-doctor-writing.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
@@ -131,7 +131,7 @@ body {
 }
 
 .blur-text {
-  background-color: rgba(255, 255, 255, .6);
+  background-color: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(90px);
 }
 
@@ -141,7 +141,6 @@ body {
   }
 }
 /* Page Flow Registration BPJS End */
-
 
 .accordion {
   max-width: 800px;
@@ -161,7 +160,7 @@ body {
 }
 
 .accordion .contentBx .label::before {
-  content: "+";
+  content: '+';
   position: absolute;
   top: 50%;
   right: 20%;
@@ -173,7 +172,7 @@ body {
   position: relative;
   background-color: #fff;
   overflow: hidden;
-  transition: .5s;
+  transition: 0.5s;
   overflow-y: auto;
 }
 
@@ -191,7 +190,7 @@ body {
 }
 
 .dot::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 20%;
   left: 50%;
@@ -236,10 +235,11 @@ body {
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.days, .dates {
+.days,
+.dates {
   display: grid;
   grid-template-columns: repeat(7, 32px);
   gap: 10px;
@@ -265,7 +265,7 @@ body {
 }
 
 .dates button:hover {
-  background-color: rgba(119, 136, 153, .1);
+  background-color: rgba(119, 136, 153, 0.1);
 }
 
 .dates button.today {
@@ -316,7 +316,7 @@ body {
   color: slategray;
 }
 
-.datepicker-header button:hover{
+.datepicker-header button:hover {
   color: mediumpurple;
 }
 
@@ -329,7 +329,7 @@ body {
 }
 
 .datepicker-footer button {
-  background-color: rgba(119, 136, 153, .1);
+  background-color: rgba(119, 136, 153, 0.1);
   padding: 3px 10px;
 }
 
@@ -337,7 +337,6 @@ body {
   background-color: mediumpurple;
   color: #fff;
 }
-
 
 /* Background card dashboard patient */
 .blur-background {
@@ -366,8 +365,14 @@ body {
   background-size: contain;
   background: purple;
 }
-
 .bg-feedback {
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
+}
+
+.doctor-profile-settings {
+  background: rgb(191, 191, 191);
+  background: linear-gradient(39deg, rgba(191, 191, 191, 1) 0%, rgb(121, 104, 230) 56%);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }

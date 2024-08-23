@@ -11,7 +11,7 @@ const useActivity = () => {
   const getAllActivities = async () => {
     try {
       if (session.data.accessToken) {
-        const activities = await activityService.getAllActivities(session.data.accessToken);
+        const activities = await activityService.getAllActivities(session?.data?.accessToken);
         setActivities(activities.data.data);
       }
     } catch (error) {
@@ -22,7 +22,7 @@ const useActivity = () => {
   const performSearch = async () => {
     if (searchActivities !== '') {
       try {
-        const { data } = await activityService.searchActivities(searchActivities, session.data.accessToken);
+        const { data } = await activityService.searchActivities(searchActivities, session?.data?.accessToken);
         setActivities(data.data);
       } catch (err) {
         console.log(err);
@@ -39,7 +39,7 @@ const useActivity = () => {
   }, [searchActivities]);
 
   useEffect(() => {
-    if (session.status === 'authenticated') {
+    if (session?.status === 'authenticated') {
       getAllActivities();
     }
   }, [session]);

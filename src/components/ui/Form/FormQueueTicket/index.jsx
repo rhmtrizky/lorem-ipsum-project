@@ -185,7 +185,12 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
 
         <div className="w-full mt-4">
           <div className="flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg w-full">
-            <label className="mb-2 text-sm sr-only">Pilih Anggota Keluarga</label>
+            <label
+              htmlFor="name"
+              className="mb-2 text-sm sr-only"
+            >
+              Pilih Anggota Keluarga
+            </label>
             <i className="bx bxs-donate-blood pl-4"></i>
             <Select
               className="w-[90%] px-1.5 outline-none text-sm"
@@ -241,7 +246,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <i class="bx bxs-calendar-alt"></i>
+                    <i className="bx bxs-calendar-alt"></i>
                   </div>
                   <input
                     type="date"
@@ -267,7 +272,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <i class="bx bx-male-female"></i>
+                    <i className="bx bx-male-female"></i>
                   </div>
                   <input
                     type="text"
@@ -290,7 +295,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <i class="bx bxs-donate-blood"></i>
+                    <i className="bx bxs-donate-blood"></i>
                   </div>
                   <input
                     type="text"
@@ -460,7 +465,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
               <div className="w-full">
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <i class="bx bx-shield-plus"></i>
+                    <i className="bx bx-shield-plus"></i>
                   </div>
                   <input
                     name="keluhan"
@@ -474,7 +479,12 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
             </div>
             <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-3 justify-center w-full mt-4">
               <div className="flex flex-col justify-start lg:w-1/2 md:w-1/2 sm:w-full w-full">
-                <label className="text-sm">Jadwal Dokter</label>
+                <label
+                  htmlFor="schedule"
+                  className="text-sm"
+                >
+                  Jadwal Dokter
+                </label>
                 <div className=" flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg mt-2">
                   <i className="bx bxs-time pl-4"></i>
                   <Select
@@ -498,7 +508,12 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
                 </div>
               </div>
               <div className="flex flex-col justify-start lg:w-1/2 md:w-1/2 sm:w-full w-full">
-                <label className="text-sm">Pilih Tanggal Booking</label>
+                <label
+                  htmlFor="bookDate"
+                  className="text-sm"
+                >
+                  Pilih Tanggal Booking
+                </label>
                 <div className="flex justify-start items-center border-[1px] h-12 border-slate-400 rounded-lg w-full mt-2">
                   <i className="bx bxs-time pl-4"></i>
 

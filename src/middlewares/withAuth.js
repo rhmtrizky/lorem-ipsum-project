@@ -29,7 +29,7 @@ export default function WithAuth(middleware, requireAuth) {
         if (token.role !== 'admin' && onlyAdmin.includes(pathname)) {
           return NextResponse.redirect(new URL('/', req.url));
         }
-        if (token.role !== 'doctor' && onlyDoctor.includes(pathname) && token.role !== 'admin') {
+        if (token.role !== 'doctor' && onlyDoctor.includes(pathname)) {
           return NextResponse.redirect(new URL('/', req.url));
         }
         if (token.role !== 'pharmacy' && onlyPharmacy.includes(pathname)) {

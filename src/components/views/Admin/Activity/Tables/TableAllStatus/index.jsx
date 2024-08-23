@@ -5,17 +5,17 @@ import { useEffect } from 'react';
 
 const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, selectTabSpecialist, filterDataFotTableAllUsers, setFilterDataFotTableAllUsers, filterByStatusActivity }) => {
   useEffect(() => {
-    if (activities.length > 0) {
-      if (getDateForFilter !== '' && selectTabSpecialist.type !== '') {
-        const result = activities.filter((activity) => activity.bookDate === getDateForFilter && activity.specialist === selectTabSpecialist.type);
+    if (activities?.length > 0) {
+      if (getDateForFilter !== '' && selectTabSpecialist?.type !== '') {
+        const result = activities?.filter((activity) => activity.bookDate === getDateForFilter && activity.specialist === selectTabSpecialist?.type);
         setFilterDataFotTableAllUsers(result);
         filterByStatusActivity('');
       } else if (getDateForFilter !== '') {
-        const result = activities.filter((activity) => activity.bookDate === getDateForFilter);
+        const result = activities?.filter((activity) => activity.bookDate === getDateForFilter);
         setFilterDataFotTableAllUsers(result);
         filterByStatusActivity('');
-      } else if (selectTabSpecialist.type !== '') {
-        const result = activities.filter((activity) => activity.specialist === selectTabSpecialist.type);
+      } else if (selectTabSpecialist?.type !== '') {
+        const result = activities?.filter((activity) => activity.specialist === selectTabSpecialist?.type);
         setFilterDataFotTableAllUsers(result);
         filterByStatusActivity('');
       } else {
@@ -124,7 +124,7 @@ const TableAllStatus = ({ activities, setTicketQueue, onOpen, getDateForFilter, 
     }
   };
 
-  const processedData = filterDataFotTableAllUsers.map((queue, index) => ({ ...queue, index }));
+  const processedData = filterDataFotTableAllUsers?.map((queue, index) => ({ ...queue, index }));
   return (
     <TableUi
       data={processedData}

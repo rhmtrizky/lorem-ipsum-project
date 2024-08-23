@@ -1,4 +1,4 @@
-import { addData, retrieveData, retrieveDataById, updateData } from '@/libs/firebase/service';
+import { addData, retrieveData, updateData } from '@/libs/firebase/service';
 import verify from '@/utils/verify';
 
 export default async function handler(req, res) {

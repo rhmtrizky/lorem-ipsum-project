@@ -1,15 +1,8 @@
 import TableUi from '@/components/ui/Table';
-import { Button } from '@nextui-org/react';
-import { useEffect } from 'react';
 import { GrView } from 'react-icons/gr';
+const { Button } = require('@nextui-org/react');
 
-const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateForFilter }) => {
-  useEffect(() => {
-    if (getDateForFilter !== '') {
-      filterByStatusActivity('queue');
-    }
-  }, [getDateForFilter]);
-
+const TablePatientHistory = ({ patients, onOpen, setOpenModal }) => {
   const columns = [
     {
       title: 'No.',
@@ -40,10 +33,6 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
       uid: 'specialist',
     },
     {
-      title: 'Activity',
-      uid: 'status',
-    },
-    {
       title: 'Actions',
       uid: 'actions',
     },
@@ -52,31 +41,21 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
   const renderCellContent = (data, columnKey) => {
     switch (columnKey) {
       case 'index': {
-        return <p>{data?.index + 1}</p>;
+        return <p>{data.index + 1}</p>;
       }
       case 'phoneNumber': {
-        return <p>{!data?.phoneNumber ? '--' : data?.phoneNumber}</p>;
-      }
-      case 'status': {
-        return (
-          <Button
-            size="sm"
-            className="bg-blue-500 text-white text-[12px] rounded-md font-semibold"
-          >
-            {data?.status?.charAt(0).toUpperCase() + data?.status?.slice(1)}
-          </Button>
-        );
+        return <p>{!data.phoneNumber ? '--' : data.phoneNumber}</p>;
       }
       case 'actions':
         return (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center bg-blue">
             <Button
               isIconOnly
               type="button"
               className="text-blue-500 font-semibold text-[14px]"
               onPress={onOpen}
               startContent={<GrView />}
-              onClick={() => setTicketQueue(data)}
+              onClick={() => setOpenModal(data)}
             />
           </div>
         );
@@ -84,7 +63,7 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
         return data[columnKey];
     }
   };
-  const processedData = filterByStatusActivity('queue')?.map((user, index) => ({ ...user, index }));
+  const processedData = patients.map((user, index) => ({ ...user, index }));
   return (
     <TableUi
       data={processedData}
@@ -94,4 +73,4 @@ const TableQueues = ({ setTicketQueue, filterByStatusActivity, onOpen, getDateFo
   );
 };
 
-export default TableQueues;
+export default TablePatientHistory;

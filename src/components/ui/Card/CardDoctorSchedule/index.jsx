@@ -14,7 +14,7 @@ export default function CardDoctorSchedule({ name, specialist, image, queuePasie
               width={230}
               height={230}
               alt="doctor.png"
-              className="rounded-full"
+              className="rounded-full max-w-[230px] max-h-[230px] object-cover"
             />
           ) : (
             <Image

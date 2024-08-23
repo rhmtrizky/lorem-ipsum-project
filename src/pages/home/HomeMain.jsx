@@ -53,13 +53,13 @@ export default function HomeMain() {
             <HomeQualifiedDoctors />
           </section>
 
-          {/* <section>
+          <section>
             <HomeFeedback />
           </section>
 
           <footer>
             <Footer />
-          </footer> */}
+          </footer>
         </>
       )}
     </>
