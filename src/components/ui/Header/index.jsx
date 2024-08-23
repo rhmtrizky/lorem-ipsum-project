@@ -7,6 +7,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import LogoHarapanBunda from '../Logo';
+import SocialMedia from '../SocialMedia';
 
 export default function Header() {
   const session = useSession();
@@ -22,17 +24,7 @@ export default function Header() {
     <header className="top-0 right-0 w-full h-[90px] shadow-md bg-white">
       <div className="flex items-center justify-between h-full px-8 min-[600px]:px-0">
         <div className="flex justify-around items-center min-[600px]:w-[25%]  ">
-          <motion.div
-            whileHover={{ rotate: 180 }}
-            transition={{ type: 'spring' }}
-          >
-            <Image
-              src={logo}
-              width={70}
-              height={70}
-              alt="logo.png"
-            />
-          </motion.div>
+          <LogoHarapanBunda/>
         </div>
 
         <nav className="hidden min-[600px]:block w-full h-full">
@@ -60,39 +52,7 @@ export default function Header() {
             </div>
 
             <div className="flex gap-4">
-              <motion.div
-                whileHover={{ y: -4 }}
-                className="hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
-              >
-                <Image
-                  src={linkedin}
-                  width={13}
-                  height={13}
-                  alt="linkedin.png"
-                />
-              </motion.div>
-              <motion.div
-                whileHover={{ y: -4 }}
-                className="hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
-              >
-                <Image
-                  src={twitter}
-                  width={13}
-                  height={13}
-                  alt="mail.png"
-                />
-              </motion.div>
-              <motion.div
-                whileHover={{ y: -4 }}
-                className="hidden w-8 h-8 min-[950px]:flex items-center justify-center bg-white rounded-full p-2 shadow-sm cursor-pointer"
-              >
-                <Image
-                  src={instagram}
-                  width={15}
-                  height={15}
-                  alt="instagram.png"
-                />
-              </motion.div>
+              <SocialMedia/>
 
               <motion.button
                 whileHover={{ scale: 1.1 }}

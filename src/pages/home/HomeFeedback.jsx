@@ -66,7 +66,7 @@ export default function HomeFeedback() {
         <h2 className="text-[40px] font-archivoBlack font-extrabold text-primary" >What People Are Saying</h2>
         <p className='text-slate-500' >Dont just take our word for it. Here what real <br/><b>people</b> are saying about Harapan Bunda Hospital</p>
       </div>
-      <div className="relative flex h-[300px] w-full flex-col items-center justify-center overflow-hidden border bg-background md:shadow-xl">
+      <div className="relative flex h-[300px] w-full flex-col items-center justify-center overflow-hidden border bg-background">
         <Marquee
           pauseOnHover
           className="[--duration:20s]"
