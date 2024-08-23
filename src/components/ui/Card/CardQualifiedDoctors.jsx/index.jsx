@@ -14,10 +14,18 @@ export default function CardQualifiedDoctor({name, spesialisasi}) {
 
             <Swiper
                 breakpoints={{
-                340: {
+                300: {
+                    slidesPerView: 1,
+                    spaceBetween: 15,
+                },
+                574: {
                     slidesPerView: 2,
                     spaceBetween: 15,
                 },
+                760: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                }
                 // 768: {
                 //     slidesPerView: 3,
                 //     spaceBetween: 10
@@ -32,12 +40,11 @@ export default function CardQualifiedDoctor({name, spesialisasi}) {
                 clickable: true,
             }}
             modules={[FreeMode, Pagination]}
-            // className="max-w-[90%] lg:max-w-[100%]  "
             >
                     {
                         datasQualifiedDoctor.map((data, index) => (
                             <SwiperSlide key={index} >
-                                <div  className='flex flex-col w-[220px] h-[290px] bg-white shadow-lg rounded-xl p-4 transform hover:scale-105 transition duration-500 ease-in-out cursor-pointer'>
+                                <div  className='flex flex-col w-[220px] h-[290px] bg-white shadow-lg rounded-xl p-4 transform hover:scale-105 transition duration-500 ease-in-out cursor-pointer mb-8'>
                                     <div className='w-full flex justify-center'>
                                         <Image src={doctorCard} width={200} height={200} alt='doctor.png' className='rounded-lg' />
                                     </div>
