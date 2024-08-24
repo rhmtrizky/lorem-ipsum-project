@@ -37,14 +37,14 @@ const AdminUsersView = () => {
       <AdminLayout>
         <div className="mx-4">
           <h1 className="text-2xl font-bold mb-5">Users Management</h1>
-          <div className="flex items-center justify-between w-full">
+          <div className="flex items-start min-md:items-center justify-between max-md:flex-col w-full gap-3">
             <div className="relative w-3/5 text-neutral-600">
               <Search
                 state={searchUser}
                 setState={setSearchUser}
               />
             </div>
-            <div className="w-2/5 flex justify-end">
+            <div className="w-max flex justify-end">
               <Button
                 endContent={<i className="bx bx-plus-circle text-xl" />}
                 type="button"

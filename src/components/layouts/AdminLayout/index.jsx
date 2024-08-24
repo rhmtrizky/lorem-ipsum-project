@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { IoMdClose } from "react-icons/io";
 import SideBar from '../SideBar';
 
 const SideBarItems = [
@@ -19,22 +22,40 @@ const SideBarItems = [
 ];
 
 const AdminLayout = ({ children }) => {
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleIsOpen = () => {
+    setIsOpen(!isOpen)
+    console.log(isOpen)
+  }
+
   return (
     <>
-      <div className="flex lg:flex md:flex sm:hidden hidden">
-        <div className="flex w-full">
-          <div className="lg:w-1/5 md:w-1/4"></div>
-          <div className="lg:w-4/5 md:w-3/4 px-4 py-7 h-auto min-h-screen overflow-auto">{children}</div>
+      <div className='w-full h-12 flex items-center justify-end bg-blue-500 fixed z-10' >
+        <button onClick={handleIsOpen} className='z-10 w-8 h-8 p-1.5 fixed flex  items-center justify-center text-white bg-blue-400 rounded-full my-4 mx-7' >
+          {
+            isOpen ?
+            <IoMdClose />
+            :
+            <GiHamburgerMenu/>
+          }
+        </button>
+      </div>
+
+      <div className="flex">
+
+        <div className="flex w-full mt-12">
+          <div className="w-full px-4 py-7 h-auto min-h-screen overflow-x-scroll ">{children}</div>
         </div>
 
         <SideBar
           lists={SideBarItems}
           title="Admin Panel"
           bgColor={'pink'}
+          isOpen={isOpen}
         />
-      </div>
-      <div className="w-full h-screen lg:hidden md:hidden sm:flex flex justify-center items-center">
-        <h1>For admin panel, you can open in dekstop only</h1>
+
       </div>
     </>
   );

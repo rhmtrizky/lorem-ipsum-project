@@ -127,6 +127,7 @@ export default function FindDoctor() {
                   <CardDoctor
                     name={doctor.fullname}
                     spesialisasi={doctor.specialist}
+                    image={doctor.image}
                   />
                 </Link>
               ))}

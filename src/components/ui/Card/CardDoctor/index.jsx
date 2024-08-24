@@ -2,7 +2,7 @@ import React from 'react';
 import { doctorCard, stetoskopPurple } from '@/assets/images/images';
 import Image from 'next/image';
 
-export default function CardDoctor({ name, spesialisasi }) {
+export default function CardDoctor({ name, spesialisasi, image }) {
   const nameSplit = name.split(' ');
 
   const displayName = nameSplit.length > 6 ? nameSplit.slice(0, 5).join(' ') + ' ...' : name;
@@ -12,7 +12,7 @@ export default function CardDoctor({ name, spesialisasi }) {
       <div className="flex flex-col items-start">
         <div className="w-full flex justify-center">
           <Image
-            src={doctorCard}
+            src={image}
             width={240}
             height={200}
             alt="doctor.png"

@@ -120,7 +120,7 @@ const ActivityView = () => {
               Scanner<i className="bx bxs-camera text-xl"></i>
             </Button>
           </div>
-          <div className="flex items-center justify-between w-full">
+          <div className="flex max-md:flex-col items-start min-md:items-center justify-between gap-2 w-full">
             <div className="relative w-3/5 text-neutral-600">
               <Search
                 state={searchActivities}
@@ -138,7 +138,7 @@ const ActivityView = () => {
             </div>
           </div>
           <div className="flex flex-col justify-start items-start mt-6 gap-3">
-            <div className="flex items-center justify-between w-full">
+            <div className="flex min-[700px]:items-center justify-between w-full max-[700px]:flex-col items-start ">
               <div className="relative w-2/5 text-neutral-600">
                 <Button
                   endContent={<i className="bx bx-plus-circle text-xl" />}
@@ -150,19 +150,21 @@ const ActivityView = () => {
                   Tambah Antrian
                 </Button>
               </div>
-              <div className="w-2/5 flex justify-end">
-                <div className="flex justify-end mx-4 items-center gap-1">
-                  <p className="text-neutral-700 text-sm">Filter by date:</p>
-                  <InputUi
-                    name="date"
-                    type="date"
-                    defaultValue={getDateForFilter}
-                    onChange={(e) => setGetDateForFilter(e.target.value)}
-                    className={' border-2 border-neutral-300 rounded-md px-2 text-sm'}
-                  />
+              <div className="w-full flex justify-end max-md:mt-6">
+                <div className="flex justify-end items-end gap-1">
+                  <div className='flex items-center max-[700px]:flex-col  max-[700px]:justify-center' >
+                    <p className="text-neutral-700 text-sm">Filter by date:</p>
+                    <InputUi
+                      name="date"
+                      type="date"
+                      defaultValue={getDateForFilter}
+                      onChange={(e) => setGetDateForFilter(e.target.value)}
+                      className={' border-2 border-neutral-300 rounded-md px-2 text-sm'}
+                    />
+                  </div>
                   <Button
                     type="button"
-                    className="text-white font-semibold text-[12px] bg-red-500 rounded-md"
+                    className="text-white font-semibold text-[12px] bg-red-500 rounded-md mb-1"
                     value={getDateForFilter}
                     onClick={() => setGetDateForFilter('')}
                     size="sm"

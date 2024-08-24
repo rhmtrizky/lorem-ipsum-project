@@ -34,7 +34,7 @@ const AuthLayout = ({ children, title, link, linkText, isError, errorText, linkT
         </div>
 
       </div>
-
+      
     </div>
   );
 };

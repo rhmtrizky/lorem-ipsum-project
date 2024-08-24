@@ -1,14 +1,43 @@
-import Button from '@/components/ui/Button';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
+import Button from '@/components/ui/Button';
+import Link from 'next/link';
 
-const SideBar = ({ lists, title, closeIcon, onClick, bgColor }) => {
+const SideBar = ({ lists, title, closeIcon, onClick, isOpen }) => {
+  const variants = {
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      },
+      display: "flex"
+    },
+    hide: {
+      opacity: 0,
+      x: -400,
+      transition: {
+        duration: 0.8,
+        ease: "easeIn"
+      },
+      transitionEnd: {
+        display: "none"
+      }
+    }
+  };
+
   const { pathname } = useRouter();
   const { status } = useSession();
 
   return (
-    <div className="lg:w-1/5 md:w-[2/5] h-screen fixed bg-blue-500 flex flex-col justify-between p-5">
+    <motion.div
+      initial={false}
+      animate={isOpen ? "show" : "hide"} 
+      variants={variants}
+      className="lg:w-1/5 md:w-[2/5] h-full fixed bg-blue-500 flex flex-col justify-between top-0 p-5 z-10"
+    >
       <div className="">
         <div className="flex justify-between items-center">
           <h1 className="text-white font-bold text-xl">{title}</h1>
@@ -17,7 +46,7 @@ const SideBar = ({ lists, title, closeIcon, onClick, bgColor }) => {
           </button>
         </div>
         <div className="flex flex-col gap-2 mt-7">
-          {lists.map((item, index) => (
+          {lists.map((item) => (
             <Link
               href={item.url}
               key={item.title}
@@ -34,7 +63,7 @@ const SideBar = ({ lists, title, closeIcon, onClick, bgColor }) => {
         onClick={() => (status !== 'authenticated' ? signIn() : signOut())}
         className="bg-white w-full text-neutral-900 font-semibold py-2 px-3 rounded-md text-sm"
       />
-    </div>
+    </motion.div>
   );
 };
 
