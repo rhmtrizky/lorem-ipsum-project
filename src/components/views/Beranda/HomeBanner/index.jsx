@@ -1,8 +1,19 @@
 import { hospitalHarapanBunda } from '@/assets/images/images';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function HomeBanner() {
+
+  const router = useRouter()
+
+  const handleFindDoctor = () => {
+      router.push({
+        pathname: '/find-doctor'
+      })
+  }
+
+
   return (
     <article className="w-full h-[550px] bg-gradient-radial flex flex-col min-[921px]:flex-row justify-center items-center relative rounded-xl mx-3 min-[774px]:ml-3 overflow-hidden">
       <div className="ml-3 md:ml-7 mt-5 min-[430px]:mt-24 min-[921px]:mt-0 text-white">
@@ -17,6 +28,7 @@ export default function HomeBanner() {
           <button
             type="click"
             className="bg-button-pink font-semibold py-1 px-4 rounded-lg mt-8"
+            onClick={handleFindDoctor}
           >
             Ambil Antrian
           </button>

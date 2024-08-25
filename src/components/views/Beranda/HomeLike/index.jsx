@@ -4,7 +4,6 @@ import React from 'react'
 
 export default function HomeLike() {
     return (
-        // w[40%]
         <div className="relative bg-[#ffffff49] min-[500px]:h-[120px] h-max flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl py-4">
             <div className="flex flex-wrap gap-1 justify-evenly w-full ">
                 <div className='flex  flex-col items-center justify-center relative bg-purpl-950 w-[150px] h-[80px] rounded-lg text-purple-900' >
@@ -36,5 +35,3 @@ export default function HomeLike() {
         </div>
     )
 }
-
-// ketika di wrap yg 5.2 juta beam nya hilang terus pindah ke 

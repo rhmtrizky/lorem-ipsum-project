@@ -1,4 +1,4 @@
-import FeedbackView from '@/components/views/Home/FeedbackView'
+import FeedbackView from '@/components/views/FeedbackView'
 import Head from 'next/head'
 import React from 'react'
 

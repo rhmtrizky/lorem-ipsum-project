@@ -28,7 +28,6 @@ const nextConfig = {
   },
 };
 
-// Gunakan export default untuk ES Module dan bungkus nextConfig dengan withPWA
 export default withPWA({
   dest: "public",        
   disable: process.env.NODE_ENV === "development",        

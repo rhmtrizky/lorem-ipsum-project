@@ -1,4 +1,4 @@
-import FlowRegisBpjs from '@/components/views/Home/FlowRegisBpjsView'
+import FlowRegisBpjs from '@/components/views/FlowRegisBpjsView'
 import Head from 'next/head'
 import React from 'react'
 

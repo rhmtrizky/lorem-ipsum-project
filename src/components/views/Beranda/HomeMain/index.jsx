@@ -1,13 +1,13 @@
 import { useScroll, useTransform, motion } from 'framer-motion';
-import HomeBanner from './HomeBanner';
-import HomeHelp from './HomeHelp';
 import React, { useEffect, useState } from 'react';
 import PoliCard from '@/components/ui/Card/PoliCard';
-import HomeLike from './HomeLike';
-import Loader from '@/components/ui/Loader';
 import Head from 'next/head';
-import HomeQualifiedDoctors from './HomeQualifiedDoctors';
-import HomeFeedback from './HomeFeedback';
+import Loader from '@/components/ui/Loader';
+import HomeBanner from '../HomeBanner';
+import HomeHelp from '../HomeHelp';
+import HomeLike from '../HomeLike';
+import HomeQualifiedDoctors from '../HomeQualifiedDoctor';
+import HomeFeedback from '../HomeFeedback';
 import Footer from '@/components/ui/Footer';
 
 export default function HomeMain() {
