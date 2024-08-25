@@ -1,12 +1,12 @@
 import { framerButton, framerSidebarBackground, framerSidebarPanel, framerText } from './framer';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useClickAway } from 'react-use';
 import { AiOutlineRollback } from 'react-icons/ai';
 import { logo, next } from '@/assets/images/images';
 import { items } from '@/utils/datas';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -102,7 +102,8 @@ export const Sidebar = () => {
                                 transition={{ duration: 0.2 }}
                               >
                                 <Link href={'/faq'}>+ FAQ</Link>
-                                <Link href={'/flowRegisBpjs'}>+ Cara Daftar</Link>
+                                <Link href={'/flow-bpjs-regis'}>+ Cara Daftar</Link>
+                                <Link href={'/feedback'}>+ Pengalaman Pelanggan</Link>
                               </motion.div>
                             </motion.div>
                           ) : null

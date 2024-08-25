@@ -1,12 +1,12 @@
-import { call, instagram, linkedin, logo, mail, next, twitter } from '@/assets/images/images';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { call, mail, next } from '@/assets/images/images';
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import { Sidebar } from '../Sidebar';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import LogoHarapanBunda from '../Logo';
 import SocialMedia from '../SocialMedia';
 
@@ -28,7 +28,7 @@ export default function Header() {
         </div>
 
         <nav className="hidden min-[600px]:block w-full h-full">
-          <div className="flex items-center justify-around max-[950px]:justify-center h-1/2 px-1 bg-gradient-to-r from-secondary to-primary ">
+          <div className="flex items-center justify-around max-[950px]:justify-around h-1/2 px-1 bg-gradient-to-r from-secondary to-primary ">
             <div className="flex gap-5 h-max">
               <div className="flex items-center gap-1">
                 <Image
