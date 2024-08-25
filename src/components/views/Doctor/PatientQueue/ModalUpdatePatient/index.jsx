@@ -51,13 +51,11 @@ const ModalUpdatePatient = ({ setActivities, updatePatient, setUpdatePatient, is
         taken: '',
       },
     };
-    console.log(data);
 
     try {
       const response = await activityService.updateActivity(updatePatient.id, data, session?.accessToken);
-      console.log(response);
       if (response.status === 200) {
-        const { data } = await activityService.getAllActivities(session.data.accessToken);
+        const { data } = await activityService.getAllActivities(session?.accessToken);
         setActivities(data.data);
         setIsLoading(false);
         setUpdatePatient({});

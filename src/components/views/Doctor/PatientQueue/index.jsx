@@ -3,9 +3,9 @@ import { useSession } from 'next-auth/react';
 import useActivity from '@/hooks/useActivity';
 import { useCallback, useEffect, useState } from 'react';
 import TablePatientDoctorQueue from './Tables/TablePatientDoctorQueue';
-import ModalUpdatePatientPharmacy from '../../Pharmacy/PatientPharmacyQueue/ModalUpdatePatientPharmacy';
 import DataFilters from '@/components/layouts/DataFilters';
 import { useDisclosure } from '@nextui-org/react';
+import ModalUpdatePatient from './ModalUpdatePatient';
 
 const PatientQueueView = () => {
   const { data: session } = useSession();
@@ -22,11 +22,11 @@ const PatientQueueView = () => {
     const filteredPatients = activities.filter((item) => item.doctorId === session.user.id && (!getDateForFilter || item.bookDate === getDateForFilter) && (item.status === 'queue' || item.status === 'checkup' || item.status === 'preparing'));
 
     setPatients(filteredPatients);
-  }, [activities, getDateForFilter, session]);
+  }, [activities, session, getDateForFilter]);
 
   useEffect(() => {
     getDataPatient();
-  }, [activities, session, getDataPatient]);
+  }, [getDataPatient]);
 
   return (
     <>
@@ -46,7 +46,7 @@ const PatientQueueView = () => {
         />
       </DoctorLayout>
       {Object.keys(updatePatient).length > 0 && (
-        <ModalUpdatePatientPharmacy
+        <ModalUpdatePatient
           updatePatient={updatePatient}
           setUpdatePatient={setUpdatePatient}
           isOpen={isOpen}

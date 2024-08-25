@@ -4,13 +4,13 @@ import ModalUi from '@/components/views/Admin/Ui/Modal';
 import useSpecialist from '@/hooks/useSpecialist';
 import userService from '@/services/user';
 import doctorService from '@/services/user/doctor';
+import pharmacyService from '@/services/user/pharmacy';
 import handleImageUpload from '@/utils/uploadImage';
 import { Button, Select, SelectItem } from '@nextui-org/react';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, setDoctor, doctorId, token }) => {
+const ModalUpdateProfileAdmin = ({ openModal, setOpenModal, isOpen, onOpenChange, setState, id, token }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { specialists } = useSpecialist();
   const [imageFile, setImageFile] = useState(null);
@@ -51,31 +51,44 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
       phoneNumber: formData.get('phoneNumber'),
       address: formData.get('address'),
       licenceNumber: formData.get('licenceNumber'),
-      specialization: formData.get('specialization'),
-      schedule: schedules,
     };
+
+    if (openModal.role === 'doctor') {
+      data.specialist = formData.get('specialist');
+      data.schedule = schedules;
+    }
 
     if (!formData.get('password')) {
       delete data.password;
     }
 
     try {
-      const result = await userService.updateUser(doctorId, data, token);
+      const result = await userService.updateUser(id, data, token);
       if (result.status === 200) {
         if (imageFile) {
-          const downloadUrl = await handleImageUpload(imageFile, doctorId, 'users', 'doctor image profile');
+          const downloadUrl = await handleImageUpload(imageFile, id, 'users', 'doctor image profile');
           data.image = downloadUrl;
-          const result = await userService.updateUser(doctorId, data, token);
+          const result = await userService.updateUser(id, data, token);
           if (result.status === 200) {
-            const getData = await doctorService.getDoctorById(doctorId);
-            setDoctor(getData.data.data);
+            if (openModal.role === 'doctor') {
+              const { data } = await doctorService.getDoctorById(id);
+              setState(data.data);
+            } else if (openModal.role === 'pharmacy') {
+              const { data } = await pharmacyService.getPharmacyById(id);
+              console.log(data.data);
+            }
             setOpenModal({});
             onOpenChange();
             setIsLoading(false);
           }
         } else {
-          const getData = await doctorService.getDoctorById(doctorId);
-          setDoctor(getData.data.data);
+          if (openModal.role === 'doctor') {
+            const { data } = await doctorService.getDoctorById(id);
+            setState(data.data);
+          } else if (openModal.role === 'pharmacy') {
+            const { data } = await pharmacyService.getPharmacyById(id);
+            setState(data.data);
+          }
           setOpenModal({});
           onOpenChange();
           setIsLoading(false);
@@ -174,28 +187,6 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
           className={'border-2 border-blue-300 rounded-md text-blue-900'}
           colorLabel={'blue-900'}
         />
-        <div>
-          <label className="text-sm font-medium text-blue-900">Pilih Spesialis</label>
-          <Select
-            name="specialist"
-            size="sm"
-            placeholder="Pilih Spesialis"
-            className="border-2 border-blue-300 rounded-md text-blue-900"
-            required
-            onChange={(e) => setSelectedSpesialist(e.target.value)}
-            defaultSelectedKeys={[openModal?.specialist]}
-          >
-            {specialists.map((item) => (
-              <SelectItem
-                key={item.specialistName}
-                value={item.specialistName}
-                className="w-full bg-white gap-0"
-              >
-                {item.specialistName}
-              </SelectItem>
-            ))}
-          </Select>
-        </div>
         <InputUi
           name="address"
           type={'text'}
@@ -205,56 +196,82 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
           className={'border-2 border-blue-300 rounded-md text-blue-900'}
           colorLabel={'blue-900'}
         />
-        <div className="flex flex-col gap-4">
-          <label>Schedule:</label>
-          {schedules.map((schedule, index) => (
-            <div
-              key={index}
-              className="flex gap-2 w-full"
-            >
-              <InputUi
-                name={`schedule[${index}].day`}
-                type={'text'}
-                placeholder={'Hari'}
-                label={'Hari'}
-                onChange={(e) => handleScheduleChange(index, 'day', e.target.value)}
-                defaultValue={schedule.day}
+        {openModal?.role === 'doctor' && (
+          <>
+            <div>
+              <label className="text-sm font-medium text-blue-900">Pilih Spesialis</label>
+              <Select
+                name="specialist"
+                size="sm"
+                placeholder="Pilih Spesialis"
+                className="border-2 border-blue-300 rounded-md text-blue-900"
                 required
-              />
-              <InputUi
-                name={`schedule[${index}].startTime`}
-                type={'time'}
-                placeholder={'Jam Mulai'}
-                label={'Jam Mulai'}
-                onChange={(e) => handleScheduleChange(index, 'startTime', e.target.value)}
-                defaultValue={schedule.startTime}
-                required
-              />
-              <InputUi
-                name={`schedule[${index}].endTime`}
-                type={'time'}
-                placeholder={'Jam Selesai'}
-                label={'Jam Selesai'}
-                onChange={(e) => handleScheduleChange(index, 'endTime', e.target.value)}
-                defaultValue={schedule.endTime}
-                required
-              />
-              <Button
-                color="danger"
-                onClick={() => removeSchedule(index)}
+                onChange={(e) => setSelectedSpesialist(e.target.value)}
+                defaultSelectedKeys={[openModal?.specialist]}
               >
-                <i className="bx bx-trash" />
+                {specialists.map((item) => (
+                  <SelectItem
+                    key={item.specialistName}
+                    value={item.specialistName}
+                    className="w-full bg-white gap-0"
+                  >
+                    {item.specialistName}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            <div className="flex flex-col gap-4">
+              <label>Schedule:</label>
+              {schedules.map((schedule, index) => (
+                <div
+                  key={index}
+                  className="flex gap-2 w-full"
+                >
+                  <InputUi
+                    name={`schedule[${index}].day`}
+                    type={'text'}
+                    placeholder={'Hari'}
+                    label={'Hari'}
+                    onChange={(e) => handleScheduleChange(index, 'day', e.target.value)}
+                    defaultValue={schedule.day}
+                    required
+                  />
+                  <InputUi
+                    name={`schedule[${index}].startTime`}
+                    type={'time'}
+                    placeholder={'Jam Mulai'}
+                    label={'Jam Mulai'}
+                    onChange={(e) => handleScheduleChange(index, 'startTime', e.target.value)}
+                    defaultValue={schedule.startTime}
+                    required
+                  />
+                  <InputUi
+                    name={`schedule[${index}].endTime`}
+                    type={'time'}
+                    placeholder={'Jam Selesai'}
+                    label={'Jam Selesai'}
+                    onChange={(e) => handleScheduleChange(index, 'endTime', e.target.value)}
+                    defaultValue={schedule.endTime}
+                    required
+                  />
+                  <Button
+                    color="danger"
+                    onClick={() => removeSchedule(index)}
+                  >
+                    <i className="bx bx-trash" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                onClick={addSchedule}
+                className="text-xs flex items-center gap-1 items-center bg-green-500 text-white p-2 rounded-md mt-2"
+              >
+                <p className="bx bx-plus-circle text-xl" />
+                Add Schedule
               </Button>
             </div>
-          ))}
-          <Button
-            onClick={addSchedule}
-            className="text-xs flex items-center gap-1 items-center bg-green-500 text-white p-2 rounded-md mt-2"
-          >
-            <p className="bx bx-plus-circle text-xl" />
-            Add Schedule
-          </Button>
-        </div>
+          </>
+        )}
         <div className="w-full flex justify-end items-center gap-2 my-2">
           <Button
             color="danger"
@@ -278,4 +295,4 @@ const ModalUpdateProfile = ({ openModal, setOpenModal, isOpen, onOpenChange, set
   );
 };
 
-export default ModalUpdateProfile;
+export default ModalUpdateProfileAdmin;
