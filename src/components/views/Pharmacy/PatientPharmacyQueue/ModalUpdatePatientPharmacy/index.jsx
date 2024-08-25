@@ -14,10 +14,7 @@ const ModalUpdatePatientPharmacy = ({ setActivities, updatePatient, setUpdatePat
   const [isSelected, setIsSelected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isTaken, setIsTaken] = useState(false);
-  const [apoteker, setApoteker] = useState(updatePatient?.isHandle?.apoteker || '');
   const [dataUser, setDataUser] = useState({});
-
-  console.log(updatePatient);
 
   useEffect(() => {
     const getDataUser = users.find((user) => user.id === session.user.id);
@@ -33,17 +30,14 @@ const ModalUpdatePatientPharmacy = ({ setActivities, updatePatient, setUpdatePat
         id: updatePatient.id,
         isHandle: {
           status: true,
-          apoteker: formData.get('apoteker'),
+          apoteker: session?.user?.fullname,
           taken: formData.get('taken'),
         },
       };
 
-      console.log(data);
-
       try {
         // Update the activity status isHandle is true and get taken time
         const result = await activityService.updateActivity(updatePatient.id, data, session.accessToken);
-        console.log(result);
 
         if (result.status === 200) {
           // Fetch the updated activities
@@ -64,7 +58,7 @@ const ModalUpdatePatientPharmacy = ({ setActivities, updatePatient, setUpdatePat
         isHandle: {
           status: true,
           isTaken: isTaken ? true : false,
-          apoteker: formData.get('apoteker'),
+          apoteker: session?.user?.fullname,
           taken: 'done',
         },
       };
@@ -99,7 +93,7 @@ const ModalUpdatePatientPharmacy = ({ setActivities, updatePatient, setUpdatePat
       id: updatePatient.id,
       isHandle: {
         status: true,
-        apoteker: apoteker,
+        apoteker: session?.user?.fullname,
         taken: 'waiting',
       },
     };
@@ -344,12 +338,6 @@ const ModalUpdatePatientPharmacy = ({ setActivities, updatePatient, setUpdatePat
                     required
                   />
                 </div>
-                <Button
-                  color="danger"
-                  // onClick={() => handleRemoveResepDokter(index)}
-                >
-                  <i className="bx bx-trash" />
-                </Button>
               </div>
             ))}
           </div>
@@ -370,11 +358,10 @@ const ModalUpdatePatientPharmacy = ({ setActivities, updatePatient, setUpdatePat
               type={'text'}
               placeholder={'Apoteker'}
               label={'Apoteker'}
-              defaultValue={updatePatient?.isHandle?.apoteker !== '' ? updatePatient?.isHandle?.apoteker : ''}
+              defaultValue={session?.user?.fullname}
               className={'border-2 border-blue-300 rounded-md text-blue-900'}
               colorLabel={'blue-900'}
-              onChange={(e) => setApoteker(e.target.value)}
-              disabled={updatePatient.status !== 'take medicine' ? true : false}
+              disabled
               required
             />
             {updatePatient?.isHandle?.status === false && (

@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { gender, golDarah } from '@/constraint/adminPanel';
-import { Select, SelectItem, useDisclosure } from '@nextui-org/react';
+import { Button, useDisclosure } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import ModalEditPatient from '../../Modal/ModalEditPatient';
 import userService from '@/services/user';
+import Image from 'next/image';
+import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
+import handleImageUpload from '@/utils/uploadImage';
 
 export default function FormEditPatient({ user, setUser, patient }) {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [imageFile, setImageFile] = useState(null);
 
   const handleAddPatient = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-  
+
     const form = e.target;
     const formData = new FormData(form);
-  
+
     const updatedPatient = {
       name: formData.get('name'),
       nik: formData.get('nik'),
@@ -29,14 +33,15 @@ export default function FormEditPatient({ user, setUser, patient }) {
       fatherName: formData.get('fatherName'),
       motherName: formData.get('motherName'),
       suku: formData.get('suku'),
+      bpjsCard: patient?.bpjsCard,
     };
-  
+
     try {
       const currentPatients = user.patient || [];
-  
+
       // Gunakan NIK lama untuk mencari pasien yang akan diupdate
-      const patientIndex = currentPatients.findIndex(p => p.nik === patient.nik);
-  
+      const patientIndex = currentPatients.findIndex((p) => p.nik === patient.nik);
+
       if (patientIndex !== -1) {
         // Update data pasien yang ditemukan dengan data baru
         currentPatients[patientIndex] = updatedPatient;
@@ -44,9 +49,18 @@ export default function FormEditPatient({ user, setUser, patient }) {
         // Jika pasien tidak ditemukan, tambahkan ke daftar
         currentPatients.push(updatedPatient);
       }
-  
-      const result = await userService.updateUser(user.id, { patient: currentPatients }, session?.accessToken);
-  
+
+      let result = await userService.updateUser(user.id, { patient: currentPatients }, session?.accessToken);
+
+      if (result.status === 200 && imageFile) {
+        const downloadUrl = await handleImageUpload(imageFile, user.id, 'users', 'BPJS Card');
+        updatedPatient.bpjsCard = downloadUrl;
+
+        currentPatients[patientIndex] = updatedPatient;
+
+        result = await userService.updateUser(user.id, { patient: currentPatients }, session?.accessToken);
+      }
+
       if (result.status === 200) {
         const response = await userService.detailUser(session?.accessToken);
         setUser(response.data.data);
@@ -59,7 +73,6 @@ export default function FormEditPatient({ user, setUser, patient }) {
       onOpenChange(false);
     }
   };
-  
 
   return (
     <ModalEditPatient
@@ -128,7 +141,7 @@ export default function FormEditPatient({ user, setUser, patient }) {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <i class="bx bxs-calendar-alt"></i>
+                <i className="bx bxs-calendar-alt"></i>
               </div>
               <input
                 type="date"
@@ -286,6 +299,41 @@ export default function FormEditPatient({ user, setUser, patient }) {
             </div>
           </div>
         </div>
+
+        {patient?.bpjsCard ? (
+          <div className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none mt-3 flex flex-col items-center gap-2 justify-center">
+            <Image
+              src={imageFile !== null || '' ? URL.createObjectURL(imageFile) : patient?.bpjsCard}
+              alt="profile"
+              width={300}
+              height={300}
+              className="h-[200px] w-fite"
+            />
+            <div className="relative">
+              <Button
+                size="sm"
+                className="bg-blue-500 text-white text-sm rounded-md"
+              >
+                Reupload BPJS Card
+              </Button>
+              <input
+                className="absolute bg-color-gray z-0 bottom-0 left-0 w-full h-full opacity-0"
+                type="file"
+                name="image"
+                onChange={(e) => setImageFile(e.target.files[0])}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col items-start ">
+            <p className="text-sm font-semibold mt-3">Upload Kartu BPJS</p>
+            <ImageUpload
+              stateImage={imageFile}
+              setStateImage={setImageFile}
+              title={'Upload Kartu BPJS'}
+            />
+          </div>
+        )}
 
         <div className="flex gap-5 mt-4">
           <div className="w-full">
