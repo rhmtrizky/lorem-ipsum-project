@@ -4,6 +4,8 @@ import { SessionProvider } from 'next-auth/react';
 import 'boxicons/css/boxicons.min.css';
 import { useRouter } from 'next/router';
 import Header from '@/components/ui/Header';
+import { useEffect } from 'react';
+
 
 
 
@@ -11,6 +13,15 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   const router = useRouter();
   const excludedPaths = ['/auth', '/admin', '/doctor'];
   const showNavbar = !excludedPaths.some((path) => router.pathname.startsWith(path));
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((reg) => console.log('Service Worker registered'))
+        .catch((err) => console.error('Service Worker registration failed', err));
+    }
+  }, []);
   return (
     <SessionProvider session={session}>
       <NextUIProvider>
