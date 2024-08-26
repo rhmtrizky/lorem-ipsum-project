@@ -1,4 +1,4 @@
-import { animateDoctor, injectionNotes, injectionPink, purpleFluid } from '@/assets/images/images';
+import { animateDoctor, injectionNotes, injectionPink, purpleFluid, userIcon } from '@/assets/images/images';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
@@ -100,9 +100,9 @@ export default function PatientDashboardLayout({ children }) {
             <div className="blur-card-account"></div>
           </div>
           <div
-            className={`group bg-cover bg-center w-24 h-24 absolute flex items-center justify-center top-24 right-1/2 translate-x-1/2 bg-white shadow-lg rounded-full overflow-hidden hover:bg-none `}
+            className={`group bg-cover bg-center w-24 h-24 absolute flex items-center justify-center top-24 right-1/2 translate-x-1/2 bg-white shadow-lg rounded-full overflow-hidden hover:bg-none border-2 border-white `}
             style={{
-              backgroundImage: `url(${user?.image})`,
+              backgroundImage: `${user?.image ? `url(${user?.image})` : `url(${userIcon})`}`,
             }}
           ></div>
           <div className="opacity-0 w-24 h-24 group-hover:bg-purple-700 rounded-full group-hover:opacity-50 absolute top-24 right-1/2 translate-x-1/2 cursor-pointer transition duration-200 ease-linear ">
@@ -125,7 +125,7 @@ export default function PatientDashboardLayout({ children }) {
               className={`flex items-center justify-center gap-2 font-semibold ${isFamily[3] === 'family' ? 'text-purple-700' : 'text-black'} `}
             >
               <i className="bx bxs-user-plus" />
-              Anggota Keluarga
+              <p>Anggota Keluarga</p>
             </Link>
           </div>
         </div>

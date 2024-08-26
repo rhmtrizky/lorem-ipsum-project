@@ -1,13 +1,14 @@
-import DoctorLayout from '@/components/layouts/DoctorLayout';
 import { useSession } from 'next-auth/react';
 import useActivity from '@/hooks/useActivity';
 import { useCallback, useEffect, useState } from 'react';
-import TablePatientDoctorQueue from './Tables/TablePatientDoctorQueue';
-import DataFilters from '@/components/layouts/DataFilters';
 import { useDisclosure } from '@nextui-org/react';
-import ModalUpdatePatient from './ModalUpdatePatient';
 
-const PatientQueueView = () => {
+import PharmacyLayout from '@/components/layouts/PharmacyLayout';
+import TablePatientPharmacyQueue from './Tables/TablePatientPharmacyQueue';
+import ModalUpdatePatientPharmacy from './ModalUpdatePatientPharmacy';
+import DataFilters from '@/components/layouts/DataFilters';
+
+const PatientPharmacyQueueView = () => {
   const { data: session } = useSession();
   const { activities, setActivities, searchActivities, setSearchActivities } = useActivity();
   const [patients, setPatients] = useState([]);
@@ -19,34 +20,35 @@ const PatientQueueView = () => {
   const getDataPatient = useCallback(() => {
     if (!activities || !session) return;
 
-    const filteredPatients = activities.filter((item) => item.doctorId === session.user.id && (!getDateForFilter || item.bookDate === getDateForFilter) && (item.status === 'queue' || item.status === 'checkup' || item.status === 'preparing'));
+    const filteredPatients = activities.filter((item) => (!getDateForFilter || item.bookDate === getDateForFilter) && item.status === 'take medicine');
 
     setPatients(filteredPatients);
-  }, [activities, session, getDateForFilter]);
+  }, [activities, getDateForFilter, session]);
 
   useEffect(() => {
     getDataPatient();
-  }, [getDataPatient]);
+  }, [activities, session, getDataPatient]);
 
   return (
     <>
-      <DoctorLayout>
+      <PharmacyLayout>
         <DataFilters
           searchActivities={searchActivities}
           setSearchActivities={setSearchActivities}
           getDateForFilter={getDateForFilter}
           setGetDateForFilter={setGetDateForFilter}
           patients={patients}
+          setUpdatePatient={setUpdatePatient}
           onOpen={onOpen}
         />
-        <TablePatientDoctorQueue
+        <TablePatientPharmacyQueue
           patients={patients}
           setUpdatePatient={setUpdatePatient}
           onOpen={onOpen}
         />
-      </DoctorLayout>
+      </PharmacyLayout>
       {Object.keys(updatePatient).length > 0 && (
-        <ModalUpdatePatient
+        <ModalUpdatePatientPharmacy
           updatePatient={updatePatient}
           setUpdatePatient={setUpdatePatient}
           isOpen={isOpen}
@@ -59,4 +61,4 @@ const PatientQueueView = () => {
   );
 };
 
-export default PatientQueueView;
+export default PatientPharmacyQueueView;

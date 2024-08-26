@@ -4,16 +4,19 @@ import { Select, SelectItem, useDisclosure } from '@nextui-org/react';
 import userService from '@/services/user';
 import { useSession } from 'next-auth/react';
 import ModalAddFamily from '../../Modal/ModalAddFamily';
+import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
+import handleImageUpload from '@/utils/uploadImage';
 
 export default function FormAddFamily({ user, setUser }) {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [imageFile, setImageFile] = useState(null);
 
   const handleAddPatient = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // form data
+
     const form = e.target;
     const formData = new FormData(form);
 
@@ -29,21 +32,36 @@ export default function FormAddFamily({ user, setUser }) {
       fatherName: formData.get('fatherName'),
       motherName: formData.get('motherName'),
       suku: formData.get('suku'),
+      bpjsCard: null,
     };
 
     try {
       const currentPatients = user.patient || [];
-
       const updatedPatients = [...currentPatients, newPatient];
 
-      const result = await userService.updateUser(user.id, { patient: updatedPatients }, session?.accessToken);
+      let result = await userService.updateUser(user.id, { patient: updatedPatients }, session?.accessToken);
+      console.log(result);
 
       if (result.status === 200) {
+        if (imageFile) {
+          const downloadUrl = await handleImageUpload(imageFile, user.id, 'users', 'BPJS Card');
+
+          updatedPatients[updatedPatients.length - 1].bpjsCard = downloadUrl;
+
+          result = await userService.updateUser(user.id, { patient: updatedPatients }, session?.accessToken);
+        }
+
+        if (result.status === 200) {
+          const response = await userService.detailUser(session?.accessToken);
+          setUser(response.data.data);
+        }
+      } else {
         const response = await userService.detailUser(session?.accessToken);
         setUser(response.data.data);
-        setIsLoading(false);
-        onOpenChange(false);
       }
+
+      setIsLoading(false);
+      onOpenChange(false);
     } catch (err) {
       setIsLoading(false);
       console.log(err);
@@ -268,6 +286,15 @@ export default function FormAddFamily({ user, setUser }) {
             </div>
           </div>
         </div>
+
+        <di className="flex flex-col items-start ">
+          <p className="text-sm font-semibold mt-3">Upload Kartu BPJS</p>
+          <ImageUpload
+            stateImage={imageFile}
+            setStateImage={setImageFile}
+            title={'Upload Kartu BPJS'}
+          />
+        </di>
 
         <div className="flex gap-5 mt-4">
           <div className="w-full">

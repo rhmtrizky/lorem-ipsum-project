@@ -7,11 +7,9 @@ import Header from '@/components/ui/Header';
 import { useEffect } from 'react';
 
 
-
-
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
-  const excludedPaths = ['/auth', '/admin', '/doctor'];
+  const excludedPaths = ['/auth', '/admin', '/doctor', '/pharmacy', '/404'];
   const showNavbar = !excludedPaths.some((path) => router.pathname.startsWith(path));
 
   useEffect(() => {

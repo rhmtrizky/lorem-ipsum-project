@@ -19,8 +19,6 @@ export default function AccountView() {
   const { onOpen, isOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(true);
 
-  console.log(tickets);
-
   // Fetches activities for the logged-in user
   const getActivity = () => {
     const filter = activities.filter((item) => item.userId === session?.user?.id);

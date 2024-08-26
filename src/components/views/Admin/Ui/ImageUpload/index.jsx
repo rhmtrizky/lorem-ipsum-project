@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { BsUpload } from 'react-icons/bs';
 
-const ImageUpload = ({ stateImage, setStateImage }) => {
+const ImageUpload = ({ stateImage, setStateImage, title }) => {
   return (
     <div className="relative w-full h-full py-2 flex flex-col justify-center items-center border-2 border-color-gray rounded-md mt-2">
       {stateImage ? (
@@ -26,7 +26,7 @@ const ImageUpload = ({ stateImage, setStateImage }) => {
             type="button"
             className="bg-color-gray text-color-dark py-2 px-3 rounded-md text-sm"
           >
-            Upload Profile Image
+            {title || 'Upload Profile Image'}
           </Button>
           <div className="text-xs flex justify-center flex-col items-center text-center mt-1">
             <p>
