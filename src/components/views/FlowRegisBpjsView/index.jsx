@@ -31,28 +31,27 @@ export default function FlowRegisBpjs() {
       />
 
       <div className="flex justify-evenly items-start max-[600px]:flex-col max-[6000px]:items-center min-[1550px]:justify-center min-[1550px]:gap-40 mt-5">
-      <div className='relative w-max h-max' >
+        <div className='relative w-max h-max z-10 mb-6' >
+          <Image
+            src={laptop}
+            width={500}
+            height={400}
+            alt="laptop.png"
+            className='max-md:w-[400px] max-sm:w-[300px] cursor-pointer'
+            onClick={() => setIsVisible(!isVisible)}
+          />
 
-            <Image
-              src={laptop}
-              width={600}
-              height={400}
-              alt="laptop.png"
-              className='relative cursor-pointer'
-              onClick={() => setIsVisible(!isVisible)}
-            />
-
-        <motion.div animate={isVisible ? show : hide} className='absolute top-10 bottom-0 left-1/2 w-[60%] h-[200px] shadow-xl -z-0' >
-          <video autoPlay muted loop >
-            <source src={videoFlow} type='video/mp4' />
-          </video>
-        </motion.div>
-        
-        <Link className='flex items-center gap-1 justify-center font-semibold font-sans' href={'https://www.youtube.com/watch?v=yRR0w6lcjnY'} >
-          <BsYoutube color='red' />
-          Youtube
-        </Link>
-      </div>
+          <motion.div animate={isVisible ? show : hide} className='absolute top-0 bottom-0 left-1/2 max-md:-translate-x-1/2 w-[60%] h-max shadow-xl -z-0' >
+            <video autoPlay muted loop >
+              <source src={videoFlow} type='video/mp4' />
+            </video>
+          </motion.div>
+          
+          <Link className='flex items-center gap-1 justify-center font-semibold font-sans' href={'https://www.youtube.com/watch?v=yRR0w6lcjnY'} >
+            <BsYoutube color='red' />
+            Youtube
+          </Link>
+        </div>
 
         <div className="max-[380px]:w-full w-max px-6">
           {datasFlow.map((flow) => (
