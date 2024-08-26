@@ -70,3 +70,7 @@ export const loves = "/loves.png"
 export const feedbackAnimation = "/feedback-animation.png"
 
 export const emptyData = '/empty-data.jpg';
+
+
+// video 
+export const videoFlow = "/vid-rs-harapan-bunda.mp4"
