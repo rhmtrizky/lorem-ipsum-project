@@ -4,6 +4,20 @@ import queueActivityService from '@/services/activity/queue';
 import currentDate from '@/utils/currentDate';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { GiDoctorFace } from 'react-icons/gi';
+import { GrUserAdmin } from 'react-icons/gr';
+import { BiCapsule } from 'react-icons/bi';
+import { UsersIcon } from 'lucide-react';
+import { IoIosToday } from 'react-icons/io';
+
+const Card = ({ icon: Icon, label, count }) => (
+  <div className='flex items-center justify-center w-40 h-40 bg-blue-300 rounded-xl p-3'>
+    <p className='flex flex-col items-center justify-center text-sm font-semibold font-sans mt-4 text-white'>
+      <Icon size='30' />
+      {label}: {count}
+    </p>
+  </div>
+);
 
 const AdminDashboardView = () => {
   const [data, setData] = useState([]);
@@ -58,41 +72,19 @@ const AdminDashboardView = () => {
     <AdminLayout>
       <figure className='flex items-center bg-blue-300 w-4/5 h-56 rounded-lg p-8'> 
         <div>
-          <h1 className='text-6xl font-bold font-sans text-white'>Welcome</h1>
-          <h2 className='text-xl font-semibold font-sans mt-4 text-white'>
-            Muhammad Ghifani Ikhsan
-          </h2>
+          <h1 className='text-6xl max-sm:text-2xl max-sm:text-center font-bold font-sans text-white'>Welcome</h1>
         </div>
       </figure>
 
       <div className='mt-10'>
         <h1 className='text-xl font-bold text-blue-400 mb-2'>Report</h1>
-        <div className='flex gap-3'>
-          <div className='flex items-center justify-center w-40 h-40 bg-blue-300 rounded-xl p-3'>
-            <p className='text-sm font-semibold font-sans mt-4 text-white'>
-              Jumlah Dokter: {doctorCount}
-            </p>
-          </div>
-          <div className='flex items-center justify-center w-40 h-40 bg-blue-300 rounded-xl p-3'>
-            <p className='text-sm font-semibold font-sans mt-4 text-white'>
-              Jumlah Admin: {adminCount}
-            </p>
-          </div>
-          <div className='flex items-center justify-center w-40 h-40 bg-blue-300 rounded-xl p-3'>
-            <p className='text-sm font-semibold font-sans mt-4 text-white'>
-              Jumlah Pharmacy: {pharmasyCount}
-            </p>
-          </div>
-          <div className='flex items-center justify-center w-40 h-40 bg-blue-300 rounded-xl p-3'>
-            <p className='text-sm font-semibold font-sans mt-4 text-white'>
-              Jumlah Pasien Terdaftar: {patientCount}
-            </p>
-          </div>
-          <div className='flex items-center justify-center w-40 h-40 bg-blue-300 rounded-xl p-3'>
-            <p className='text-sm font-semibold font-sans mt-4 text-white'>
-              Jumlah Pasien Hari ini: {todayQueueCount}
-            </p>
-          </div>
+
+        <div className='flex flex-wrap gap-3'>
+          <Card icon={GiDoctorFace} label="Jumlah Dokter" count={doctorCount} />
+          <Card icon={GrUserAdmin} label="Jumlah Admin" count={adminCount} />
+          <Card icon={BiCapsule} label="Jumlah Pharmacy" count={pharmasyCount} />
+          <Card icon={UsersIcon} label="Jumlah Pasien Terdaftar" count={patientCount} />
+          <Card icon={IoIosToday} label="Jumlah Pasien Hari ini" count={todayQueueCount} />
         </div>
       </div>
     </AdminLayout>

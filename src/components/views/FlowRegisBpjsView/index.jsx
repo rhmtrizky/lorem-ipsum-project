@@ -34,10 +34,10 @@ export default function FlowRegisBpjs() {
         <div className='relative w-max h-max z-10 mb-6' >
           <Image
             src={laptop}
-            width={500}
+            width={600}
             height={400}
             alt="laptop.png"
-            className='max-md:w-[400px] max-sm:w-[300px] cursor-pointer'
+            className=' max-md:w-[400px] max-sm:w-[300px] cursor-pointer'
             onClick={() => setIsVisible(!isVisible)}
           />
 
