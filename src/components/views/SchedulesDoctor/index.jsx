@@ -11,8 +11,9 @@ import { Button, useDisclosure } from '@nextui-org/react';
 import QueueTicket from '@/components/ui/Form/QueueTicket';
 import useActivity from '@/hooks/useActivity';
 import currentDate from '@/utils/currentDate';
+import SkeletonLine from '@/components/ui/Skeleton/SkeletonLine';
 
-export default function SchedulesDoctor({ data, doctorId }) {
+export default function SchedulesDoctor({ data, doctorId, setToaster }) {
   const { data: session } = useSession();
   const { activities } = useActivity();
   const [user, setUser] = useState({});
@@ -57,8 +58,8 @@ export default function SchedulesDoctor({ data, doctorId }) {
           <div className="flex justify-center items-center w-full">
             <CardDoctorSchedule
               image={data?.image}
-              name={data?.fullname || 'Loading..'}
-              specialist={data?.specialist || 'Loading..'}
+              name={data?.fullname}
+              specialist={data?.specialist}
               queuePasient={queuePasient}
             />
           </div>
@@ -68,19 +69,24 @@ export default function SchedulesDoctor({ data, doctorId }) {
               <p className="text-white font-semibold cursor-default text-[13px]">JADWAL DOKTER</p>
             </div>
             <div className="bg-white w-full h-max p-4 rounded-b-lg">
-              <p className="mb-4 text-md text-semibold text-slate-600">{data?.fullname || 'Loading..'}</p>
+              {data?.fullname ? <p className="mb-4 text-md text-semibold text-slate-600">{data?.fullname}</p> : <SkeletonLine />}
+
               <div className="flex flex-col gap-2.5 font-light">
-                {data?.schedule?.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex justify-between"
-                  >
-                    {item.day}
-                    <div className="flex gap-3">
-                      <span>{item.startTime}</span>-<span>{item.endTime}</span>
-                    </div>
-                  </li>
-                ))}
+                {data?.schedule ? (
+                  data?.schedule?.map((item, index) => (
+                    <li
+                      key={index}
+                      className="flex justify-between"
+                    >
+                      {item.day}
+                      <div className="flex gap-3">
+                        <span>{item.startTime}</span>-<span>{item.endTime}</span>
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <SkeletonLine />
+                )}
               </div>
             </div>
           </div>
@@ -102,6 +108,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
                 <FormAddFamily
                   user={user}
                   setUser={setUser}
+                  setToaster={setToaster}
                 />
               </div>
             )}
@@ -124,6 +131,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
                           user={user}
                           doctorId={doctorId}
                           setTicket={setTicket}
+                          setToaster={setToaster}
                         />
                       </>
                     ) : (
@@ -132,6 +140,7 @@ export default function SchedulesDoctor({ data, doctorId }) {
                         <FormAddPatient
                           user={user}
                           setUser={setUser}
+                          setToaster={setToaster}
                         />
                       </>
                     )}

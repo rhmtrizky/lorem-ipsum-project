@@ -6,13 +6,14 @@ import { useSession } from 'next-auth/react';
 import ModalAddFamily from '../../Modal/ModalAddFamily';
 import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
 import handleImageUpload from '@/utils/uploadImage';
+import ValidateNik from '@/utils/ValidateNik';
 
-export default function FormAddFamily({ user, setUser }) {
+export default function FormAddFamily({ user, setUser, setToaster }) {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [imageFile, setImageFile] = useState(null);
-
+  const { nik, error, handleChangeNik } = ValidateNik();
   const handleAddPatient = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -22,7 +23,7 @@ export default function FormAddFamily({ user, setUser }) {
 
     const newPatient = {
       name: formData.get('name'),
-      nik: formData.get('nik'),
+      nik: nik,
       bpjsNumber: formData.get('bpjsNumber'),
       bornPlace: formData.get('bornPlace'),
       bornDate: formData.get('bornDate'),
@@ -54,10 +55,18 @@ export default function FormAddFamily({ user, setUser }) {
         if (result.status === 200) {
           const response = await userService.detailUser(session?.accessToken);
           setUser(response.data.data);
+          setToaster({
+            variant: 'success',
+            message: 'Patient added successfully',
+          });
         }
       } else {
         const response = await userService.detailUser(session?.accessToken);
         setUser(response.data.data);
+        setToaster({
+          variant: 'success',
+          message: 'Patient added successfully, but failed to upload BPJS Card',
+        });
       }
 
       setIsLoading(false);
@@ -260,8 +269,10 @@ export default function FormAddFamily({ user, setUser }) {
                 className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="NIK"
                 required
+                onChange={(e) => handleChangeNik(e.target.value)}
               />
             </div>
+            <p className="text-sm text-red-500">{error}</p>
           </div>
 
           <div className="w-full">
@@ -347,7 +358,8 @@ export default function FormAddFamily({ user, setUser }) {
         <div className="flex justify-center w-full">
           <button
             type="submit"
-            className="mt-4 bg-primary text-white py-2 px-4 rounded-lg w-full"
+            className={`mt-4 ${error !== '' ? 'bg-blue-200' : 'bg-primary'} text-white py-2 px-4 rounded-lg w-full`}
+            disabled={isLoading || error}
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>

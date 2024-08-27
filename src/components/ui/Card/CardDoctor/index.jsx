@@ -16,7 +16,7 @@ export default function CardDoctor({ name, spesialisasi, image }) {
             width={240}
             height={200}
             alt="doctor.png"
-            className="rounded-lg"
+            className="rounded-lg max-h-[140px] min-h-[140px] object-cover"
           />
         </div>
         <div className="mt-2">

@@ -6,16 +6,14 @@ import { useSession } from 'next-auth/react';
 import ModalAddPatient from '../../Modal/ModalAddPatient';
 import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
 import handleImageUpload from '@/utils/uploadImage';
+import ValidateNik from '@/utils/ValidateNik';
 
-export default function FormAddPatient({ user, setUser }) {
+export default function FormAddPatient({ user, setUser, setToaster }) {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [imageFile, setImageFile] = useState(null);
-
-  console.log(user);
-
-  console.log(user.id);
+  const { nik, error, handleChangeNik } = ValidateNik();
 
   const handleAddPatient = async (e) => {
     e.preventDefault();
@@ -27,7 +25,7 @@ export default function FormAddPatient({ user, setUser }) {
     const data = [
       {
         name: formData.get('name'),
-        nik: formData.get('nik'),
+        nik: nik,
         bpjsNumber: formData.get('bpjsNumber'),
         bornPlace: formData.get('bornPlace'),
         bornDate: formData.get('bornDate'),
@@ -56,10 +54,18 @@ export default function FormAddPatient({ user, setUser }) {
           if (updatedResult.status === 200) {
             const response = await userService.detailUser(session?.accessToken);
             setUser(response.data.data);
+            setToaster({
+              variant: 'success',
+              message: 'Patient added successfully',
+            });
           }
         } else {
           const response = await userService.detailUser(session?.accessToken);
           setUser(response.data.data);
+          setToaster({
+            variant: 'success',
+            message: 'Patient added successfull, but failed image uploaded',
+          });
         }
       }
 
@@ -69,6 +75,10 @@ export default function FormAddPatient({ user, setUser }) {
       setIsLoading(false);
       console.log(err);
       onOpenChange(false);
+      setToaster({
+        variant: 'error',
+        message: 'Failed to add patient',
+      });
     }
   };
 
@@ -263,8 +273,10 @@ export default function FormAddPatient({ user, setUser }) {
                 className="block w-full p-4 ps-10 text-sm text-gray-800 border border-slate-400 focus:border-primary focus:shadow-lg bg-white rounded-lg outline-none"
                 placeholder="NIK"
                 required
+                onChange={(e) => handleChangeNik(e.target.value)}
               />
             </div>
+            <p className="text-sm text-red-500">{error}</p>
           </div>
 
           <div className="w-full">
@@ -347,10 +359,11 @@ export default function FormAddPatient({ user, setUser }) {
           </div>
         </div>
 
-        <div className="w-full flex justify-center">
+        <div className="flex justify-center w-full">
           <button
             type="submit"
-            className="mt-4 bg-primary text-white py-2 px-4 rounded-lg w-full"
+            className={`mt-4 ${error !== '' ? 'bg-blue-200' : 'bg-primary'} text-white py-2 px-4 rounded-lg w-full`}
+            disabled={isLoading || error}
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>

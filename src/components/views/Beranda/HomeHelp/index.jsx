@@ -40,7 +40,7 @@ export default function HomeHelp() {
             <h1 className="text-2xl xl:text-5xl font-bold my-4">
               Kami Hadir untuk <span className="text-primary">Membantu</span> dan <span className="text-primary">Menemukan Solusi</span>
             </h1>
-            <p className="w text-slate-600 font-semibold bg-text-help ">
+            <p className="w text-slate-600 font-semibold bg-text-help hidden md:flex">
               Daftarkan diri Anda untuk menjadi lebih sehat, <br />
               Anda bisa lihat cara daftar dengan mengklik tombol dibawah ini.
             </p>

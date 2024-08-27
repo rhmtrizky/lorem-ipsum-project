@@ -9,7 +9,7 @@ import activityService from '@/services/activity';
 import { useSession } from 'next-auth/react';
 import BookingRules from '@/utils/BookingRules';
 
-export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
+export default function FormQueueTicket({ user, data, doctorId, setTicket, setToaster }) {
   const { data: session } = useSession();
   const [patientIndex, setPatientIndex] = useState(null);
   const [dataPatient, setDataPatient] = useState({});
@@ -17,8 +17,6 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
   const [isLoading, setIsLoading] = useState(false);
   const { activities, setActivities } = useActivity();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  console.log(patientIndex);
 
   useEffect(() => {
     if (patientIndex >= 0) {
@@ -84,22 +82,28 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
       status: 'queue',
     };
 
-    console.log(data);
-
     try {
       const resultQueue = await activityService.addQueue(data, session.accessToken);
-      console.log(resultQueue);
+
       if (resultQueue.status === 200) {
         const result = await activityService.getAllActivities(session.accessToken);
         setActivities(result.data.data);
         setIsLoading(false);
         onOpenChange(false);
         setTicket(resultQueue.data.data);
+        setToaster({
+          variant: 'success',
+          message: 'Queue added successfully',
+        });
       }
     } catch (err) {
       console.log(err);
       setIsLoading(false);
       onOpenChange(false);
+      setToaster({
+        variant: 'error',
+        message: 'Failed to add queue',
+      });
     }
   };
 

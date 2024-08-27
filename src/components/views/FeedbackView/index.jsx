@@ -5,11 +5,9 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-export default function FeedbackView() {
+export default function FeedbackView({ setToaster }) {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log(session);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,10 +35,18 @@ export default function FeedbackView() {
       if (result.status === 200) {
         setIsLoading(false);
         form.reset();
+        setToaster({
+          variant: 'susccess',
+          message: 'Review successfully submitted',
+        });
       }
     } catch (e) {
       console.log(e);
       setIsLoading(false);
+      setToaster({
+        variant: 'error',
+        message: 'Failed to submit review',
+      });
     }
   };
   return (

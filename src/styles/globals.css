@@ -27,7 +27,7 @@ body {
 }
 
 .archivo-black-regular {
-  font-family: "Archivo Black", sans-serif ;
+  font-family: 'Archivo Black', sans-serif;
   font-weight: 800;
   font-style: normal;
 }
@@ -370,10 +370,64 @@ body {
   backdrop-filter: blur(10px);
 }
 
-
 .doctor-profile-settings {
   background: rgb(191, 191, 191);
   background: linear-gradient(39deg, rgba(191, 191, 191, 1) 0%, rgb(121, 104, 230) 56%);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+}
+
+.skeleton-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+/* Skeleton CSS */
+.skeleton {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin: 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(to right, transparent 0%, #f0f0f0 50%, transparent 100%);
+  animation: loading 1.5s infinite;
+}
+
+.skeleton-button {
+  height: 30px;
+  width: 100%;
+  border-radius: 50px;
+}
+.skeleton-image {
+  height: 130px;
+  width: 100%;
+}
+.skeleton-title {
+  height: 24px;
+  width: 70%;
+}
+
+.skeleton-text {
+  height: 16px;
+  width: 100%;
+}
+
+@keyframes loading {
+  0% {
+    left: -150px;
+  }
+  100% {
+    left: 100%;
+  }
 }

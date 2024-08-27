@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import userService from '@/services/user';
 import FormEditUser from '@/components/ui/Form/FormEditUser';
+import SkeletonLine from '@/components/ui/Skeleton/SkeletonLine';
 
 export default function PatientDashboardLayout({ children }) {
   const router = useRouter();
@@ -111,9 +112,10 @@ export default function PatientDashboardLayout({ children }) {
               setUser={setUser}
             />
           </div>
-          <div className="mt-12 text-center">
-            <p>{user.fullname || 'Loading..'}</p>
-            <p className="text-xs">{user.email}</p>
+          <div className="mt-12 text-center px-5">
+            {user?.fullname ? <p>{user.fullname}</p> : <SkeletonLine />}
+            {user?.email ? <p className="text-xs">{user.email}</p> : <SkeletonLine />}
+
             <Link
               href={'/patient/dashboard/account'}
               className={`flex items-center justify-center gap-1.5 mt-3 mb-1 font-semibold ${isHome[3] === 'account' ? 'text-purple-700' : 'text-black'} `}

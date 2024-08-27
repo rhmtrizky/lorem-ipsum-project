@@ -8,7 +8,6 @@ import HomeHelp from '../HomeHelp';
 import HomeLike from '../HomeLike';
 import HomeQualifiedDoctors from '../HomeQualifiedDoctor';
 import HomeFeedback from '../HomeFeedback';
-import Footer from '@/components/ui/Footer';
 
 export default function HomeMain() {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +37,7 @@ export default function HomeMain() {
 
           <motion.section
             // style={{ boxShadow: shadow }}
-            className="flex justify-center min-h-[60vh] mt-2"
+            className="flex justify-center min-h-[60vh] mt-7"
           >
             <div className="w-full flex justify-center">
               <HomeHelp />
@@ -53,13 +52,9 @@ export default function HomeMain() {
             <HomeQualifiedDoctors />
           </section>
 
-          <section className='xl:mt-12' >
+          <section className="mb-5">
             <HomeFeedback />
           </section>
-
-          <footer>
-            <Footer />
-          </footer>
         </>
       )}
     </>
