@@ -120,9 +120,9 @@ export default function FindDoctor() {
             ></div>
           </div>
         </div>
-        {isLoading ? (
+        {!isLoading ? (
           <div className="flex justify-center w-full px-2">
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-7 md:gap-6 sm:gap-2 gap-2 ">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-7 md:gap-6 sm:gap-3 gap-3 ">
               {Array.from({ length: 4 }).map((_, index) => (
                 <SkeletonDoctorCard key={index} />
               ))}
@@ -130,7 +130,6 @@ export default function FindDoctor() {
           </div>
         ) : (
           <div className="flex justify-center w-full px-2">
-            {/* <SkeletonCard /> */}
             {doctors.length !== 0 ? (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-7 md:gap-6 sm:gap-2 gap-2">
                 {doctors.slice(0, visibleDoctors).map((doctor, index) => (
