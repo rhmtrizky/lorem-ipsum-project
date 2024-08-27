@@ -7,7 +7,7 @@ import Image from 'next/image'
 
 export default function Footer() {
     return (
-        <div className='w-full h-full border' >
+        <footer className='w-full h-full' >
             <div className="bg-slate-900  flex items- justify-between w-full h-max min-[645px]:h-[252px] p-6" >
                 <div className='flex max-[645px]:flex-col gap-12'>
                     <LogoHarapanBunda/>
@@ -51,6 +51,6 @@ export default function Footer() {
             <div className='w-full h-12 flex items-center justify-center bg-primary' >
                 <span>Copyright | 2024</span>
             </div>
-        </div>
+        </footer>
     )
 }

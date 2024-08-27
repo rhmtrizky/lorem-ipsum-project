@@ -5,6 +5,7 @@ import 'boxicons/css/boxicons.min.css';
 import { useRouter } from 'next/router';
 import Header from '@/components/ui/Header';
 import { useEffect } from 'react';
+import Footer from '@/components/ui/Footer';
 
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
       <NextUIProvider>
         {showNavbar && <Header />}
         <Component {...pageProps} />
+        {<Footer/>}
       </NextUIProvider>
     </SessionProvider>
   );

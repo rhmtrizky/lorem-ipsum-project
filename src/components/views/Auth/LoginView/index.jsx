@@ -1,59 +1,59 @@
-import Button from '@/components/ui/Button';
-import InputUi from '@/components/ui/Input';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import GoogleIcon from '../../../../../public/googleIcon.png';
-import AuthLayout from '@/components/layouts/AuthLayout';
+import Button from '@/components/ui/Button'
+import InputUi from '@/components/ui/Input'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import GoogleIcon from '../../../../../public/googleIcon.png'
+import AuthLayout from '@/components/layouts/AuthLayout'
 
 const LoginView = () => {
   
-  const { push, query } = useRouter();
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { push, query } = useRouter()
+  const [isError, setIsError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formErrors, setFormErrors] = useState({
     email: '',
     password: '',
-  });
+  })
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
+    event.preventDefault()
+    setIsLoading(true)
 
-    const form = event.target;
-    const callbackUrl = query.callbackUrl || '/';
+    const form = event.target
+    const callbackUrl = query.callbackUrl || '/'
     const res = await signIn('credentials', {
       redirect: false,
       email: form.email.value,
       password: form.password.value,
       callbackUrl,
-    });
+    })
 
     if (!form.email.value || !form.password.value) {
       setFormErrors({
         email: !form.email.value ? 'Email is required' : '',
         password: !form.password.value ? 'Password is required' : '',
-      });
+      })
       setTimeout(() => {
         setFormErrors({
           email: '',
           password: '',
-        });
-      }, 3000);
-      setIsLoading(false);
-      return;
+        })
+      }, 3000)
+      setIsLoading(false)
+      return
     }
     if (!res?.error) {
-      push(callbackUrl);
-      setIsLoading(false);
-      form.reset();
+      push(callbackUrl)
+      setIsLoading(false)
+      form.reset()
     } else {
-      setIsLoading(false);
-      setIsError(true);
+      setIsLoading(false)
+      setIsError(true)
       setTimeout(() => {
-        setIsError(false);
-      }, 3000);
+        setIsError(false)
+      }, 3000)
     }
-  };
+  }
   return (
     <AuthLayout
       title="Login"
@@ -112,7 +112,7 @@ const LoginView = () => {
         </form>
       </div>
     </AuthLayout>
-  );
-};
+  )
+}
 
-export default LoginView;
+export default LoginView

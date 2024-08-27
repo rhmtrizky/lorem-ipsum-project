@@ -56,10 +56,6 @@ export default function HomeMain() {
           <section className='xl:mt-12' >
             <HomeFeedback />
           </section>
-
-          <footer>
-            <Footer />
-          </footer>
         </>
       )}
     </>

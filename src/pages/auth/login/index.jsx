@@ -7,7 +7,7 @@ const LoginPage = () => {
       <Head>
         <title>RS Harapan Bunda | Login</title>
       </Head>
-      <LoginView />;
+      <LoginView />
     </>
   )
 };
