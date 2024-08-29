@@ -40,7 +40,7 @@ export default function FormAddFamily({ user, setUser, setToaster }) {
       const currentPatients = user.patient || [];
       const updatedPatients = [...currentPatients, newPatient];
 
-      let result = await userService.updateUser(user.id, { patient: updatedPatients }, session?.accessToken);
+      const result = await userService.updateUser(user.id, { patient: updatedPatients }, session?.accessToken);
       console.log(result);
 
       if (result.status === 200) {
@@ -49,24 +49,24 @@ export default function FormAddFamily({ user, setUser, setToaster }) {
 
           updatedPatients[updatedPatients.length - 1].bpjsCard = downloadUrl;
 
-          result = await userService.updateUser(user.id, { patient: updatedPatients }, session?.accessToken);
-        }
+          const result = await userService.updateUser(user.id, { patient: updatedPatients }, session?.accessToken);
 
-        if (result.status === 200) {
+          if (result.status === 200) {
+            const response = await userService.detailUser(session?.accessToken);
+            setUser(response.data.data);
+            setToaster({
+              variant: 'success',
+              message: 'Aggota keluarga ditambahkan',
+            });
+          }
+        } else {
           const response = await userService.detailUser(session?.accessToken);
           setUser(response.data.data);
           setToaster({
             variant: 'success',
-            message: 'Patient added successfully',
+            message: 'Aggota keluarga ditambahkan, namun gagal/tidak menambahkan BPJS Card',
           });
         }
-      } else {
-        const response = await userService.detailUser(session?.accessToken);
-        setUser(response.data.data);
-        setToaster({
-          variant: 'success',
-          message: 'Patient added successfully, but failed to upload BPJS Card',
-        });
       }
 
       setIsLoading(false);
@@ -75,6 +75,10 @@ export default function FormAddFamily({ user, setUser, setToaster }) {
       setIsLoading(false);
       console.log(err);
       onOpenChange(false);
+      setToaster({
+        variant: 'error',
+        message: 'Aggota keluarga gagal ditambahkan',
+      });
     }
   };
 

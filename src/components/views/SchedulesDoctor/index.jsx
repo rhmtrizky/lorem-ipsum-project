@@ -1,6 +1,6 @@
 import { addUser, bufferBro } from '@/assets/images/images';
 import { signIn, useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CardDoctorSchedule from '@/components/ui/Card/CardDoctorSchedule';
 import userService from '@/services/user';
 import Image from 'next/image';
@@ -12,8 +12,10 @@ import QueueTicket from '@/components/ui/Form/QueueTicket';
 import useActivity from '@/hooks/useActivity';
 import currentDate from '@/utils/currentDate';
 import SkeletonLine from '@/components/ui/Skeleton/SkeletonLine';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
-export default function SchedulesDoctor({ data, doctorId, setToaster }) {
+export default function SchedulesDoctor({ data, doctorId }) {
+  const { setToaster } = useContext(ToasterContext);
   const { data: session } = useSession();
   const { activities } = useActivity();
   const [user, setUser] = useState({});
@@ -131,7 +133,6 @@ export default function SchedulesDoctor({ data, doctorId, setToaster }) {
                           user={user}
                           doctorId={doctorId}
                           setTicket={setTicket}
-                          setToaster={setToaster}
                         />
                       </>
                     ) : (

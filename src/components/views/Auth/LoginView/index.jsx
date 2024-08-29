@@ -2,12 +2,13 @@ import Button from '@/components/ui/Button';
 import InputUi from '@/components/ui/Input';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import GoogleIcon from '../../../../../public/googleIcon.png';
 import AuthLayout from '@/components/layouts/AuthLayout';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
 const LoginView = () => {
-  
+  const { setToaster } = useContext(ToasterContext);
   const { push, query } = useRouter();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,12 +47,20 @@ const LoginView = () => {
       push(callbackUrl);
       setIsLoading(false);
       form.reset();
+      setToaster({
+        variant: 'success',
+        message: 'Login Berhasil',
+      });
     } else {
       setIsLoading(false);
       setIsError(true);
       setTimeout(() => {
         setIsError(false);
       }, 3000);
+      setToaster({
+        variant: 'error',
+        message: 'Email/password salah',
+      });
     }
   };
   return (
@@ -81,7 +90,6 @@ const LoginView = () => {
         </>
       }
     >
-      
       <div className="lg:min-w-[320px] md:min-w-[320px] sm:w-[290px] w-[290px]">
         <form
           className="flex w-full flex-col justify-center gap-2"

@@ -29,7 +29,6 @@ export default function Schedules({ setToaster }) {
       <SchedulesDoctor
         data={data}
         doctorId={id}
-        setToaster={setToaster}
       />
     </>
   );

@@ -1,17 +1,19 @@
 import { useSession } from 'next-auth/react';
 import { Button, useDisclosure } from '@nextui-org/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 import ModalEditUser from '../../Modal/ModalEditUser';
 import userService from '@/services/user';
 import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
 import Image from 'next/image';
 import handleImageUpload from '@/utils/uploadImage';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
 export default function FormEditUser({ user, setUser }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session } = useSession();
   const [imageFile, setImageFile] = useState(null);
+  const { setToaster } = useContext(ToasterContext);
 
   const [formData, setFormData] = useState({
     fullname: user.fullname,
@@ -56,16 +58,28 @@ export default function FormEditUser({ user, setUser }) {
             setUser(data.data);
             onOpenChange(false);
             setFormData({});
+            setToaster({
+              variant: 'success',
+              message: 'Berhasil mengupdate profile',
+            });
           }
         } else {
           const { data } = await userService.detailUser(session.accessToken);
           setUser(data.data);
           onOpenChange(false);
           setFormData({});
+          setToaster({
+            variant: 'success',
+            message: 'Berhasil mengupdate profile',
+          });
         }
       }
     } catch (error) {
       console.error('Error updating user:', error);
+      setToaster({
+        variant: 'error',
+        message: 'Gagal mengupdate profile',
+      });
     }
   };
 

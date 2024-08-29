@@ -1,13 +1,17 @@
 import { feedbackAnimation } from '@/assets/images/images';
+import { ToasterContext } from '@/contexts/ToasterContext';
 import reviewService from '@/services/review';
 import { Button, Select, SelectItem, Textarea } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useContext, useState } from 'react';
 
-export default function FeedbackView({ setToaster }) {
+export default function FeedbackView() {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const { setToaster } = useContext(ToasterContext);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,21 +35,21 @@ export default function FeedbackView({ setToaster }) {
 
     try {
       const result = await reviewService.addReview(data, session?.accessToken);
-      console.log(result);
       if (result.status === 200) {
         setIsLoading(false);
         form.reset();
         setToaster({
-          variant: 'susccess',
-          message: 'Review successfully submitted',
+          variant: 'success',
+          message: 'Terima kasih sudah memberikan masukan',
         });
+        router.push('/');
       }
     } catch (e) {
       console.log(e);
       setIsLoading(false);
       setToaster({
         variant: 'error',
-        message: 'Failed to submit review',
+        message: 'Terjadi kesalahan, silahkan coba lagi',
       });
     }
   };

@@ -56,7 +56,7 @@ export default function FormAddPatient({ user, setUser, setToaster }) {
             setUser(response.data.data);
             setToaster({
               variant: 'success',
-              message: 'Patient added successfully',
+              message: 'Berhasil menambahkan data pasien',
             });
           }
         } else {
@@ -64,7 +64,7 @@ export default function FormAddPatient({ user, setUser, setToaster }) {
           setUser(response.data.data);
           setToaster({
             variant: 'success',
-            message: 'Patient added successfull, but failed image uploaded',
+            message: 'Berhasil menambahkan data pasien, namun tidak/gagal upload BPJS Card',
           });
         }
       }
@@ -77,7 +77,7 @@ export default function FormAddPatient({ user, setUser, setToaster }) {
       onOpenChange(false);
       setToaster({
         variant: 'error',
-        message: 'Failed to add patient',
+        message: 'Gagal menambahkan data pasien',
       });
     }
   };

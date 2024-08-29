@@ -127,7 +127,7 @@ const ActivityView = () => {
                 setState={setSearchActivities}
               />
             </div>
-            <div className="w-2/5 flex justify-end">
+            <div className="lg:w-2/5 md:2/5 sm: w-full w-full flex justify-end">
               <Button
                 type="submit"
                 onClick={handleRefresh}
@@ -152,7 +152,7 @@ const ActivityView = () => {
               </div>
               <div className="w-full flex justify-end max-md:mt-6">
                 <div className="flex justify-end items-end gap-1">
-                  <div className='flex items-center max-[700px]:flex-col  max-[700px]:justify-center' >
+                  <div className="flex items-center max-[700px]:flex-col  max-[700px]:justify-center">
                     <p className="text-neutral-700 text-sm">Filter by date:</p>
                     <InputUi
                       name="date"

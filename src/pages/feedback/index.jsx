@@ -8,7 +8,7 @@ export default function Feedback({ setToaster }) {
       <Head>
         <title>RS Harapan Bunda | Feedback</title>
       </Head>
-      <FeedbackView setToaster={setToaster} />
+      <FeedbackView />
     </>
   );
 }

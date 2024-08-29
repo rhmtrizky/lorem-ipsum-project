@@ -2,16 +2,18 @@ import InputUi from '@/components/ui/Input';
 import userService from '@/services/user';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { roles, gender, golDarah } from '@/constraint/adminPanel';
 import Image from 'next/image';
 import ImageUpload from '../../Ui/ImageUpload';
 import handleImageUpload from '@/utils/uploadImage';
 import useSpecialist from '@/hooks/useSpecialist';
 import ModalUi from '../../Ui/Modal';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
 const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, setUsers }) => {
   const session = useSession();
+  const { setToaster } = useContext(ToasterContext);
   const { specialists } = useSpecialist();
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState(dataUpdateUser.role);
@@ -114,6 +116,10 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
             setUpdateUser({});
             onOpenChange(false);
             setIsLoading(false);
+            setToaster({
+              variant: 'success',
+              message: 'Pengguna berhasil diupdate',
+            });
           }
         } else {
           const { data } = await userService.getAllUsers(session.data.accessToken);
@@ -121,11 +127,19 @@ const ModalUpdateUser = ({ dataUpdateUser, setUpdateUser, onOpenChange, isOpen, 
           setUpdateUser({});
           onOpenChange(false);
           setIsLoading(false);
+          setToaster({
+            variant: 'success',
+            message: 'Pengguna berhasil diupdate',
+          });
         }
       }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      setToaster({
+        variant: 'success',
+        message: 'Pengguna gagal diupdate',
+      });
     }
   };
 

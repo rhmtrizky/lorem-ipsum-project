@@ -27,6 +27,8 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
     ]
   );
 
+  console.log(ticketQueue);
+
   const addResepDokter = () => {
     setResepDokter([...resepDokter, { namaObat: '', dosis: '', hari: '', catatan: '' }]);
   };
@@ -140,12 +142,14 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
           // Fetch the updated activities
           const activitiesResult = await activityService.getAllActivities(session.accessToken);
           const updatedActivities = activitiesResult.data.data;
+          console.log(updatedActivities);
 
           // Sort activities by queue number and date
           updatedActivities.sort((a, b) => a.queueNumber.localeCompare(b.queueNumber));
 
-          // Create a map to keep track of the last index for each specialist
+          // Create a map to keep track of the last index for each specialist and doctorId
           const specialistCheckupIndex = {};
+
           updatedActivities.forEach((entry, index) => {
             if (entry.status === 'take medicine') {
               // Update the index of the last checkup activity for each specialist
@@ -153,13 +157,13 @@ const ModalTicketQueue = ({ onOpenChange, isOpen, users, ticketQueue, setTicketQ
             }
           });
 
-          // Update the status of subsequent entries with same specialist and consecutive queue numbers
+          // Update the status of subsequent entries with same specialist, doctorId, and consecutive queue numbers
           const newActivities = updatedActivities.map((activity, index) => {
             const specialist = activity.specialist;
             const checkupIndex = specialistCheckupIndex[specialist];
             const currentActivityDate = new Date(activity.bookDate).toDateString();
 
-            if (checkupIndex !== undefined && index > checkupIndex && index <= checkupIndex + 1 && activity.status === 'preparing' && new Date(updatedActivities[checkupIndex].bookDate).toDateString() === currentActivityDate) {
+            if (checkupIndex !== undefined && index > checkupIndex && index <= checkupIndex + 1 && activity.status === 'preparing' && new Date(updatedActivities[checkupIndex].bookDate).toDateString() === currentActivityDate && activity.doctorId === updatedActivities[checkupIndex].doctorId) {
               return { ...activity, status: 'checkup' };
             }
             return activity;

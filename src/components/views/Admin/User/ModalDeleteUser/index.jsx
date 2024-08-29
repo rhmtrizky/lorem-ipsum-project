@@ -1,11 +1,13 @@
 import userService from '@/services/user';
 import { Button } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ModalUi from '../../Ui/Modal';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
 const ModalDeleteUser = ({ dataDeleteUser, setDeleteUser, onOpenChange, isOpen, setUsers }) => {
   const session = useSession();
+  const { setToaster } = useContext(ToasterContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteUser = async (event) => {
@@ -18,10 +20,18 @@ const ModalDeleteUser = ({ dataDeleteUser, setDeleteUser, onOpenChange, isOpen, 
         setUsers(data.data);
         setDeleteUser({});
         setIsLoading(false);
+        setToaster({
+          variant: 'success',
+          message: 'Berhasil menghapus user',
+        });
       }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      setToaster({
+        variant: 'error',
+        message: 'Gagal menghapus user',
+      });
     }
   };
 

@@ -9,7 +9,7 @@ import activityService from '@/services/activity';
 import { useSession } from 'next-auth/react';
 import BookingRules from '@/utils/BookingRules';
 
-export default function FormQueueTicket({ user, data, doctorId, setTicket, setToaster }) {
+export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
   const { data: session } = useSession();
   const [patientIndex, setPatientIndex] = useState(null);
   const [dataPatient, setDataPatient] = useState({});
@@ -60,6 +60,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket, setTo
       activities,
       selectedSpesialist,
       bookDate,
+      doctorId,
     });
     console.log(queueNumber);
 
@@ -91,19 +92,11 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket, setTo
         setIsLoading(false);
         onOpenChange(false);
         setTicket(resultQueue.data.data);
-        setToaster({
-          variant: 'success',
-          message: 'Queue added successfully',
-        });
       }
     } catch (err) {
       console.log(err);
       setIsLoading(false);
       onOpenChange(false);
-      setToaster({
-        variant: 'error',
-        message: 'Failed to add queue',
-      });
     }
   };
 

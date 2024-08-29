@@ -89,7 +89,7 @@ export default function AccountView() {
                       className={`w-full box-shadow ${ticket.bookDate === currentDate() ? 'bg-blue-200' : 'bg-white'} rounded-lg p-5 flex flex-col gap-3`}
                       key={ticket.id}
                     >
-                      <div className="flex justify-between items-center">
+                      <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col justify-between lg:items-center md:items-center sm:items-start items-start">
                         <div className="text-sm text-sm font-semibold text-slate-600 flex flex-col gap-1">
                           <div>
                             <p className="flex gap-1 items-center">
@@ -105,9 +105,9 @@ export default function AccountView() {
                             </p>
                           </div>
                         </div>
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center mt-3">
                           <div className="text-sm font-semibold text-slate-600 flex items-center gap-1">
-                            <p className="hidden sm:block">Status </p>
+                            <p>Status </p>
                             <span
                               className={`px-4 py-1 rounded-full  ${
                                 ticket.status === 'queue' ? 'bg-blue-500 text-white' : ticket.status === 'preparing' ? 'bg-blue-500 text-white' : ticket.status === 'take medicine' ? 'bg-blue-500 text-white' : ticket.status === 'done' ? 'bg-green-500 text-white' : ticket.status === 'expired' ? 'bg-red-500 text-white' : ''

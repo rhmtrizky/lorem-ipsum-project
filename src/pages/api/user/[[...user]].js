@@ -31,10 +31,6 @@ export default async function handler(req, res) {
       if (decoded && decoded.role === 'admin') {
         const { data } = req.body;
 
-        if (data.nik.length !== 16 || !/^\d+$/.test(data.nik)) {
-          return res.status(400).json({ status: false, code: 400, message: 'Invalid NIK' });
-        }
-
         data.password = await bcrypt.hash(data.password, 10);
 
         try {

@@ -1,9 +1,9 @@
 import { hospitalPurple, stetoskopPurple, userIcon } from '@/assets/images/images';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
+import SkeletonLine from '../Skeleton/SkeletonLine';
 
 const ProfileSettingAdmin = ({ data, setOpenModal, onOpen, handleChangeButton, profile, schedule }) => {
-  console.log(data);
   return (
     <div className="w-full flex justify-center">
       <div className="w-[85%] flex flex-col ">
@@ -40,7 +40,7 @@ const ProfileSettingAdmin = ({ data, setOpenModal, onOpen, handleChangeButton, p
             >
               Edit <i className="bx bxs-message-square-edit text-lg"></i>
             </Button>
-            <h1 className="font-semibold text-2xl ">{data.fullname}</h1>
+            <h1 className="font-semibold text-2xl ">{data.fullname || 'loading...'}</h1>
             <div className="flex items-center gap-1.5 ">
               <Image
                 src={stetoskopPurple}
@@ -48,7 +48,7 @@ const ProfileSettingAdmin = ({ data, setOpenModal, onOpen, handleChangeButton, p
                 height={20}
                 alt="stetoskop.png"
               />
-              {data.role === 'doctor' ? <p className="text-[#654AB4] cursor-default text-[16px]">{data?.specialist?.charAt(0).toUpperCase() + data?.specialist?.slice(1)}</p> : <p className="text-[#654AB4] cursor-default text-[16px]">{data?.role?.charAt(0).toUpperCase() + data?.role?.slice(1)}</p>}
+              {data.role === 'doctor' ? <p className="text-[#654AB4] cursor-default text-[16px]">{data?.specialist?.charAt(0).toUpperCase() + data?.specialist?.slice(1)}</p> : <p className="text-[#654AB4] cursor-default text-[16px]">{data?.role?.charAt(0).toUpperCase() + data?.role?.slice(1) || 'loading...'}</p>}
             </div>
             <div className="flex items-center gap-1.5 ">
               <Image
@@ -76,7 +76,7 @@ const ProfileSettingAdmin = ({ data, setOpenModal, onOpen, handleChangeButton, p
               </div>
             )}
             {data.role === 'doctor' && (
-              <div className="flex w-[50%] mt-2 h-fit rounded-lg border-[1px] border-slate-300 justify-center text-sm">
+              <div className="flex lg:w-[50%] md:w-[70%] sm:w-[90%] w-[90%] mt-2 h-fit rounded-lg border-[1px] border-slate-300 justify-center text-sm">
                 {schedule ? (
                   <div className="flex flex-col gap-2.5 font-light w-full p-5 ">
                     {data?.schedule?.map((item, index) => (
@@ -116,7 +116,7 @@ const ProfileSettingAdmin = ({ data, setOpenModal, onOpen, handleChangeButton, p
               </div>
             )}
             {data.role === 'pharmacy' && (
-              <div className="flex w-[50%] mt-2 h-fit rounded-lg border-[1px] border-slate-300 justify-center text-sm">
+              <div className="flex lg:w-[50%] md:w-[70%] sm:w-[90%] w-[90%] mt-2 h-fit rounded-lg border-[1px] border-slate-300 justify-center text-sm">
                 <div className="flex flex-col gap-2.5 font-light w-full p-5">
                   <li className="flex justify-between w-full text-blue-900">
                     <p className="font-semibold">Phone Number</p>

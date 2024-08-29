@@ -1,7 +1,6 @@
-import DoctorDashboardView from '@/components/views/Doctor/Dashboard';
+import PatientQueueView from '@/components/views/Doctor/PatientQueue';
 
-const DoctorPage = () => {
-  return <DoctorDashboardView />;
+const QueuePage = () => {
+  return <PatientQueueView />;
 };
-
-export default DoctorPage;
+export default QueuePage;

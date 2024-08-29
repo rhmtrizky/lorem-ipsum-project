@@ -2,7 +2,7 @@ import InputUi from '@/components/ui/Input';
 import userService from '@/services/user';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { roles, gender, golDarah } from '@/constraint/adminPanel';
 import specialistService from '@/services/specialist';
 import ImageUpload from '../../Ui/ImageUpload';
@@ -10,9 +10,11 @@ import handleImageUpload from '@/utils/uploadImage';
 import useSpecialist from '@/hooks/useSpecialist';
 import ModalUi from '../../Ui/Modal';
 import ValidateNik from '@/utils/ValidateNik';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
 const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
   const session = useSession();
+  const { setToaster } = useContext(ToasterContext);
   const { nik, error, handleChangeNik } = ValidateNik();
   const { specialists, setSpecialists } = useSpecialist();
   const formRef = useRef(null);
@@ -113,6 +115,10 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
               onOpenChange(false);
               setIsLoading(false);
               setAddUser({ status: false });
+              setToaster({
+                variant: 'success',
+                message: 'Berhasil menambahkan user baru',
+              });
             }
           } catch (error) {
             console.error('Image upload failed:', error);
@@ -123,6 +129,10 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
           onOpenChange(false);
           setIsLoading(false);
           setAddUser({ status: false });
+          setToaster({
+            variant: 'success',
+            message: 'Berhasil menambahkan user baru',
+          });
         }
       }
     } catch (err) {
@@ -130,6 +140,10 @@ const ModalAddUser = ({ onOpenChange, isOpen, setUsers, setAddUser }) => {
       onOpenChange(false);
       setIsLoading(false);
       setAddUser({ status: false });
+      setToaster({
+        variant: 'success',
+        message: 'Gagal menambahkan user baru',
+      });
     }
   };
 
