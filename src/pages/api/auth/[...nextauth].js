@@ -20,10 +20,12 @@ const authOptions = {
       },
       async authorize(credentials) {
         const { email, password } = credentials;
+
         const user = await signIn(email);
+
         if (user) {
           const passwordConfirm = await compare(password, user.password);
-          if (passwordConfirm) {
+          if (passwordConfirm && user.isVerified) {
             return user;
           } else {
             return null;

@@ -36,6 +36,7 @@ export async function retrieveDataByField(collectionName, field, value) {
 export async function addData(collectionName, data, callback) {
   await addDoc(collection(firestore, collectionName), data)
     .then((res) => {
+      console.log(res.id);
       callback(true, res);
     })
     .catch((error) => {

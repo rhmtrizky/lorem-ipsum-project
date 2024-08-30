@@ -20,10 +20,10 @@ const AppShell = ({ children }) => {
   // header and footer
   const router = useRouter();
 
-  const excludedPathsNavbar = ['/auth', '/admin', '/doctor', '/pharmacy', '/404'];
+  const excludedPathsNavbar = ['/auth', '/admin', '/doctor', '/pharmacy', '/404', '/verify-email'];
   const showNavbar = !excludedPathsNavbar.some((path) => router.pathname.startsWith(path));
 
-  const excludedPathsFooter = ['/auth', '/admin', '/doctor', '/pharmacy', '/404', '/patient', '/schedules', '/find-doctor'];
+  const excludedPathsFooter = ['/auth', '/admin', '/doctor', '/pharmacy', '/404', '/patient', '/schedules', '/find-doctor', '/verify-email'];
   const showFooter = !excludedPathsFooter.some((path) => router.pathname.startsWith(path));
   return (
     <NextUIProvider>
