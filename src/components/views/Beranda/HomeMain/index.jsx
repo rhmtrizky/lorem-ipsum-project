@@ -32,15 +32,17 @@ export default function HomeMain() {
         <Loader />
       ) : (
         <>
-          <section className="w-full h-fit relative flex flex-col min-[774px]:flex-row justify-center gap-3 mt-3">
-            <div className="w-full min-[774px]:w-[80%] xl:w-full flex justify-center">
-              <HomeBanner />
+        <section className="w-full 2xl:flex 2xl:justify-center h-fit relative mt-3">
+            <div className='w-full min-[1600px]:w-[90%] flex flex-col min-[774px]:flex-row justify-center gap-3 ' >
+              <div className="w-full min-[774px]:w-[80%] xl:w-[90%] flex justify-center">
+                <HomeBanner />
+              </div>
+              <PoliCard
+                setDetailQueue={setDetailQueue}
+                onOpen={onOpen}
+              />
             </div>
-            <PoliCard
-              setDetailQueue={setDetailQueue}
-              onOpen={onOpen}
-            />
-          </section>
+        </section>
 
           <motion.section
             // style={{ boxShadow: shadow }}
@@ -55,8 +57,10 @@ export default function HomeMain() {
             <HomeLike />
           </section>
 
-          <section className=" m-5">
-            <HomeQualifiedDoctors />
+          <section className="min-[1600px]:flex min-[1600px]:justify-center m-5">
+            <div className='min-[1600px]:w-[90%] ' >
+              <HomeQualifiedDoctors />
+            </div>
           </section>
 
           <section className="mb-5">
