@@ -1,5 +1,7 @@
+import { ToasterContext } from '@/contexts/ToasterContext';
 import { addUser, bufferBro } from '@/assets/images/images';
 import { signIn, useSession } from 'next-auth/react';
+import { Button, useDisclosure } from '@nextui-org/react';
 import React, { useContext, useEffect, useState } from 'react';
 import CardDoctorSchedule from '@/components/ui/Card/CardDoctorSchedule';
 import userService from '@/services/user';
@@ -7,12 +9,10 @@ import Image from 'next/image';
 import FormQueueTicket from '@/components/ui/Form/FormQueueTicket';
 import FormAddFamily from '@/components/ui/Form/FormAddFamily';
 import FormAddPatient from '@/components/ui/Form/FormAddPatient';
-import { Button, useDisclosure } from '@nextui-org/react';
 import QueueTicket from '@/components/ui/Form/QueueTicket';
 import useActivity from '@/hooks/useActivity';
 import currentDate from '@/utils/currentDate';
 import SkeletonLine from '@/components/ui/Skeleton/SkeletonLine';
-import { ToasterContext } from '@/contexts/ToasterContext';
 
 export default function SchedulesDoctor({ data, doctorId }) {
   const { setToaster } = useContext(ToasterContext);
@@ -163,7 +163,6 @@ export default function SchedulesDoctor({ data, doctorId }) {
                   width={400}
                   height={400}
                   alt="buffer-bro.png"
-                  className="border"
                 />
               </div>
             </div>

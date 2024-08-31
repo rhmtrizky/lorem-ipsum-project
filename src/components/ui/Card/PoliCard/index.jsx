@@ -90,7 +90,7 @@ export default function PoliCard({ onOpen, setDetailQueue }) {
                 </div>
                 <h3 className="text-primary font-bold text-sm">{poli.name}</h3>
               </div>
-              <div className="flex justify-between items-center ">
+              <div className="flex max-lg:flex-col max-lg:items-start justify-between xl:items-center ">
                 <div className="flex gap-1 text-slate-500 text-[12px]">
                   <p>Total Antrian: </p>
                   <motion.p>{arrayPoli[index]}</motion.p>
@@ -98,7 +98,7 @@ export default function PoliCard({ onOpen, setDetailQueue }) {
                 <button
                   type="button"
                   size="xs"
-                  className="bg-blue-500 text-white px-2 py-1 rounded-md text-[10px]"
+                  className="bg-blue-500 text-white px-2 py-0.5 rounded-md text-[10px]"
                   onClick={() => {
                     setDetailQueue({
                       specialist: poli.name.toLowerCase(),
