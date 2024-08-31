@@ -7,6 +7,9 @@ module.exports = {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    // screens: {
+    //   '2xdesktop': '1600px'
+    // },
     extend: {
       colors: {
         "primary": "#654AB4",

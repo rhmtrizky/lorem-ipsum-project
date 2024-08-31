@@ -15,7 +15,7 @@ export default function SocialMedia() {
                     src={linkedin}
                     width={13}
                     height={13}
-                    alt="linkedin.png"
+                    alt="linkedin"
                 />
             </motion.div>
             <motion.div
@@ -26,7 +26,7 @@ export default function SocialMedia() {
                     src={twitter}
                     width={13}
                     height={13}
-                    alt="mail.png"
+                    alt="mail"
                 />
             </motion.div>
 
@@ -38,7 +38,7 @@ export default function SocialMedia() {
                     src={instagram}
                     width={15}
                     height={15}
-                    alt="instagram.png"
+                    alt="instagram"
                 />
         </motion.div>
         </figure>

@@ -44,7 +44,7 @@ export default function HomeFeedback() {
     <div>
       <div className="text-center">
         <h2 className="text-[40px] font-archivoBlack font-extrabold text-primary">What People Are Saying</h2>
-        <p className="text-slate-500">
+        <p className="text-slate-500 mb-4">
           Dont just take our word for it. Here what real <br />
           <b>people</b> are saying about Harapan Bunda Hospital
         </p>

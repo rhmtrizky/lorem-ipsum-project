@@ -26,7 +26,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
       <NextUIProvider>
         {showNavbar && <Header />}
         <Component {...pageProps} />
-        {<Footer/>}
+        {/* {<Footer/>} */}
       </NextUIProvider>
     </SessionProvider>
   );

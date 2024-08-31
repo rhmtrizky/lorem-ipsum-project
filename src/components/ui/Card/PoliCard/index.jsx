@@ -54,7 +54,7 @@ export default function PoliCard() {
   return (
     <>
       {/* Tampilan pada 774px - seterusnya */}
-      <motion.div className="hidden min-[774px]:w-[25%] lg:w-[20%] xl:w-[17%] min-[774px]:flex flex-col justify-center gap-2 border h-max xl:mr-1">
+      <motion.div className="hidden min-[774px]:w-[25%] lg:w-[20%] xl:w-[15%] min-[774px]:flex flex-col justify-center gap-2 h-max xl:mr-1">
         <div className="flex gap-3 justify-center flex-col">
           {datas.map((poli, index) => (
             <div

@@ -15,7 +15,7 @@ export default function HomeQualifiedDoctors() {
     }
 
     return (
-        <div className="flex flex-row-reverse max-[1070px]:flex-col justify-evenly items-center gap-4 bg-gradient-radial w-full h-max rounded-md px-1.5 my-12 py-12" >
+        <div className="flex flex-row-reverse max-[1070px]:flex-col justify-evenly items-center gap-4 bg-gradient-radial w-full h-max rounded-md px-1.5 my-12 py-12 min-[1600px]:py-32 " >
             <div className=" flex flex-col justify-center max-[555px]:items-center max-[555px]:text-center  " >
                 <h1 className='text-xl font-bold text-primary mb-3' >Qualified Doctors</h1>
                 <h2 className='max-[555px]:text-3xl text-6xl font-bold text-slate-800 font-sans ' >Keep doctors and <br/> loved ones in the</h2>

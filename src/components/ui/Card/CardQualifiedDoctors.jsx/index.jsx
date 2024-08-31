@@ -36,7 +36,7 @@ export default function CardQualifiedDoctor({name, spesialisasi}) {
                     {
                         datasQualifiedDoctor.map((data, index) => (
                             <SwiperSlide key={index} >
-                                <div  className='flex flex-col w-[220px] h-[290px] bg-white shadow-lg rounded-xl p-4 transform transition duration-500 ease-in-out cursor-pointer mb-8'>
+                                <div  className='flex flex-col w-[220px] h-[290px] bg-white shadow-lg rounded-xl p-4 transform transition duration-500 ease-in-out cursor-pointer my-12'>
                                     <div className='w-full flex justify-center'>
                                         <Image src={doctorCard} width={200} height={200} alt='doctor.png' className='rounded-lg' />
                                     </div>
