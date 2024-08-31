@@ -24,8 +24,6 @@ const PatientHistoryView = () => {
     setPatients(filteredPatients);
   }, [activities, getDateForFilter, session]);
 
-  console.log(patients);
-
   useEffect(() => {
     getDataPatient();
   }, [activities, session, getDataPatient]);
@@ -39,6 +37,7 @@ const PatientHistoryView = () => {
           setGetDateForFilter={setGetDateForFilter}
           patients={patients}
           onOpen={onOpen}
+          title={'Patient History'}
         />
         <TablePatientHistory
           patients={patients}

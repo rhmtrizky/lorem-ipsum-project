@@ -41,7 +41,7 @@ export default function HomeFeedback() {
     getReviews();
   }, []);
   return (
-    <div>
+    <div className="w-full flex flex-col gap-5">
       <div className="text-center">
         <h2 className="text-[40px] font-archivoBlack font-extrabold text-primary">What People Are Saying</h2>
         <p className="text-slate-500 mb-4">

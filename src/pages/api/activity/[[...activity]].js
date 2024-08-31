@@ -8,7 +8,6 @@ export default async function handler(req, res) {
         const search = req.query.search;
         const patientActivities = await retrieveData('patientActivities');
         const patientActivityId = req.query.activity;
-        console.log(patientActivityId);
 
         if (search) {
           const searchResult = patientActivities.filter((item) => {

@@ -4,15 +4,15 @@ import { SessionProvider } from 'next-auth/react';
 import 'boxicons/css/boxicons.min.css';
 import { useRouter } from 'next/router';
 import Header from '@/components/ui/Header';
-import { useEffect } from 'react';
-import Footer from '@/components/ui/Footer';
 
+import { useContext, useEffect } from 'react';
+import Footer from '@/components/ui/Footer';
+import Toaster from '@/components/ui/Alert';
+import AppShell from '@/components/fragments/AppShell';
+import { ToasterProvider } from '@/contexts/ToasterContext';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
-  const router = useRouter();
-  const excludedPaths = ['/auth', '/admin', '/doctor', '/pharmacy', '/404'];
-  const showNavbar = !excludedPaths.some((path) => router.pathname.startsWith(path));
-
+  // service worker
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
@@ -21,13 +21,14 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
         .catch((err) => console.error('Service Worker registration failed', err));
     }
   }, []);
+
   return (
     <SessionProvider session={session}>
-      <NextUIProvider>
-        {showNavbar && <Header />}
-        <Component {...pageProps} />
-        {/* {<Footer/>} */}
-      </NextUIProvider>
+      <ToasterProvider>
+        <AppShell>
+          <Component {...pageProps} />
+        </AppShell>
+      </ToasterProvider>
     </SessionProvider>
   );
 }

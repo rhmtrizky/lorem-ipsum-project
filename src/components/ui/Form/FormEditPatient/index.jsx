@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { gender, golDarah } from '@/constraint/adminPanel';
 import { Button, useDisclosure } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
@@ -7,12 +7,14 @@ import userService from '@/services/user';
 import Image from 'next/image';
 import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
 import handleImageUpload from '@/utils/uploadImage';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
 export default function FormEditPatient({ user, setUser, patient }) {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [imageFile, setImageFile] = useState(null);
+  const { setToaster } = useContext(ToasterContext);
 
   const handleAddPatient = async (e) => {
     e.preventDefault();
@@ -59,6 +61,10 @@ export default function FormEditPatient({ user, setUser, patient }) {
         currentPatients[patientIndex] = updatedPatient;
 
         result = await userService.updateUser(user.id, { patient: currentPatients }, session?.accessToken);
+        setToaster({
+          variant: 'success',
+          message: 'Data berhasil diupdate',
+        });
       }
 
       if (result.status === 200) {
@@ -66,11 +72,19 @@ export default function FormEditPatient({ user, setUser, patient }) {
         setUser(response.data.data);
         setIsLoading(false);
         onOpenChange(false);
+        setToaster({
+          variant: 'success',
+          message: 'Data berhasil diupdate',
+        });
       }
     } catch (err) {
       setIsLoading(false);
       console.log(err);
       onOpenChange(false);
+      setToaster({
+        variant: 'error',
+        message: 'Data gagal diupdate',
+      });
     }
   };
 

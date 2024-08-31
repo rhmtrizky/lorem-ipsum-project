@@ -4,7 +4,7 @@ import Filter from '@/components/ui/Filter';
 import useDebounce from '@/hooks/useDebounce';
 import Link from 'next/link';
 import doctorService from '@/services/user/doctor';
-import SkeletonCard from '@/components/ui/SkeletonCard';
+import SkeletonDoctorCard from '@/components/ui/Skeleton/SkeletonDoctorCard';
 
 export default function FindDoctor() {
   const [doctors, setDoctors] = useState([]);
@@ -13,13 +13,16 @@ export default function FindDoctor() {
   const [doctorName, setDoctorName] = useState('');
   const [specialist, setSpecialist] = useState('');
   const [day, setDay] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchDoctors = async () => {
     try {
       const { data } = await doctorService.getDoctors();
       setDoctors(data.data);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching doctors', error);
+      setIsLoading(false);
     }
   };
 
@@ -32,8 +35,10 @@ export default function FindDoctor() {
       try {
         const { data } = await doctorService.searchDoctor(doctorName, specialist, day);
         setDoctors(data.data);
+        setIsLoading(false);
       } catch (err) {
         console.error(err);
+        setIsLoading(false);
       }
     } else {
       fetchDoctors();
@@ -115,30 +120,40 @@ export default function FindDoctor() {
             ></div>
           </div>
         </div>
-
-        <div className="flex justify-center w-full px-2">
-          {doctors.length !== 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-7 md:gap-6 sm:gap-2 gap-2">
-              {doctors.slice(0, visibleDoctors).map((doctor, index) => (
-                <Link
-                  href={`/schedules/${doctor.id}`}
-                  key={index}
-                >
-                  <CardDoctor
-                    name={doctor.fullname}
-                    spesialisasi={doctor.specialist}
-                    image={doctor.image}
-                  />
-                </Link>
+        {isLoading ? (
+          <div className="flex justify-center w-full px-2">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-7 md:gap-6 sm:gap-3 gap-3 ">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <SkeletonDoctorCard key={index} />
               ))}
             </div>
-          ) : (
-            <div className="flex flex-col justify-center items-center">
-              <i className="bx bxs-message-alt-error text-8xl text-primary"></i>
-              <p className="text-lg font-semibold">Dokter tidak ditemukan.</p>
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="flex justify-center w-full px-2">
+            {doctors.length !== 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-7 md:gap-6 sm:gap-2 gap-2">
+                {doctors.slice(0, visibleDoctors).map((doctor, index) => (
+                  <Link
+                    href={`/schedules/${doctor.id}`}
+                    key={index}
+                  >
+                    <CardDoctor
+                      name={doctor.fullname}
+                      spesialisasi={doctor.specialist}
+                      image={doctor.image}
+                    />
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center items-center">
+                <i className="bx bxs-message-alt-error text-8xl text-primary"></i>
+                <p className="text-lg font-semibold">Dokter tidak ditemukan.</p>
+              </div>
+            )}
+          </div>
+        )}
+
         {visibleDoctors < doctors.length && (
           <div className="flex justify-center mt-6">
             <button

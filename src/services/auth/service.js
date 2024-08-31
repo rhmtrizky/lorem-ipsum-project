@@ -1,5 +1,8 @@
 import { addData, retrieveDataByField } from '@/libs/firebase/service';
+import sendEmail from '@/utils/sendEmail';
+import { verificationEmailTemplate } from '@/utils/verificationEmailTemplate';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 export async function signUp(userData, callback) {
   const dataEmail = await retrieveDataByField('users', 'email', userData.email);
@@ -12,9 +15,25 @@ export async function signUp(userData, callback) {
     }
     userData.image = '';
     userData.password = await bcrypt.hash(userData.password, 10);
-    addData('users', userData, (result) => {
-      if (result) {
-        callback(result);
+
+    // is verified
+    userData.isVerified = false;
+
+    // verify token
+    const verifyToken = crypto.randomBytes(20).toString('hex');
+    userData.verifyToken = crypto.createHash('sha256').update(verifyToken).digest('hex');
+
+    // token expired
+    userData.verifyTokenExpire = new Date(Date.now() + 30 * 60 * 1000);
+
+    addData('users', userData, async (status, result) => {
+      if (status) {
+        const verificationLink = `${process.env.NEXTAUTH_URL}/verify-email?verifyToken=${verifyToken}&id=${result.id}`;
+
+        const message = verificationEmailTemplate(verificationLink);
+
+        await sendEmail(userData.email, 'Verify Email', message);
+        callback(status);
       }
     });
   }

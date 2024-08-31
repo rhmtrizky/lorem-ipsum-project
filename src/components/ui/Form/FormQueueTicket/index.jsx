@@ -18,8 +18,6 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
   const { activities, setActivities } = useActivity();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  console.log(patientIndex);
-
   useEffect(() => {
     if (patientIndex >= 0) {
       setDataPatient(user.patient[patientIndex]);
@@ -62,6 +60,7 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
       activities,
       selectedSpesialist,
       bookDate,
+      doctorId,
     });
     console.log(queueNumber);
 
@@ -84,11 +83,9 @@ export default function FormQueueTicket({ user, data, doctorId, setTicket }) {
       status: 'queue',
     };
 
-    console.log(data);
-
     try {
       const resultQueue = await activityService.addQueue(data, session.accessToken);
-      console.log(resultQueue);
+
       if (resultQueue.status === 200) {
         const result = await activityService.getAllActivities(session.accessToken);
         setActivities(result.data.data);

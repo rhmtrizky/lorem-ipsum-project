@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import PatientDashboardLayout from '@/components/layouts/PatientDashboardLayout';
 import CardFamily from '@/components/ui/Card/CardFamily';
@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { emptyData } from '@/assets/images/images';
 import ModalDeleteFamily from './ModalDeleteFamily';
 import { useDisclosure } from '@nextui-org/react';
+import { ToasterContext } from '@/contexts/ToasterContext';
 
 export default function FamilyView() {
   const { data: session } = useSession();
@@ -14,8 +15,7 @@ export default function FamilyView() {
   const [deleteFamily, setDeleteFamily] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log(user);
+  const { setToaster } = useContext(ToasterContext);
 
   const getDetailUser = async () => {
     try {
@@ -43,10 +43,18 @@ export default function FamilyView() {
         setDeleteFamily({});
         onOpenChange(false);
         setIsLoading(false);
+        setToaster({
+          variant: 'success',
+          message: 'Anggota keluarga dihapus',
+        });
       }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      setToaster({
+        variant: 'error',
+        message: 'Gagal menghapus anggota keluarga',
+      });
     }
   };
 
@@ -58,7 +66,7 @@ export default function FamilyView() {
             <h1 className="text-2xl font-bold text-slate-400 font-sans">Anggota keluarga</h1>
           </div>
           <div className="flex flex-wrap gap-2 mt-5 border overflow-y-auto h-[300px]">
-            {patientArray.length > 0 ? (
+            {patientArray?.length > 0 ? (
               patientArray.map((patient, index) => (
                 <CardFamily
                   key={patient.nik}

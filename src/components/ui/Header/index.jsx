@@ -24,7 +24,9 @@ export default function Header() {
     <header className="top-0 right-0 w-full h-[90px] shadow-md bg-white">
       <div className="flex items-center justify-between h-full px-8 min-[600px]:px-0">
         <div className="flex justify-around items-center min-[600px]:w-[25%]  ">
-          <LogoHarapanBunda/>
+          <Link href="/">
+            <LogoHarapanBunda />
+          </Link>
         </div>
 
         <nav className="hidden min-[600px]:block w-full h-full">
@@ -38,7 +40,7 @@ export default function Header() {
                   alt="mail.png"
                   className="w-[30px] min-[950px]:w-[20px]"
                 />
-                <p className="hidden min-[600px]:block text-sm text-white cursor-default">loremipsum@gmail.com</p>
+                <p className="hidden min-[600px]:block text-sm text-white cursor-default">hospitalharapanbunda@gmail.com</p>
               </div>
               <div className="flex items-center gap-1">
                 <Image
@@ -52,8 +54,8 @@ export default function Header() {
             </div>
 
             <div className="flex gap-4">
-              <div className='hidden min-[950px]:block' >
-                <SocialMedia/>
+              <div className="hidden min-[950px]:block">
+                <SocialMedia />
               </div>
 
               <motion.button

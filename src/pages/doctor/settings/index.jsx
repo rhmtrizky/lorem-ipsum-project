@@ -3,7 +3,6 @@ import { useSession } from 'next-auth/react';
 
 const ProfileSettingPage = () => {
   const { data: session } = useSession();
-  console.log(session);
 
   return (
     <ProfileSettingView

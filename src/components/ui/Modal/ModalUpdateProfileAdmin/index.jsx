@@ -1,6 +1,7 @@
 import InputUi from '@/components/ui/Input';
 import ImageUpload from '@/components/views/Admin/Ui/ImageUpload';
 import ModalUi from '@/components/views/Admin/Ui/Modal';
+import { ToasterContext } from '@/contexts/ToasterContext';
 import useSpecialist from '@/hooks/useSpecialist';
 import userService from '@/services/user';
 import doctorService from '@/services/user/doctor';
@@ -8,10 +9,11 @@ import pharmacyService from '@/services/user/pharmacy';
 import handleImageUpload from '@/utils/uploadImage';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const ModalUpdateProfileAdmin = ({ openModal, setOpenModal, isOpen, onOpenChange, setState, id, token }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { setToaster } = useContext(ToasterContext);
   const { specialists } = useSpecialist();
   const [imageFile, setImageFile] = useState(null);
   const [schedules, setSchedules] = useState(openModal.schedule || [{ day: '', startTime: '', endTime: '' }]);
@@ -73,9 +75,17 @@ const ModalUpdateProfileAdmin = ({ openModal, setOpenModal, isOpen, onOpenChange
             if (openModal.role === 'doctor') {
               const { data } = await doctorService.getDoctorById(id);
               setState(data.data);
+              setToaster({
+                variant: 'success',
+                message: 'Berhasil update profile',
+              });
             } else if (openModal.role === 'pharmacy') {
               const { data } = await pharmacyService.getPharmacyById(id);
-              console.log(data.data);
+              setState(data.data);
+              setToaster({
+                variant: 'success',
+                message: 'Berhasil update profile',
+              });
             }
             setOpenModal({});
             onOpenChange();
@@ -85,9 +95,17 @@ const ModalUpdateProfileAdmin = ({ openModal, setOpenModal, isOpen, onOpenChange
           if (openModal.role === 'doctor') {
             const { data } = await doctorService.getDoctorById(id);
             setState(data.data);
+            setToaster({
+              variant: 'success',
+              message: 'Berhasil update profile',
+            });
           } else if (openModal.role === 'pharmacy') {
             const { data } = await pharmacyService.getPharmacyById(id);
             setState(data.data);
+            setToaster({
+              variant: 'success',
+              message: 'Berhasil update profile',
+            });
           }
           setOpenModal({});
           onOpenChange();
@@ -99,6 +117,10 @@ const ModalUpdateProfileAdmin = ({ openModal, setOpenModal, isOpen, onOpenChange
       setOpenModal({});
       onOpenChange();
       setIsLoading(false);
+      setToaster({
+        variant: 'error',
+        message: 'Gagal update profile',
+      });
     }
   };
 

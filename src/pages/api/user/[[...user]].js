@@ -30,6 +30,7 @@ export default async function handler(req, res) {
     verify(req, res, async (decoded) => {
       if (decoded && decoded.role === 'admin') {
         const { data } = req.body;
+
         data.password = await bcrypt.hash(data.password, 10);
 
         try {
@@ -42,6 +43,7 @@ export default async function handler(req, res) {
           });
         } catch (error) {
           console.log(error);
+          return res.status(500).json({ status: false, code: 500, message: 'Internal Server Error' });
         }
       }
     });

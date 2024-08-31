@@ -78,7 +78,13 @@ export const Sidebar = () => {
                         {idx < 2 && (
                           <motion.div
                             {...framerText(idx)}
-                            className="w-full flex justify-between text-center border-purple-900 border-2 hover:bg-[#654ab4a8] p-3 rounded-xl"
+                            className={`${
+                              idx === 0
+                                ? session.status === 'authenticated'
+                                  ? 'flex'
+                                  : 'hidden'
+                                : ''
+                            } w-full flex justify-between text-center border-purple-900 border-2 hover:bg-[#654ab4a8] p-3 rounded-xl`}
                           >
                             <span>{title}</span>
                             <Icon className="text-2xl" />
@@ -88,15 +94,14 @@ export const Sidebar = () => {
                           idx == 2 ? (
                             <motion.div
                               {...framerText(idx)}
-                              className="group relative w-full hover:h-30 hover:transition-all hover:duration-1000 ease-linear text-center border-purple-900 border-2 p-3 rounded-xl"
-                              whileHover={{ backgroundColor: '#654ab4a8' }} // Change background color on hover
+                              className="relative w-full text-center hover:bg-[#654ab4a8] border-purple-900 border-2 p-3 rounded-xl"
                             >
                               <div className="flex justify-between items-center">
                                 <span>{title}</span>
                                 <Icon className="text-2xl" />
                               </div>
                               <motion.div
-                                className="hidden group-hover:flex flex-col items-start mt-2"
+                                className="flex flex-col items-start mt-2"
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.2 }}

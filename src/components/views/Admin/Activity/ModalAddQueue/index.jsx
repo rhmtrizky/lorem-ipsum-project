@@ -97,6 +97,7 @@ const ModalAddQueue = ({ onOpenChange, isOpen, setAddQueue, users, activities, s
       activities,
       selectedSpesialist,
       bookDate,
+      doctorId: selectDoctor,
     });
     console.log(queueNumber);
 

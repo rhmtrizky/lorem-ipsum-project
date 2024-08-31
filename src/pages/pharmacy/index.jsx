@@ -1,7 +1,7 @@
-import PharmacyDashboardView from '@/components/views/Pharmacy/Dashboard';
+import PatientPharmacyQueueView from '@/components/views/Pharmacy/PatientPharmacyQueue';
 
-const PharmacyDashboardPage = () => {
-  return <PharmacyDashboardView />;
+const PatientPharmacyQueuePage = () => {
+  return <PatientPharmacyQueueView />;
 };
 
-export default PharmacyDashboardPage;
+export default PatientPharmacyQueuePage;

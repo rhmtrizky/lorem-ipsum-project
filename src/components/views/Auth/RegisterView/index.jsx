@@ -1,12 +1,14 @@
 import AuthLayout from '@/components/layouts/AuthLayout';
 import Button from '@/components/ui/Button';
 import InputUi from '@/components/ui/Input';
+import { ToasterContext } from '@/contexts/ToasterContext';
 import authService from '@/services/auth';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 const RegisterView = () => {
   const { push } = useRouter();
+  const { setToaster } = useContext(ToasterContext);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({
@@ -65,8 +67,11 @@ const RegisterView = () => {
 
       if (result.status == 200) {
         form.reset();
-        push('/auth/login');
         setIsLoading(false);
+        setToaster({
+          variant: 'success',
+          message: 'Check email to verify your account.',
+        });
       }
     } catch (error) {
       form.reset();
@@ -75,6 +80,10 @@ const RegisterView = () => {
       setTimeout(() => {
         setIsError(false);
       }, 3000);
+      setToaster({
+        variant: 'error',
+        message: 'Failed to register. Please try again.',
+      });
     }
   };
 
@@ -106,7 +115,6 @@ const RegisterView = () => {
             type="email"
             name="email"
             placeholder="Email"
-
             className={'input-auth text-white shadow-md rounded mt-2'}
             required={true}
           />
